@@ -58,4 +58,10 @@ dependencies {
     implementation 'com.orhanobut:dialogplus:1.11@aar'
     implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
 
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:+'
+    implementation 'com.squareup.okhttp3:logging-interceptor:+'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:+'
+    implementation 'io.reactivex:rxandroid:1.2.0'
+
 }
