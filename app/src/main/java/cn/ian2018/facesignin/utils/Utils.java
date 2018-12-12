@@ -7,6 +7,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
@@ -96,6 +98,21 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    // 获取本应用版本号
+    public static int getVersionCode() {
+        // 拿到包管理者
+        PackageManager pm = MyApplication.getContext().getPackageManager();
+        // 获取包的基本信息
+        try {
+            PackageInfo info = pm.getPackageInfo(MyApplication.getContext().getPackageName(), 0);
+            // 返回应用的版本号
+            return info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     // 获取当前时间

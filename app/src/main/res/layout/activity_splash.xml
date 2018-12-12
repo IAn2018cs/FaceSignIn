@@ -23,7 +23,7 @@
         android:layout_marginBottom="30dp"
         android:text="@string/copyright"
         android:textColor="#ffffff"
-        android:textSize="12sp" />
+        android:textSize="@dimen/copyright_text_size" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -25,7 +25,7 @@ public class MyApplication extends Application {
             public void uncaughtException(Thread thread, Throwable ex) {
                 // 输出异常
                 ex.printStackTrace();
-                Logs.d("捕获到的异常：" + ex.toString());
+                Logs.e("捕获到的异常：" + ex.toString());
                 System.exit(0);
             }
         });
