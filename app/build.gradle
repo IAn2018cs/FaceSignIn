@@ -34,10 +34,10 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
 
+    // 找东西替换  可能会引起问题
     implementation ('com.wdullaer:materialdatetimepicker:3.2.2'){
         exclude group: 'com.android.support'
     }
-    // 找东西替换  可能会引起问题
 
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation ('cn.yipianfengye.android:zxing-library:1.9') {
@@ -66,4 +66,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava:+'
     implementation 'io.reactivex:rxandroid:1.2.0'
 
+    implementation 'com.zhy:okhttputils:2.6.2'
 }
