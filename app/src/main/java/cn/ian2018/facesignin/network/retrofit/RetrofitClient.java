@@ -46,35 +46,4 @@ public class RetrofitClient {
     public static ServiceApi getServiceApi() {
         return mServiceApi;
     }
-
-    public static <T> Observable.Transformer<Result<T>, T> transformer() {
-        return new Observable.Transformer<Result<T>, T>() {
-            @Override
-            public Observable<T> call(Observable<Result<T>> resultObservable) {
-                return resultObservable.flatMap(new Func1<Result<T>, Observable<T>>() {
-                    @Override
-                    public Observable<T> call(Result<T> tResult) {
-                        // 解析不同的情况返回
-                        if(tResult.isOk()){
-                            // 返回成功
-                            return createObservable(tResult.data);
-                        }else {
-                            // 返回失败
-                            return Observable.error(new ErrorHandle.ServiceError("",tResult.getMsg()));
-                        }
-                    }
-                }).subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-            }
-        };
-    }
-
-    private static <T> Observable<T> createObservable(final T data) {
-        return Observable.create(new Action1<Emitter<T>>() {
-            @Override
-            public void call(Emitter<T> tEmitter) {
-                tEmitter.onNext(data);
-                tEmitter.onCompleted();
-            }
-        }, Emitter.BackpressureMode.NONE);
-    }
 }

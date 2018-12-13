@@ -1,7 +1,6 @@
 package cn.ian2018.facesignin.ui.login;
 
 import cn.ian2018.facesignin.bean.User;
-import cn.ian2018.facesignin.network.retrofit.BaseSubscriber;
 import cn.ian2018.facesignin.ui.base.BasePresenter;
 import rx.Subscriber;
 
@@ -25,9 +24,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.LoginView> imple
         mModel.login(account,password).subscribe(new Subscriber<User>() {
             @Override
             public void onCompleted() {
-
             }
-
             @Override
             public void onError(Throwable e) {
 

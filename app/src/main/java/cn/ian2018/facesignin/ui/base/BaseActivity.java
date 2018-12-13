@@ -1,6 +1,7 @@
 package cn.ian2018.facesignin.ui.base;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import cn.ian2018.facesignin.utils.ToastUtil;
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements BaseView {
     private P mPresenter;
     private final int REQUEST_PERMISSION = 1;
+    private ProgressDialog mProgressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,6 +100,23 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
                     finish();
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void showProgressDialog(String msg) {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+        }
+        mProgressDialog.setMessage(msg);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void closeProgressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
         }
     }
 }

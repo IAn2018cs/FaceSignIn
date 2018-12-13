@@ -2,10 +2,22 @@ package cn.ian2018.facesignin.ui.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.ui.base.BaseActivity;
+import cn.ian2018.facesignin.ui.widget.CustomVideoView;
 import cn.ian2018.facesignin.utils.CheckVersionHelper;
+import cn.ian2018.facesignin.utils.Constant;
+import cn.ian2018.facesignin.utils.SpUtil;
 
 /**
  * Description:
@@ -13,7 +25,13 @@ import cn.ian2018.facesignin.utils.CheckVersionHelper;
  * E-mail:chenshuai@amberweather.com
  * Date:2018/12/12
  */
-public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.LoginView {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.LoginView, View.OnClickListener {
+
+    private EditText et_account;
+    private EditText et_password;
+    private TextInputLayout text_input_account;
+    private TextInputLayout text_input_pass;
+    private CustomVideoView videoview;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, LoginActivity.class);
@@ -27,17 +45,97 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     protected void initData() {
+        // 检测更新
         CheckVersionHelper checkVersionHelper = new CheckVersionHelper(this);
         checkVersionHelper.checkVersionCode();
+
+        if (!SpUtil.getBoolean(Constant.IS_REMBER_PWD,false)) {
+            et_account.setText(SpUtil.getString(Constant.ACCOUNT,""));
+        }
     }
 
     @Override
     protected void initView() {
+        et_account = findViewById(R.id.et_account);
+        et_password = findViewById(R.id.et_password);
+        Button bt_login = findViewById(R.id.bt_login);
+        TextView tv_sign_up = findViewById(R.id.tv_sign_up);
+        TextView tv_forget = findViewById(R.id.tv_forget);
+
+        text_input_account = (TextInputLayout) findViewById(R.id.text_input_account);
+        text_input_pass = (TextInputLayout) findViewById(R.id.text_input_pass);
+
+        et_account.addTextChangedListener(new MyTextWatcher(text_input_account));
+        et_password.addTextChangedListener(new MyTextWatcher(text_input_pass));
+
+        bt_login.setOnClickListener(this);
+        tv_sign_up.setOnClickListener(this);
+        tv_forget.setOnClickListener(this);
+
+        initVideo();
+    }
+
+    private void initVideo() {
+        //加载视频资源控件
+        videoview = (CustomVideoView) findViewById(R.id.videoview);
+        //设置播放加载路径
+        videoview.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.video));
+        //播放
+        videoview.start();
+        //循环播放
+        videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                videoview.start();
+            }
+        });
+    }
+
+
+    @Override
+    protected void setContentView() {
+        //去掉Activity上面的状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_login);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
     }
 
     @Override
-    protected void setContentView() {
-        setContentView(R.layout.activity_login);
+    protected void onRestart() {
+        super.onRestart();
+        initVideo();
+    }
+
+    //防止锁屏或者切出的时候，音乐在播放
+    @Override
+    protected void onStop() {
+        videoview.stopPlayback();
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // 释放资源
+        if (videoview != null) {
+            videoview.suspend();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_login:
+                break;
+            case R.id.tv_sign_up:
+                break;
+            case R.id.tv_forget:
+                break;
+        }
     }
 }
