@@ -18,10 +18,10 @@ public interface ServiceApi {
 
     @POST(URLs.LOGIN)// 登录接口 GET(相对路径)
     @FormUrlEncoded
-    Observable<Result<User>> login(
+    Observable<User> login(
             // @Query(后台需要解析的字段)
             @Field("Account") String account, @Field("Password") String password);
 
     @GET(URLs.UPDATE)// 检测更新
-    Observable<Result<AppVersion>> checkVersion();
+    Observable<AppVersion> checkVersion();
 }

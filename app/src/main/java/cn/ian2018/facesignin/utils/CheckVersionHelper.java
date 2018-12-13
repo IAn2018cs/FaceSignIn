@@ -22,6 +22,10 @@ import cn.ian2018.facesignin.bean.AppVersion;
 import cn.ian2018.facesignin.network.retrofit.BaseSubscriber;
 import cn.ian2018.facesignin.network.retrofit.RetrofitClient;
 import okhttp3.Call;
+import rx.Scheduler;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Description:
@@ -41,8 +45,19 @@ public class CheckVersionHelper {
 
     public void checkVersionCode() {
         RetrofitClient.getServiceApi().checkVersion()
-                .compose(RetrofitClient.<AppVersion>transformer())
-                .subscribe(new BaseSubscriber<AppVersion>() {
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<AppVersion>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Logs.e("获取app信息失败  " + e.getMessage());
+                    }
+
                     @Override
                     public void onNext(AppVersion appVersion) {
                         if (appVersion.isFalg()) {
@@ -61,11 +76,6 @@ public class CheckVersionHelper {
                         } else {
                             Logs.e("获取app信息失败");
                         }
-                    }
-
-                    @Override
-                    protected void onError(String errorCode, String errorMessage) {
-                        Logs.e("获取app信息失败  " + errorCode + "   " + errorMessage);
                     }
                 });
     }

@@ -3,6 +3,9 @@ package cn.ian2018.facesignin.ui.login;
 import cn.ian2018.facesignin.bean.User;
 import cn.ian2018.facesignin.network.retrofit.RetrofitClient;
 import rx.Observable;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Description:
@@ -16,6 +19,6 @@ public class LoginModel implements LoginContract.LoginModel{
     public Observable<User> login(String account, String password) {
         return RetrofitClient.getServiceApi()
                 .login(account,password)
-                .compose(RetrofitClient.<User>transformer());
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 }
