@@ -62,8 +62,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         TextView tv_sign_up = findViewById(R.id.tv_sign_up);
         TextView tv_forget = findViewById(R.id.tv_forget);
 
-        text_input_account = (TextInputLayout) findViewById(R.id.text_input_account);
-        text_input_pass = (TextInputLayout) findViewById(R.id.text_input_pass);
+        text_input_account = findViewById(R.id.text_input_account);
+        text_input_pass = findViewById(R.id.text_input_pass);
 
         et_account.addTextChangedListener(new MyTextWatcher(text_input_account));
         et_password.addTextChangedListener(new MyTextWatcher(text_input_pass));
@@ -77,7 +77,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     private void initVideo() {
         //加载视频资源控件
-        videoview = (CustomVideoView) findViewById(R.id.videoview);
+        videoview = findViewById(R.id.videoview);
         //设置播放加载路径
         videoview.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.video));
         //播放
@@ -125,6 +125,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         if (videoview != null) {
             videoview.suspend();
         }
+    }
+
+    @Override
+    protected boolean isOnKeyDown() {
+        return false;
     }
 
     @Override
