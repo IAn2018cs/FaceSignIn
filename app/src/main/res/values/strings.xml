@@ -16,6 +16,7 @@
 
     <string name="password">Password</string>
     <string name="account">Account</string>
+    <string name="landing">Landing ...</string>
 
     <string name="again_to_return">Press again to exit the program</string>
 </resources>

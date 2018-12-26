@@ -49,6 +49,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         CheckVersionHelper checkVersionHelper = new CheckVersionHelper(this);
         checkVersionHelper.checkVersionCode();
 
+        // 检测是否登陆
         if (!SpUtil.getBoolean(Constant.IS_REMBER_PWD,false)) {
             et_account.setText(SpUtil.getString(Constant.ACCOUNT,""));
         }
@@ -136,6 +137,22 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_login:
+                boolean isLogin = true;
+                String account = et_account.getText().toString().trim();
+                String password = et_password.getText().toString().trim();
+
+                if (account.equals("")) {
+                    isLogin = false;
+                    text_input_account.setError("用户名为空");
+                }
+                if (password.equals("")) {
+                    isLogin = false;
+                    text_input_pass.setError("密码为空");
+                }
+                // 如果账号密码不为空，检查是否正确
+                if (isLogin) {
+                    getPresenter().login(account,password);
+                }
                 break;
             case R.id.tv_sign_up:
                 break;
