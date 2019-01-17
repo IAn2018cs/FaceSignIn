@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.ui.base.BaseActivity;
+import cn.ian2018.facesignin.utils.CheckVersionHelper;
 
 /**
  * 普通用户主页
@@ -29,7 +30,8 @@ public class UserMainActivity extends BaseActivity<UserMainPresenter> implements
 
     @Override
     protected void initData() {
-
+        CheckVersionHelper checkVersionHelper = new CheckVersionHelper(this);
+        checkVersionHelper.checkVersionCode();
     }
 
     @Override
@@ -37,5 +39,8 @@ public class UserMainActivity extends BaseActivity<UserMainPresenter> implements
 
     }
 
-
+    @Override
+    protected boolean isOnKeyDown() {
+        return true;
+    }
 }
