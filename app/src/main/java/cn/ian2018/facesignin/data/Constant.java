@@ -1,4 +1,4 @@
-package cn.ian2018.facesignin.utils;
+package cn.ian2018.facesignin.data;
 
 /**
  * 存储常量值

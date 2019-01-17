@@ -1,4 +1,4 @@
-package cn.ian2018.facesignin.db;
+package cn.ian2018.facesignin.data.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
