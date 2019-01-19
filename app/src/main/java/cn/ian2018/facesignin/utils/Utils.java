@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import cn.ian2018.facesignin.MyApplication;
+import cn.ian2018.facesignin.data.Constant;
+import cn.ian2018.facesignin.data.SpUtil;
 
 
 /**

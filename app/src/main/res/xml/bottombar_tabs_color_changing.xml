@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_active"
+        icon="@mipmap/ic_assignment_turned_in"
+        title="签到"
+        barColorWhenSelected="#03A9F4" />
+    <tab
+        id="@+id/tab_history"
+        icon="@mipmap/ic_assignment"
+        title="量化"
+        barColorWhenSelected="#5D4037" />
+    <tab
+        id="@+id/tab_setting"
+        icon="@mipmap/ic_assignment_ind"
+        title="我的"
+        barColorWhenSelected="#045563" />
+</tabs>

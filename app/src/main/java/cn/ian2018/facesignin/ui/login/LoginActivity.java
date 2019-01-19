@@ -16,8 +16,9 @@ import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.ui.base.BaseActivity;
 import cn.ian2018.facesignin.ui.widget.CustomVideoView;
 import cn.ian2018.facesignin.utils.CheckVersionHelper;
-import cn.ian2018.facesignin.utils.Constant;
-import cn.ian2018.facesignin.utils.SpUtil;
+
+import cn.ian2018.facesignin.data.Constant;
+import cn.ian2018.facesignin.data.SpUtil;
 import cn.ian2018.facesignin.utils.ToastUtil;
 
 /**

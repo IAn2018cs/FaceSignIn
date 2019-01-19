@@ -1,6 +1,8 @@
 package cn.ian2018.facesignin.network.retrofit;
 
 import cn.ian2018.facesignin.bean.AppVersion;
+import cn.ian2018.facesignin.bean.Saying;
+import cn.ian2018.facesignin.bean.SignInResult;
 import cn.ian2018.facesignin.bean.User;
 import cn.ian2018.facesignin.network.URLs;
 import retrofit2.http.Field;
@@ -24,4 +26,14 @@ public interface ServiceApi {
 
     @GET(URLs.UPDATE)// 检测更新
     Observable<AppVersion> checkVersion();
+
+    @GET(URLs.GET_SAYING)// 获取名言
+    Observable<Saying> getSaying();
+
+    @POST(URLs.SIGN_IN)
+    @FormUrlEncoded
+    Observable<SignInResult> signInResult(
+            @Field("account") String account, @Field("activityid") int activityId,
+            @Field("intime") String inTime, @Field("outtime") String outTime,
+            @Field("InLocation") String inLocation);
 }
