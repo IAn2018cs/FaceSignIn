@@ -12,7 +12,10 @@ import rx.Observable;
  */
 public class LoginContract {
     interface LoginView extends BaseView {
-
+        void accountEmpty();
+        void passwordEmpty();
+        void loginSuccess();
+        void loginFail();
     }
 
     interface LoginPresenter {

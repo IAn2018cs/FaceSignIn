@@ -19,4 +19,8 @@
     <string name="landing">Landing ...</string>
 
     <string name="again_to_return">Press again to exit the program</string>
+
+    <string name="password_empty">Password is empty</string>
+    <string name="account_empty">Account is empty</string>
+    <string name="login_fail">Login failed, Incorrect username or password</string>
 </resources>

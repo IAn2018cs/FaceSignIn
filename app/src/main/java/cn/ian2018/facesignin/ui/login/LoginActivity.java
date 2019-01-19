@@ -18,6 +18,7 @@ import cn.ian2018.facesignin.ui.widget.CustomVideoView;
 import cn.ian2018.facesignin.utils.CheckVersionHelper;
 import cn.ian2018.facesignin.utils.Constant;
 import cn.ian2018.facesignin.utils.SpUtil;
+import cn.ian2018.facesignin.utils.ToastUtil;
 
 /**
  * Description:
@@ -137,27 +138,35 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_login:
-                boolean isLogin = true;
                 String account = et_account.getText().toString().trim();
                 String password = et_password.getText().toString().trim();
-
-                if (account.equals("")) {
-                    isLogin = false;
-                    text_input_account.setError("用户名为空");
-                }
-                if (password.equals("")) {
-                    isLogin = false;
-                    text_input_pass.setError("密码为空");
-                }
-                // 如果账号密码不为空，检查是否正确
-                if (isLogin) {
-                    getPresenter().login(account,password);
-                }
+                getPresenter().login(account,password);
                 break;
             case R.id.tv_sign_up:
                 break;
             case R.id.tv_forget:
                 break;
         }
+    }
+
+    @Override
+    public void accountEmpty() {
+        text_input_account.setError(getResources().getString(R.string.account_empty));
+    }
+
+    @Override
+    public void passwordEmpty() {
+        text_input_pass.setError(getResources().getString(R.string.password_empty));
+    }
+
+    @Override
+    public void loginSuccess() {
+
+    }
+
+    @Override
+    public void loginFail() {
+        closeProgressDialog();
+        ToastUtil.show(R.string.login_fail);
     }
 }
