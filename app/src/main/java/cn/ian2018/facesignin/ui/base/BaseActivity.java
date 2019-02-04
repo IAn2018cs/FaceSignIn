@@ -114,6 +114,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             mProgressDialog = new ProgressDialog(this);
         }
         mProgressDialog.setMessage(msg);
+        mProgressDialog.setCancelable(false);
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
     }

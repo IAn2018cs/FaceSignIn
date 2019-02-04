@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.ui.base.BaseActivity;
+import cn.ian2018.facesignin.ui.userhome.UserMainActivity;
 import cn.ian2018.facesignin.ui.widget.CustomVideoView;
 import cn.ian2018.facesignin.utils.CheckVersionHelper;
 
@@ -29,11 +30,14 @@ import cn.ian2018.facesignin.utils.ToastUtil;
  */
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.LoginView, View.OnClickListener {
 
+    private static final int USER_ORDINARY = 0; // 普通用户
+    private static final int USER_ADMIN = 1;    // 管理员
+
     private EditText et_account;
     private EditText et_password;
     private TextInputLayout text_input_account;
     private TextInputLayout text_input_pass;
-    private CustomVideoView videoview;
+    private CustomVideoView videoView;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, LoginActivity.class);
@@ -54,6 +58,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         // 检测是否登陆
         if (!SpUtil.getBoolean(Constant.IS_REMBER_PWD,false)) {
             et_account.setText(SpUtil.getString(Constant.ACCOUNT,""));
+        } else {
+            loginSuccess(SpUtil.getInt(Constant.USER_TYPE,USER_ORDINARY));
         }
     }
 
@@ -80,16 +86,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     private void initVideo() {
         //加载视频资源控件
-        videoview = findViewById(R.id.videoview);
+        videoView = findViewById(R.id.videoview);
         //设置播放加载路径
-        videoview.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.video));
+        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.video));
         //播放
-        videoview.start();
+        videoView.start();
         //循环播放
-        videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                videoview.start();
+                videoView.start();
             }
         });
     }
@@ -117,7 +123,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     //防止锁屏或者切出的时候，音乐在播放
     @Override
     protected void onStop() {
-        videoview.stopPlayback();
+        videoView.stopPlayback();
         super.onStop();
     }
 
@@ -125,8 +131,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void onDestroy() {
         super.onDestroy();
         // 释放资源
-        if (videoview != null) {
-            videoview.suspend();
+        if (videoView != null) {
+            videoView.suspend();
         }
     }
 
@@ -161,8 +167,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @Override
-    public void loginSuccess() {
-
+    public void loginSuccess(int type) {
+        closeProgressDialog();
+        switch (type) {
+            case USER_ORDINARY:
+                UserMainActivity.start(this);
+                break;
+            case USER_ADMIN:
+                break;
+        }
+        finish();
     }
 
     @Override

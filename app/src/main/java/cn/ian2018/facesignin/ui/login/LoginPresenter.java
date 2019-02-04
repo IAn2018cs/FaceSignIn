@@ -6,6 +6,8 @@ import android.util.Log;
 import cn.ian2018.facesignin.MyApplication;
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.bean.User;
+import cn.ian2018.facesignin.data.Constant;
+import cn.ian2018.facesignin.data.SpUtil;
 import cn.ian2018.facesignin.ui.base.BasePresenter;
 import cn.ian2018.facesignin.utils.MD5Util;
 import cn.ian2018.facesignin.utils.ToastUtil;
@@ -32,7 +34,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.LoginView> imple
 
 
     @Override
-    public void login(String account, String password) {
+    public void login(final String account, final String password) {
         boolean isLogin = true;
         if (account.equals("")) {
             isLogin = false;
@@ -59,7 +61,32 @@ public class LoginPresenter extends BasePresenter<LoginContract.LoginView> imple
 
                 @Override
                 public void onNext(User user) {
-                    Log.e(TAG, "onNext: " );
+                    // 记住密码
+                    SpUtil.putString(Constant.ACCOUNT,account);
+                    SpUtil.putString(Constant.PASS_WORD,password);
+                    SpUtil.putBoolean(Constant.IS_REMBER_PWD,true);
+                    // 保存用户信息
+                    SpUtil.putInt(Constant.USER_TYPE, user.getData().getType());
+                    SpUtil.putString(Constant.USER_NAME, user.getData().getName());
+                    SpUtil.putInt(Constant.USER_GRADE, user.getData().getGradeCode());
+                    SpUtil.putString(Constant.USER_CLASS, user.getData().getClassDescription());
+                    SpUtil.putInt(Constant.USER_GROUP, user.getData().getGroup());
+                    SpUtil.putString(Constant.USER_PHONE, user.getData().getPhone());
+                    SpUtil.putInt(Constant.USER_INTERESTGROUP, user.getData().getInterestGroupCode());
+                    String imageUrl = user.getData().getNewImage();
+                    if (imageUrl.contains("http://")) {
+                        SpUtil.putString(Constant.USER_IMAGE, imageUrl);
+                    } else {
+                        if (!imageUrl.equals("null")) {
+                            SpUtil.putString(Constant.USER_IMAGE, "http://123.206.57.216:8080/StudentImage/" + imageUrl);
+                        } else {
+                            imageUrl = user.getData().getOldImage();
+                            SpUtil.putString(Constant.USER_IMAGE, "http://123.206.57.216:8080/OldImage/" + imageUrl);
+                        }
+                    }
+
+                    getView().loginSuccess(user.getData().getType());
+                    Log.e(TAG, "onNext:  登录成功");
                 }
             });
         }

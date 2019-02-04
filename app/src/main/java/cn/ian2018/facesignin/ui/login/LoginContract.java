@@ -14,7 +14,7 @@ public class LoginContract {
     interface LoginView extends BaseView {
         void accountEmpty();
         void passwordEmpty();
-        void loginSuccess();
+        void loginSuccess(int type);
         void loginFail();
     }
 
