@@ -83,11 +83,11 @@ public class UserMainActivity extends BaseActivity<UserMainPresenter> implements
                         viewPager.setCurrentItem(0);
                         changeColorAndTitle(R.string.bottom_bar_title_sign, R.color.bottom_bar_color_sign);
                         break;
-                    case R.id.tab_history:
+                    case R.id.tab_quantify:
                         viewPager.setCurrentItem(1);
                         changeColorAndTitle(R.string.bottom_bar_title_quantify, R.color.bottom_bar_color_quantify);
                         break;
-                    case R.id.tab_setting:
+                    case R.id.tab_mine:
                         viewPager.setCurrentItem(2);
                         changeColorAndTitle(R.string.bottom_bar_title_me, R.color.bottom_bar_color_me);
                         break;

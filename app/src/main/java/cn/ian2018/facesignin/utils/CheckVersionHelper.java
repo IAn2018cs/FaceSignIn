@@ -107,7 +107,11 @@ public class CheckVersionHelper {
             }
         });
 
-        builder.show();
+        try {
+            builder.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // 下载文件

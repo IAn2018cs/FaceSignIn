@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tab_active" type="id" />
+    <item name="tab_quantify" type="id" />
+    <item name="tab_mine" type="id" />
+</resources>

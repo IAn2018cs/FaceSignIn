@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
     <tab
-        id="@+id/tab_active"
+        id="@id/tab_active"
         icon="@mipmap/ic_assignment_turned_in"
         title="@string/bottom_bar_title_sign"
         barColorWhenSelected="@color/bottom_bar_color_sign" />
     <tab
-        id="@+id/tab_history"
+        id="@id/tab_quantify"
         icon="@mipmap/ic_assignment"
         title="@string/bottom_bar_title_quantify"
         barColorWhenSelected="@color/bottom_bar_color_quantify" />
     <tab
-        id="@+id/tab_setting"
+        id="@id/tab_mine"
         icon="@mipmap/ic_assignment_ind"
         title="@string/bottom_bar_title_me"
         barColorWhenSelected="@color/bottom_bar_color_me" />
