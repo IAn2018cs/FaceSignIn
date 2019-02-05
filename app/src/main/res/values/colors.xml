@@ -7,4 +7,8 @@
     <color name="change_color_text">#000</color>
     <color name="textColor">#00f</color>
     <color name="buttonColor">#0983c6</color>
+
+    <color name="bottom_bar_color_sign">#03A9F4</color>
+    <color name="bottom_bar_color_quantify">#5D4037</color>
+    <color name="bottom_bar_color_me">#045563</color>
 </resources>

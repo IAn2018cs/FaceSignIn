@@ -14,15 +14,15 @@ import android.view.WindowManager;
  */
 
 public class StatusBarUtils {
-    public static void setWindowStatusBarColor(Activity activity, String color) {
+    public static void setWindowStatusBarColor(Activity activity, int color) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = activity.getWindow();
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(Color.parseColor(color));
+                window.setStatusBarColor(activity.getResources().getColor(color));
 
                 //底部导航栏
-                //window.setNavigationBarColor(activity.getResources().getColor(colorResId));
+//                window.setNavigationBarColor(activity.getResources().getColor(color));
             }
         } catch (Exception e) {
             e.printStackTrace();

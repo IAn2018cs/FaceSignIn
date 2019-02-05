@@ -17,4 +17,8 @@
     <string name="password_empty">密码为空</string>
     <string name="account_empty">账号为空</string>
     <string name="login_fail">登录失败，账号或密码错误</string>
+
+    <string name="bottom_bar_title_sign">签到</string>
+    <string name="bottom_bar_title_quantify">量化</string>
+    <string name="bottom_bar_title_me">我的</string>
 </resources>

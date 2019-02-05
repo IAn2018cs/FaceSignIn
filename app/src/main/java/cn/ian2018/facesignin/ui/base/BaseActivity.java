@@ -38,7 +38,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
         // 创建并绑定presenter
         mPresenter = createPresenter();
-        mPresenter.attach(this);
+        if (mPresenter != null) {
+            mPresenter.attach(this);
+        }
 
         initView();
 
@@ -59,7 +61,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.detach();
+        if (mPresenter != null) {
+            mPresenter.detach();
+        }
     }
 
     public P getPresenter() {

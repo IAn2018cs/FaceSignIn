@@ -23,4 +23,8 @@
     <string name="password_empty">Password is empty</string>
     <string name="account_empty">Account is empty</string>
     <string name="login_fail">Login failed, Incorrect username or password</string>
+
+    <string name="bottom_bar_title_sign">CheckIn</string>
+    <string name="bottom_bar_title_quantify">Quantification</string>
+    <string name="bottom_bar_title_me">Mine</string>
 </resources>
