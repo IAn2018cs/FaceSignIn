@@ -1,7 +1,10 @@
 package cn.ian2018.facesignin.ui.userhome.pager.active;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.ui.base.BaseFragment;
 import cn.ian2018.facesignin.ui.base.BasePresenter;
 
@@ -13,8 +16,8 @@ import cn.ian2018.facesignin.ui.base.BasePresenter;
  */
 public class ActiveFragment extends BaseFragment {
     @Override
-    protected View createView() {
-        return null;
+    protected View createView(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(R.layout.fragment_active, container, false);
     }
 
     @Override
@@ -29,6 +32,6 @@ public class ActiveFragment extends BaseFragment {
 
     @Override
     protected BasePresenter createPresenter() {
-        return null;
+        return new ActivePresenter();
     }
 }

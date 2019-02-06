@@ -1,6 +1,8 @@
 package cn.ian2018.facesignin.ui.userhome.pager.mine;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import cn.ian2018.facesignin.ui.base.BaseFragment;
 import cn.ian2018.facesignin.ui.base.BasePresenter;
@@ -13,7 +15,7 @@ import cn.ian2018.facesignin.ui.base.BasePresenter;
  */
 public class MineFragment extends BaseFragment {
     @Override
-    protected View createView() {
+    protected View createView(LayoutInflater inflater, ViewGroup container) {
         return null;
     }
 

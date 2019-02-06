@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.skyfishjy.library.RippleBackground
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:rb_color="#0099CC"
+        app:rb_duration="3000"
+        app:rb_radius="32dp"
+        app:rb_rippleAmount="6"
+        app:rb_scale="6">
+
+        <ImageView
+            android:id="@+id/centerImage"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_phone1" />
+
+        <ImageView
+            android:id="@+id/foundDevice"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_above="@id/centerImage"
+            android:layout_marginBottom="32dp"
+            android:layout_marginRight="6dp"
+            android:layout_toLeftOf="@id/centerImage"
+            android:src="@mipmap/ic_phone2"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_saying"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="#2e4a4d"
+            android:textSize="16sp" />
+    </com.skyfishjy.library.RippleBackground>
+
+    <ListView
+        android:id="@+id/lv_active"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tv_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="@string/no_scan_active_text"
+        android:textColor="#343434"
+        android:textSize="16sp"
+        android:visibility="gone" />
+</RelativeLayout>

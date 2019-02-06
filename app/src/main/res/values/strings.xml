@@ -27,4 +27,6 @@
     <string name="bottom_bar_title_sign">CheckIn</string>
     <string name="bottom_bar_title_quantify">Quantification</string>
     <string name="bottom_bar_title_me">Mine</string>
+
+    <string name="no_scan_active_text">Unable to get the event, please click here to scan the QR code to get</string>
 </resources>

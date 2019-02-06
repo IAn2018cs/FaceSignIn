@@ -22,7 +22,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = createView();
+        View view = createView(inflater, container);
 
         // 绑定presenter
         mPresenter = createPresenter();
@@ -37,7 +37,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         return view;
     }
 
-    protected abstract View createView();
+    protected abstract View createView(LayoutInflater inflater, ViewGroup container);
 
     protected abstract void initView(View view);
 

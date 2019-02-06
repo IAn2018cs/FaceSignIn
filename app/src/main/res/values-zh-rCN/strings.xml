@@ -21,4 +21,7 @@
     <string name="bottom_bar_title_sign">签到</string>
     <string name="bottom_bar_title_quantify">量化</string>
     <string name="bottom_bar_title_me">我的</string>
+
+    <string name="no_scan_active_text">无法获取到活动，请点击这里扫二维码获取</string>
+
 </resources>
