@@ -14,7 +14,7 @@ import cn.ian2018.facesignin.ui.base.BasePresenter;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/2/5
  */
-public class ActiveFragment extends BaseFragment {
+public class ActiveFragment extends BaseFragment implements ActiveContract.ActiveView{
     @Override
     protected View createView(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.fragment_active, container, false);
