@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.ui.base.BaseFragment;
-import cn.ian2018.facesignin.ui.base.BasePresenter;
 
 /**
  * Description:
@@ -14,7 +13,7 @@ import cn.ian2018.facesignin.ui.base.BasePresenter;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/2/5
  */
-public class ActiveFragment extends BaseFragment implements ActiveContract.ActiveView{
+public class ActiveFragment extends BaseFragment<ActivePresenter> implements ActiveContract.ActiveView{
     @Override
     protected View createView(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.fragment_active, container, false);
@@ -27,11 +26,11 @@ public class ActiveFragment extends BaseFragment implements ActiveContract.Activ
 
     @Override
     protected void initData() {
-
+        //getPresenter().getActiveForNetwork("0117C596E37E",false);
     }
 
     @Override
-    protected BasePresenter createPresenter() {
+    protected ActivePresenter createPresenter() {
         return new ActivePresenter();
     }
 }

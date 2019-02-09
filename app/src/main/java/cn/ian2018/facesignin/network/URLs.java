@@ -43,7 +43,7 @@ public class URLs {
     /**
      * 签到
      */
-    public static final String SIGN_IN = HOST_ADDRESS + "HBUCentreInterface/sign.do";
+    public static final String SIGN_IN = "sign.do";
     /**
      * 签离
      */
@@ -63,7 +63,7 @@ public class URLs {
     /**
      * 获取名言
      */
-    public static final String GET_SAYING = HOST_ADDRESS + "HBUCentreInterface/getSaying.do";
+    public static final String GET_SAYING = "getSaying.do";
     /**
      * 获取活动的签到详情
      */
@@ -183,7 +183,7 @@ public class URLs {
     /**
      * 根据云子id获取活动，无值班表方式
      */
-    public static final String GET_ACTIVE_BY_YUNZI_NO_DUTY = HOST_ADDRESS + "HBUCentreInterface/getActivityForNoDuty.do";
+    public static final String GET_ACTIVE_BY_YUNZI_NO_DUTY = "getActivityForNoDuty.do";
     /**
      * 获取兴趣小组列表
      */

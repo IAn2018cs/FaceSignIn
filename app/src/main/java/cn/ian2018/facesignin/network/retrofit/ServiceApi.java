@@ -1,5 +1,6 @@
 package cn.ian2018.facesignin.network.retrofit;
 
+import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.bean.AppVersion;
 import cn.ian2018.facesignin.bean.Saying;
 import cn.ian2018.facesignin.bean.SignInResult;
@@ -29,6 +30,10 @@ public interface ServiceApi {
 
     @GET(URLs.GET_SAYING)// 获取名言
     Observable<Saying> getSaying();
+
+    @POST(URLs.GET_ACTIVE_BY_YUNZI_NO_DUTY) // 获取附近的活动
+    @FormUrlEncoded
+    Observable<Active> getActive(@Field("sensoroId") String sensoroId);
 
     @POST(URLs.SIGN_IN)
     @FormUrlEncoded
