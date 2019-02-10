@@ -1,5 +1,6 @@
 package cn.ian2018.facesignin.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/2/9
  */
-public class Active {
+public class Active implements Serializable {
 
     /**
      * msg : 查询成功

@@ -14,11 +14,17 @@ import android.support.v7.widget.Toolbar;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.bean.TabItem;
+import cn.ian2018.facesignin.event.ExitEvent;
+import cn.ian2018.facesignin.service.SensorService;
 import cn.ian2018.facesignin.ui.base.BaseActivity;
 import cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment;
 import cn.ian2018.facesignin.ui.userhome.pager.mine.MineFragment;
@@ -54,6 +60,9 @@ public class UserMainActivity extends BaseActivity<UserMainPresenter> implements
 
     @Override
     protected void initData() {
+        // 注册监听退出登录的事件
+        EventBus.getDefault().register(this);
+
         // 检查版本更新
         CheckVersionHelper checkVersionHelper = new CheckVersionHelper(this);
         checkVersionHelper.checkVersionCode();
@@ -138,6 +147,12 @@ public class UserMainActivity extends BaseActivity<UserMainPresenter> implements
         return true;
     }
 
+    // 接收退出登录的消息
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ExitEvent event) {
+        finish();
+    }
+
     // viewpager适配器
     class FragmentAdapter extends FragmentPagerAdapter {
         public FragmentAdapter(FragmentManager fm) {
@@ -160,5 +175,13 @@ public class UserMainActivity extends BaseActivity<UserMainPresenter> implements
         public int getCount() {
             return tabs.size();
         }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        stopService(new Intent(this, SensorService.class));
     }
 }

@@ -1,5 +1,7 @@
 package cn.ian2018.facesignin.ui.userhome.pager.active;
 
+import java.util.List;
+
 import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.ui.base.BaseView;
 import rx.Observable;
@@ -13,6 +15,11 @@ import rx.Observable;
 public class ActiveContract {
 
     interface ActiveView extends BaseView {
+        void showScanAnim();
+        void closeScanAnim();
+        void updateActiveList(List<Active.DataBean> actives);
+        void getActiveSuccess();
+        void getActiveFail();
     }
 
     interface ActiveModel {
@@ -21,5 +28,6 @@ public class ActiveContract {
 
     interface ActivePresenter {
         void getActiveForNetwork(String sensoroId, boolean isScan);
+        void checkSensor();
     }
 }
