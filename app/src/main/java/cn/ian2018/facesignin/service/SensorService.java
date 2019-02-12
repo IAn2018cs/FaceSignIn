@@ -51,8 +51,8 @@ public class SensorService extends Service {
         //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,notificationIntent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("中心宝")
-                .setContentText("中心宝正在运行中，请勿关闭");
+                .setContentTitle(getResources().getString(R.string.app_name))
+                .setContentText(getResources().getString(R.string.notification_bar_title));
                 //.setContentIntent(pendingIntent);
         Notification notification = builder.build();
         //设置 Notification 的 flags = FLAG_NO_CLEAR

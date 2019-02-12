@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">刷脸签到</string>
+
     <string name="update_title">发现新版本</string>
     <string name="update_now">立即更新</string>
     <string name="not_yet">暂不更新</string>
+
     <string name="download_failed">下载失败：</string>
     <string name="download_successful">下载成功,保存路径:</string>
     <string name="download_title">下载安装包中</string>
+
     <string name="register_account">注册账号</string>
     <string name="forget_password">忘记密码</string>
     <string name="sign_in">登  录</string>
+
     <string name="password">密码</string>
     <string name="account">账号</string>
     <string name="landing">登录中 ...</string>
+
     <string name="again_to_return">再按一次退出程序</string>
+
     <string name="password_empty">密码为空</string>
     <string name="account_empty">账号为空</string>
     <string name="login_fail">登录失败，账号或密码错误</string>
@@ -24,4 +30,5 @@
 
     <string name="no_scan_active_text">无法获取到活动，请点击这里扫二维码获取</string>
 
+    <string name="notification_bar_title">刷脸签到正在运行中，请勿关闭</string>
 </resources>
