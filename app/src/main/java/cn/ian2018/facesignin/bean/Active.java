@@ -45,7 +45,7 @@ public class Active implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * activityDes : 请准时进行签到，值班结束务必签离，离开时将桌椅摆放整齐
          * backTo : 0

@@ -58,10 +58,13 @@
             android:name=".ui.userhome.UserMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle" />
+
         <activity android:name=".ui.activity.ScanActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.activedetail.ActiveDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoTitle" />
 
         <service android:name=".service.SensorService" />
 

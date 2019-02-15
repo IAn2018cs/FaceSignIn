@@ -32,6 +32,7 @@ import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.bean.Saying;
 import cn.ian2018.facesignin.data.db.MyDatabase;
 import cn.ian2018.facesignin.event.SensorShow;
+import cn.ian2018.facesignin.ui.activedetail.ActiveDetailActivity;
 import cn.ian2018.facesignin.ui.activity.ScanActivity;
 import cn.ian2018.facesignin.ui.base.BaseFragment;
 import cn.ian2018.facesignin.utils.Logs;
@@ -54,8 +55,6 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
     private static final int TYPE_RUN = 4; // 跑步
     private static final int TYPE_READ = 5; // 晨读
     private List<Active.DataBean> mActiveList = new ArrayList<>();
-    private ListView listView;
-    private MyDatabase db;
     private List<Saying.DataBean> sayingList;
     private SensoroManager sensoroManager;
     private TextView tv_scan;
@@ -63,6 +62,7 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
     private ImageView foundDevice;
     private TextView tv_saying;
     private MyAdapter mAdapter;
+    private String yunziId;
 
     @Override
     protected View createView(LayoutInflater inflater, ViewGroup container) {
@@ -83,17 +83,14 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
             }
         });
 
-        listView = view.findViewById(R.id.lv_active);
+        ListView listView = view.findViewById(R.id.lv_active);
         mAdapter = new MyAdapter();
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Active active = mActiveList.get(position);
-//                Intent intent = new Intent(getContext(), DetailActivity.class);
-//                intent.putExtra("active", active);
-//                intent.putExtra("yunziId", yunziId);
-//                startActivity(intent);
+                Active.DataBean active = mActiveList.get(position);
+                ActiveDetailActivity.start(getContext(), active, yunziId);
             }
         });
     }
@@ -101,7 +98,7 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
     @Override
     protected void initData() {
         sensoroManager = SensoroManager.getInstance(getContext());
-        db = MyDatabase.getInstance();
+        MyDatabase db = MyDatabase.getInstance();
         sayingList = db.getSaying();
 
         // 注册云子相关事件
@@ -124,6 +121,7 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(SensorShow info) {
         Logs.d("发现云子:" + info.getYunziId());
+        yunziId = info.getYunziId();
         // 根据云子id从网络获取具体活动信息
         getPresenter().getActiveForNetwork(info.getYunziId(),false);
     }
