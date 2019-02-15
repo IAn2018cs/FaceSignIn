@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.data.SpUtil;
@@ -154,7 +155,7 @@ public class SensorService extends Service {
 
                 if (SpUtil.getString("yunziId","").equals(beacon.getSerialNumber())) {
                     isCheck = true;
-                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");//("HH:mm:ss")(小时：分钟：秒)
+                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());//("HH:mm:ss")(小时：分钟：秒)
                     startTime = df.format(new Date());
                 }
             }
@@ -186,7 +187,7 @@ public class SensorService extends Service {
                 super.run();
                 try {
                     while (isOpen) {
-                        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+                        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
                         String endTime = df.format(new Date());
                         Logs.d("开始时间：" + startTime);
                         Logs.d("结束时间：" + endTime);
@@ -210,7 +211,7 @@ public class SensorService extends Service {
                         // 判断是否到了活动结束时间
                         if (!SpUtil.getString("endTime","").equals("")) {
                             String endTime1 = SpUtil.getString("endTime", "").replace("T", " ").substring(11, 19);
-                            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
                             String presentTime = sdf.format(new Date());//当前时间
 
                             long end = sdf.parse(endTime1).getTime();

@@ -32,4 +32,11 @@
     <string name="no_scan_active_text">Unable to get the event, please click here to scan the QR code to get</string>
 
     <string name="notification_bar_title">FaceSignIn is running, please do not close</string>
+
+    <string name="open_bluetooth_text">Please turn on Bluetooth</string>
+    <string name="sure_scan_on_sensor_text">Make sure you are scanning the QR code on the sensor</string>
+    <string name="parsing_qr_failed_text">Parsing the QR code failed</string>
+
+    <string name="active_item_location_text">location: </string>
+    <string name="active_item_time_text">time: </string>
 </resources>

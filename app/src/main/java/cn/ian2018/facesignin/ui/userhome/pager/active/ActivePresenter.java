@@ -6,6 +6,7 @@ import android.os.Handler;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.service.SensorService;
@@ -53,7 +54,7 @@ public class ActivePresenter extends BasePresenter<ActiveContract.ActiveView> im
                         if (datum.getDisplay() == 1) {
                             try {
                                 // 获取当前时间，判断该活动是否已经失效，不失效时才添加到集合中
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                                 String presentTime = sdf.format(new java.util.Date());
                                 if (sdf.parse(presentTime).getTime() <= sdf.parse(datum.getEndTime().replace("T", " ").substring(0, 19)).getTime()) {
                                     if (getActiveForNid(datum.getId()) != null) {

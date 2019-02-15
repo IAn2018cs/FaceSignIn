@@ -31,4 +31,11 @@
     <string name="no_scan_active_text">无法获取到活动，请点击这里扫二维码获取</string>
 
     <string name="notification_bar_title">刷脸签到正在运行中，请勿关闭</string>
+
+    <string name="open_bluetooth_text">请打开蓝牙</string>
+    <string name="sure_scan_on_sensor_text">请确保您扫描的是云子上的二维码</string>
+    <string name="parsing_qr_failed_text">解析二维码失败</string>
+
+    <string name="active_item_location_text">地点: </string>
+    <string name="active_item_time_text">时间: </string>
 </resources>

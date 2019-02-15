@@ -137,7 +137,7 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
                 if (sensoroManager.isBluetoothEnabled()) {
                     getPresenter().checkSensor();
                 } else {
-                    ToastUtil.show("请打开蓝牙");
+                    ToastUtil.show(R.string.open_bluetooth_text);
                 }
                 break;
             case SCAN_CODE:
@@ -160,10 +160,10 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
                             showScanAnim();
                             getPresenter().getActiveForNetwork(result,true);
                         } catch (StringIndexOutOfBoundsException e) {
-                            ToastUtil.showLong("请确保您扫描的是云子上的二维码");
+                            ToastUtil.showLong(R.string.sure_scan_on_sensor_text);
                         }
                     } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-                        ToastUtil.show("解析二维码失败");
+                        ToastUtil.show(R.string.parsing_qr_failed_text);
                     }
                 }
         }
@@ -286,7 +286,9 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
             } else {
                 viewHolder.tv_name.setText(getItem(position).getActivityName());
             }
-            viewHolder.tv_location.setText("地点: "+getItem(position).getLocation());
+            viewHolder.tv_location.setText(new StringBuilder()
+                    .append(getResources().getString(R.string.active_item_location_text))
+                    .append(getItem(position).getLocation()));
             switch (getItem(position).getRule()) {
                 case TYPE_ORDINARY:
                 case TYPE_TRAINING:
@@ -295,8 +297,11 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
                 case TYPE_DUTY:
                 case TYPE_READ:
                 case TYPE_RUN:
-                    viewHolder.tv_time.setText("时间: "+getItem(position).getTime().replace("T", " ").substring(11, 16)
-                            + " - " + getItem(position).getEndTime().replace("T", " ").substring(11, 16));
+                    viewHolder.tv_time.setText(new StringBuilder()
+                            .append(getResources().getString(R.string.active_item_time_text))
+                            .append(getItem(position).getTime().replace("T", " ").substring(11, 16))
+                            .append(" - ")
+                            .append(getItem(position).getEndTime().replace("T", " ").substring(11, 16)));
                     break;
             }
 
