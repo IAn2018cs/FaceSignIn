@@ -3,6 +3,7 @@ package cn.ian2018.facesignin.ui.activedetail;
 import android.content.Context;
 import android.content.Intent;
 
+import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.ui.base.BaseActivity;
 
@@ -23,7 +24,7 @@ public class ActiveDetailActivity extends BaseActivity<ActiveDetailPresenter> im
 
     @Override
     protected ActiveDetailPresenter createPresenter() {
-        return null;
+        return new ActiveDetailPresenter();
     }
 
     @Override
@@ -38,6 +39,6 @@ public class ActiveDetailActivity extends BaseActivity<ActiveDetailPresenter> im
 
     @Override
     protected void setContentView() {
-
+        setContentView(R.layout.activity_active_detail);
     }
 }
