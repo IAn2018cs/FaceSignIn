@@ -39,4 +39,6 @@
 
     <string name="active_item_location_text">location: </string>
     <string name="active_item_time_text">time: </string>
+
+    <string name="request_open_camera_text">Request to open the camera</string>
 </resources>

@@ -48,7 +48,7 @@ public class ScanActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        Button bt_light = (Button) findViewById(R.id.linear1);
+        Button bt_light = findViewById(R.id.linear1);
         bt_light.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +96,7 @@ public class ScanActivity extends AppCompatActivity {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
             } else {
-                ToastUtil.show("请求打开摄像头");
+                ToastUtil.show(R.string.request_open_camera_text);
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
