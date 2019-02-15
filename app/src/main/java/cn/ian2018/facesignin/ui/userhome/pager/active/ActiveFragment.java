@@ -45,8 +45,8 @@ import cn.ian2018.facesignin.utils.ToastUtil;
  */
 public class ActiveFragment extends BaseFragment<ActivePresenter> implements ActiveContract.ActiveView{
 
-    private static final int BLUETOOTH_CODE = 0;
-    private static final int SCAN_CODE = 1;
+    public static final int BLUETOOTH_CODE = 0;
+    public static final int SCAN_CODE = 1;
 
     private static final int TYPE_ORDINARY = 1; // 普通活动
     private static final int TYPE_DUTY = 2; // 值班
@@ -131,42 +131,7 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case BLUETOOTH_CODE:
-                // 蓝牙可用
-                if (sensoroManager.isBluetoothEnabled()) {
-                    getPresenter().checkSensor();
-                } else {
-                    ToastUtil.show(R.string.open_bluetooth_text);
-                }
-                break;
-            case SCAN_CODE:
-                //处理扫描结果（在界面上显示）
-                if (null != data) {
-                    Bundle bundle = data.getExtras();
-                    if (bundle == null) {
-                        return;
-                    }
-                    if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
-                        try {
-                            String result = bundle.getString(CodeUtils.RESULT_STRING);
-                            // 解析后操作
-                            if (result.substring(0,4).equals("http")) {
-                                result = result.substring(13,25);
-                            } else {
-                                result = result.substring(0,12);
-                            }
-                            // 获取活动
-                            showScanAnim();
-                            getPresenter().getActiveForNetwork(result,true);
-                        } catch (StringIndexOutOfBoundsException e) {
-                            ToastUtil.showLong(R.string.sure_scan_on_sensor_text);
-                        }
-                    } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-                        ToastUtil.show(R.string.parsing_qr_failed_text);
-                    }
-                }
-        }
+        getPresenter().onActivityResult(requestCode,data, sensoroManager);
     }
 
     @Override
@@ -240,6 +205,11 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
                 tv_scan.setVisibility(View.VISIBLE);
             }
         },2000);
+    }
+
+    @Override
+    public void showToast(int stringId) {
+        ToastUtil.show(stringId);
     }
 
     @Override

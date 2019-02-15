@@ -1,5 +1,9 @@
 package cn.ian2018.facesignin.ui.userhome.pager.active;
 
+import android.content.Intent;
+
+import com.sensoro.cloud.SensoroManager;
+
 import java.util.List;
 
 import cn.ian2018.facesignin.bean.Active;
@@ -20,6 +24,7 @@ public class ActiveContract {
         void updateActiveList(List<Active.DataBean> actives);
         void getActiveSuccess();
         void getActiveFail();
+        void showToast(int stringId);
     }
 
     interface ActiveModel {
@@ -29,5 +34,6 @@ public class ActiveContract {
     interface ActivePresenter {
         void getActiveForNetwork(String sensoroId, boolean isScan);
         void checkSensor();
+        void onActivityResult(int requestCode, Intent data, SensoroManager sensoroManager);
     }
 }

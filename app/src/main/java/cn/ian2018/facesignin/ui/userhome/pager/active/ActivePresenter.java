@@ -1,13 +1,18 @@
 package cn.ian2018.facesignin.ui.userhome.pager.active;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
+
+import com.sensoro.cloud.SensoroManager;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.service.SensorService;
 import cn.ian2018.facesignin.ui.base.BasePresenter;
@@ -16,6 +21,8 @@ import cn.ian2018.facesignin.utils.Utils;
 import rx.Subscriber;
 
 import static cn.ian2018.facesignin.MyApplication.getContext;
+import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.BLUETOOTH_CODE;
+import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.SCAN_CODE;
 
 /**
  * Description:
@@ -102,6 +109,46 @@ public class ActivePresenter extends BasePresenter<ActiveContract.ActiveView> im
             }
         }
         return null;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, Intent data, SensoroManager sensoroManager) {
+        switch (requestCode) {
+            case BLUETOOTH_CODE:
+                // 蓝牙可用
+                if (sensoroManager.isBluetoothEnabled()) {
+                    checkSensor();
+                } else {
+                    getView().showToast(R.string.open_bluetooth_text);
+                }
+                break;
+            case SCAN_CODE:
+                //处理扫描结果（在界面上显示）
+                if (null != data) {
+                    Bundle bundle = data.getExtras();
+                    if (bundle == null) {
+                        return;
+                    }
+                    if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                        try {
+                            String result = bundle.getString(CodeUtils.RESULT_STRING);
+                            // 解析后操作
+                            if (result.substring(0,4).equals("http")) {
+                                result = result.substring(13,25);
+                            } else {
+                                result = result.substring(0,12);
+                            }
+                            // 获取活动
+                            getView().showScanAnim();
+                            getActiveForNetwork(result,true);
+                        } catch (StringIndexOutOfBoundsException e) {
+                            getView().showToast(R.string.sure_scan_on_sensor_text);
+                        }
+                    } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                        getView().showToast(R.string.parsing_qr_failed_text);
+                    }
+                }
+        }
     }
 
     // 检查云子
