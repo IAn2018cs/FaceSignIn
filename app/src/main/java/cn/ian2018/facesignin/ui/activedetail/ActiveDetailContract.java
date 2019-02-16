@@ -1,5 +1,8 @@
 package cn.ian2018.facesignin.ui.activedetail;
 
+import android.content.Context;
+
+import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.ui.base.BaseView;
 
 /**
@@ -14,7 +17,8 @@ public class ActiveDetailContract {
     }
 
     interface ActiveDetailPresenter {
-
+        void initLocation(Context context);
+        void signIn(Active.DataBean active, String yunziId);
     }
 
     interface ActiveDetailModel {

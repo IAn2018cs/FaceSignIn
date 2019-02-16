@@ -49,11 +49,12 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
     public static final int BLUETOOTH_CODE = 0;
     public static final int SCAN_CODE = 1;
 
-    private static final int TYPE_ORDINARY = 1; // 普通活动
-    private static final int TYPE_DUTY = 2; // 值班
-    private static final int TYPE_TRAINING = 3; // 培训
-    private static final int TYPE_RUN = 4; // 跑步
-    private static final int TYPE_READ = 5; // 晨读
+    public static final int TYPE_ORDINARY = 1; // 普通活动
+    public static final int TYPE_DUTY = 2; // 值班
+    public static final int TYPE_TRAINING = 3; // 培训
+    public static final int TYPE_RUN = 4; // 跑步
+    public static final int TYPE_READ = 5; // 晨读
+
     private List<Active.DataBean> mActiveList = new ArrayList<>();
     private List<Saying.DataBean> sayingList;
     private SensoroManager sensoroManager;
