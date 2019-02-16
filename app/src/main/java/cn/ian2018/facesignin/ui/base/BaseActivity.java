@@ -28,7 +28,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     private P mPresenter;
     private final int REQUEST_PERMISSION = 1;
     private ProgressDialog mProgressDialog;
-    private boolean isExit;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,40 +126,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     public void closeProgressDialog() {
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
-        }
-    }
-
-    // 是否打开返回键监听
-    protected boolean isOnKeyDown() {
-        return true;
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (!isOnKeyDown()) return super.onKeyDown(keyCode, event);
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            exitBy2Click();
-        }
-        return false;
-    }
-
-    // 双击退出程序
-    private void exitBy2Click() {
-        Timer tExit = null;
-        if (!isExit) {
-            isExit = true; // 准备退出
-            ToastUtil.show(R.string.again_to_return);
-            tExit = new Timer();
-            tExit.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    isExit = false; // 取消退出
-                }
-            }, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
-
-        } else {
-            finish();
-            System.exit(0);
         }
     }
 }

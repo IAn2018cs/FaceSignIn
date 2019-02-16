@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -20,6 +21,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.bean.TabItem;
@@ -31,6 +34,7 @@ import cn.ian2018.facesignin.ui.userhome.pager.mine.MineFragment;
 import cn.ian2018.facesignin.ui.userhome.pager.quantify.QuantifyFragment;
 import cn.ian2018.facesignin.utils.CheckVersionHelper;
 import cn.ian2018.facesignin.utils.StatusBarUtils;
+import cn.ian2018.facesignin.utils.ToastUtil;
 
 /**
  * 普通用户主页
@@ -42,6 +46,8 @@ public class UserMainActivity extends BaseActivity<UserMainPresenter> implements
     private BottomBar bottomBar;
     private Toolbar toolbar;
     private List<TabItem> tabs;
+
+    private boolean isExit;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, UserMainActivity.class);
@@ -142,10 +148,7 @@ public class UserMainActivity extends BaseActivity<UserMainPresenter> implements
         StatusBarUtils.setWindowStatusBarColor(UserMainActivity.this, colorId);
     }
 
-    @Override
-    protected boolean isOnKeyDown() {
-        return true;
-    }
+
 
     // 接收退出登录的消息
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -183,5 +186,33 @@ public class UserMainActivity extends BaseActivity<UserMainPresenter> implements
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         stopService(new Intent(this, SensorService.class));
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            exitBy2Click();
+        }
+        return false;
+    }
+
+    // 双击退出程序
+    private void exitBy2Click() {
+        Timer tExit = null;
+        if (!isExit) {
+            isExit = true; // 准备退出
+            ToastUtil.show(R.string.again_to_return);
+            tExit = new Timer();
+            tExit.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isExit = false; // 取消退出
+                }
+            }, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
+
+        } else {
+            finish();
+            System.exit(0);
+        }
     }
 }
