@@ -9,9 +9,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.data.db.MyDatabase;
+import cn.ian2018.facesignin.event.SensorGone;
+import cn.ian2018.facesignin.event.SensorUpdate;
 import cn.ian2018.facesignin.ui.base.BaseActivity;
 
 import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE_DUTY;
@@ -35,6 +44,8 @@ public class ActiveDetailActivity extends BaseActivity<ActiveDetailPresenter> im
     private CollapsingToolbarLayout mToolbarLayout;
     private Active.DataBean mActive;
     private String mYunziId;
+    private boolean isCanSign = false;
+    private List<String> mSensorList = new ArrayList<>();
 
     public static void start(Context context, Active.DataBean active, String yunziId) {
         Intent starter = new Intent(context, ActiveDetailActivity.class);
@@ -50,6 +61,8 @@ public class ActiveDetailActivity extends BaseActivity<ActiveDetailPresenter> im
 
     @Override
     protected void initData() {
+        EventBus.getDefault().register(this);
+
         getPresenter().initLocation(this);
 
         Intent intent = getIntent();
@@ -112,6 +125,22 @@ public class ActiveDetailActivity extends BaseActivity<ActiveDetailPresenter> im
         signButton.setOnClickListener(this);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(SensorUpdate event) {
+        if (!mSensorList.contains(event.getYunziId())) {
+            mSensorList.add(event.getYunziId());
+        }
+        isCanSign = mSensorList.contains(mYunziId);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(SensorGone event) {
+        if (mSensorList.contains(event.getYunziId())) {
+            mSensorList.remove(event.getYunziId());
+        }
+        isCanSign = mSensorList.contains(mYunziId);
+    }
+
     @Override
     protected void setContentView() {
         setContentView(R.layout.activity_active_detail);
@@ -120,5 +149,16 @@ public class ActiveDetailActivity extends BaseActivity<ActiveDetailPresenter> im
     @Override
     public void onClick(View v) {
         getPresenter().signIn(mActive,mYunziId);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public boolean isCanSign() {
+        return isCanSign;
     }
 }

@@ -207,11 +207,6 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
     }
 
     @Override
-    public void showToast(int stringId) {
-        ToastUtil.show(stringId);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         EventBus.getDefault().unregister(this);

@@ -44,4 +44,8 @@
 
     <string name="start_time_text">start time：</string>
     <string name="end_time_text">end time：</string>
+
+    <string name="unable_sign_location_error">Check-in is temporarily unavailable, please try again later and make sure you are near the event location</string>
+    <string name="unable_sign_time_error">Does not match the check-in time</string>
+    <string name="unable_sign_unsignout_error">You have not signed out yet, please sign out of the event first.</string>
 </resources>

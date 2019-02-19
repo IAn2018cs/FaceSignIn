@@ -21,7 +21,9 @@ import java.util.Locale;
 
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.data.SpUtil;
+import cn.ian2018.facesignin.event.SensorGone;
 import cn.ian2018.facesignin.event.SensorShow;
+import cn.ian2018.facesignin.event.SensorUpdate;
 import cn.ian2018.facesignin.utils.Logs;
 
 
@@ -128,11 +130,8 @@ public class SensorService extends Service {
                 Logs.d("service发现新云子:" + serialNumber);
                 EventBus.getDefault().post(new SensorShow(serialNumber));
 
-                // 签到 签离界面需要的广播
-                Intent intent = new Intent();
-                intent.setAction("SET_BROADCST_OUT");
-                intent.putExtra("sensor2ID", beacon.getSerialNumber());
-                sendBroadcast(intent);
+                // 签到 签离界面需要的广播 云子更新
+                EventBus.getDefault().post(new SensorUpdate(serialNumber));
 
                 if (SpUtil.getString("yunziId","").equals(beacon.getSerialNumber())) {
                     isCheck = false;
@@ -147,10 +146,7 @@ public class SensorService extends Service {
                 Logs.d("service一个云子消失了:" + beacon.getSerialNumber());
                 if (oldSerialNumber.contains(beacon.getSerialNumber())) {
                     oldSerialNumber.remove(beacon.getSerialNumber());
-                    Intent intent = new Intent();
-                    intent.setAction("SENSOR_GONE");
-                    intent.putExtra("sensorNumber", beacon.getSerialNumber());
-                    sendBroadcast(intent);
+                    EventBus.getDefault().post(new SensorGone(beacon.getSerialNumber()));
                 }
 
                 if (SpUtil.getString("yunziId","").equals(beacon.getSerialNumber())) {
@@ -168,10 +164,7 @@ public class SensorService extends Service {
                 for (Beacon beacon : beacons) {
                     Logs.d("service云子更新：" + beacon.getSerialNumber());
                     // 签到 签离界面需要的广播
-                    Intent intent = new Intent();
-                    intent.setAction("SET_BROADCST_OUT");
-                    intent.putExtra("sensor2ID", beacon.getSerialNumber());
-                    sendBroadcast(intent);
+                    EventBus.getDefault().post(new SensorUpdate(beacon.getSerialNumber()));
                 }
             }
         };

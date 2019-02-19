@@ -24,7 +24,6 @@ public class ActiveContract {
         void updateActiveList(List<Active.DataBean> actives);
         void getActiveSuccess();
         void getActiveFail();
-        void showToast(int stringId);
     }
 
     interface ActiveModel {

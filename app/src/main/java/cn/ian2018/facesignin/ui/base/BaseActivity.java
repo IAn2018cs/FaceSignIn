@@ -128,4 +128,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             mProgressDialog.dismiss();
         }
     }
+
+    @Override
+    public void showToast(int stringId) {
+        ToastUtil.show(stringId);
+    }
 }

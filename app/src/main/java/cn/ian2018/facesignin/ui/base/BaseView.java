@@ -9,4 +9,5 @@ package cn.ian2018.facesignin.ui.base;
 public interface BaseView {
     void showProgressDialog(String msg);
     void closeProgressDialog();
+    void showToast(int stringId);
 }

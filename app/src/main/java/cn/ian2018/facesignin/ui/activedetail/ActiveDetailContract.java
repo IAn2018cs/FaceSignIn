@@ -13,7 +13,7 @@ import cn.ian2018.facesignin.ui.base.BaseView;
  */
 public class ActiveDetailContract {
     interface ActiveDetailView extends BaseView {
-
+        boolean isCanSign();
     }
 
     interface ActiveDetailPresenter {

@@ -7,9 +7,26 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.bean.Active;
+import cn.ian2018.facesignin.bean.SignItem;
+import cn.ian2018.facesignin.data.Constant;
+import cn.ian2018.facesignin.data.SpUtil;
 import cn.ian2018.facesignin.data.db.MyDatabase;
 import cn.ian2018.facesignin.ui.base.BasePresenter;
+
+import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE_DUTY;
+import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE_ORDINARY;
+import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE_READ;
+import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE_RUN;
+import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE_TRAINING;
 
 /**
  * Description:
@@ -22,10 +39,13 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.Ac
     private final ActiveDetailModel mActiveDetailModel;
     private final MyDatabase mDatabase;
     private String mInLocation = "";
+    private int mClickCount;
+    private int clickDebug;
 
     public ActiveDetailPresenter() {
         mActiveDetailModel = new ActiveDetailModel();
         mDatabase = MyDatabase.getInstance();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -68,6 +88,106 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.Ac
 
     @Override
     public void signIn(Active.DataBean active, String yunziId) {
+        switch (active.getRule()) {
+            // 日常活动
+            case TYPE_DUTY:
+            case TYPE_RUN:
+            case TYPE_READ:
+                // 如果当前签到时间距离上一次签到时间不超过24个小时，就不能再次签到
+                if (mDatabase.isRecentSign(SpUtil.getString(Constant.ACCOUNT, ""), active.getId()) || clickDebug > 24) {
+                    if (TimeCompareDay(active, active.getTime().replace("T", " ").substring(11, 19))) {
+                        // TODO 如果能检测到云子 可以签到 为了优化用户体验，当连续点击15次，可以签到
+                        // 如果是扫描获取的活动，可以直接签到
+                        if (getView().isCanSign() || mClickCount > 14 || active.isScan()) {
+                            //signInForService();
+                        } else {
+                            getView().showToast(R.string.unable_sign_location_error);
+                            mClickCount++;
+                        }
+                    } else {
+                        getView().showToast(R.string.unable_sign_time_error);
+                    }
+                } else if (mDatabase.isSignOut(SpUtil.getString(Constant.ACCOUNT, ""), active.getId(), new SignItem()) == 0){
+                    getView().showToast(R.string.unable_sign_unsignout_error);
+                } else {
+                    clickDebug++;
+                    //ToastUtil.show("您今天已经签到过，请明天在来吧");
+                }
+                break;
+            // 普通活动
+            case TYPE_ORDINARY:
+            case TYPE_TRAINING:
+                int flag = mDatabase.isSign2(SpUtil.getString(Constant.ACCOUNT, ""), active.getId());
+                switch (flag) {
+                    // 如果还没有签到过
+                    case 0:
+                        // 如果符合时间
+                        if (TimeCompare(active, active.getTime().replace("T", " ").substring(0, 19))) {
+                            // 如果能检测到云子 可以签到
+                            if (getView().isCanSign() || mClickCount > 14 || active.isScan()) {
+                                //signInForService();
+                            } else {
+                                getView().showToast(R.string.unable_sign_location_error);
+                                mClickCount++;
+                            }
+                        } else {
+                            getView().showToast(R.string.unable_sign_time_error);
+                        }
+                        break;
+                    // 已经签到过
+                    case 1:
+                        //ToastUtil.show("您已经签到过");
+                        break;
+                    // 没有签离
+                    case 2:
+                        getView().showToast(R.string.unable_sign_unsignout_error);
+                        break;
+                }
+                break;
+        }
+    }
 
+    // 判断是否到了签到时间  signTime 需要签到的时间
+    private boolean TimeCompare(Active.DataBean active, String signTime) {
+        // 设置时间格式
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        // 当前时间
+        String presentTime = sdf.format(new Date());
+        try {
+            Date beginTime = sdf.parse(signTime);
+            Date current = sdf.parse(presentTime);
+            Date aEndTime = sdf.parse(active.getEndTime().replace("T", " ").substring(0, 19));
+            // 可以提前10分钟签到     并且不能超过要活动结束时间
+            if (((current.getTime() + 1000 * 60 * 10) >= beginTime.getTime()) && (current.getTime() < aEndTime.getTime())) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    // 判断日常活动是否在指定时间范围内
+    private boolean TimeCompareDay(Active.DataBean active, String signTime) {
+        // 设置时间格式
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        // 当前时间
+        String presentTime = sdf.format(new Date());
+        try {
+            Date beginTime = sdf.parse(signTime);
+            Date current = sdf.parse(presentTime);
+            Date aEndTime = sdf.parse(active.getEndTime().replace("T", " ").substring(11, 19));
+            // 可以提前10分钟签到     并且不能超过要活动结束时间
+            if (((current.getTime() + 1000 * 60 * 10) >= beginTime.getTime()) && (current.getTime() < aEndTime.getTime())) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }

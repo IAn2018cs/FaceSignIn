@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.ian2018.facesignin.utils.ToastUtil;
+
 /**
  * Description:
  * Author:chenshuai
@@ -73,5 +75,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
+    }
+
+    @Override
+    public void showToast(int stringId) {
+        ToastUtil.show(stringId);
     }
 }
