@@ -48,7 +48,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.LoginView> imple
         if (isLogin) {
             // 对密码md5加密
             String MD5Pass = MD5Util.strToMD5(password);
-            getView().showProgressDialog(mContext.getResources().getString(R.string.landing));
+            getView().showProgressDialog(R.string.landing);
             mModel.login(account,MD5Pass).subscribe(new Subscriber<User>() {
                 @Override
                 public void onCompleted() {

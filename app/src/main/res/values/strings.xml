@@ -48,4 +48,14 @@
     <string name="unable_sign_location_error">Check-in is temporarily unavailable, please try again later and make sure you are near the event location</string>
     <string name="unable_sign_time_error">Does not match the check-in time</string>
     <string name="unable_sign_unsignout_error">You have not signed out yet, please sign out of the event first.</string>
+    <string name="unable_sign_already_error">You have already checked in</string>
+
+    <string name="sign_dialog_title">Ok to sign in</string>
+    <string name="sign_dialog_msg">You are sure you want to check in to the event</string>
+    <string name="sign_dialog_positive">Confirm</string>
+    <string name="sign_dialog_negative">Cancel</string>
+
+    <string name="sign_dialog_loading_mag">Check in ...</string>
+    
+    <string name="sign_fail">Check in failure:</string>
 </resources>

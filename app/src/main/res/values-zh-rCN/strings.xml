@@ -47,4 +47,14 @@
     <string name="unable_sign_location_error">暂时无法进行签到，请稍后重试，并确保您在活动地点附近</string>
     <string name="unable_sign_time_error">不符合签到时间</string>
     <string name="unable_sign_unsignout_error">您还没有签离，请先签离该活动</string>
+    <string name="unable_sign_already_error">您已经签到过</string>
+
+    <string name="sign_dialog_title">确定要签到</string>
+    <string name="sign_dialog_msg">您确定要对该活动签到</string>
+    <string name="sign_dialog_positive">确认</string>
+    <string name="sign_dialog_negative">取消</string>
+
+    <string name="sign_dialog_loading_mag">签到中...</string>
+
+    <string name="sign_fail">签到失败:</string>
 </resources>

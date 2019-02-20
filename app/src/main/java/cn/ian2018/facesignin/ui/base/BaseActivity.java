@@ -112,11 +112,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     @Override
-    public void showProgressDialog(String msg) {
+    public void showProgressDialog(int msg) {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
         }
-        mProgressDialog.setMessage(msg);
+        mProgressDialog.setMessage(getString(msg));
         mProgressDialog.setCancelable(false);
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
@@ -132,5 +132,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     public void showToast(int stringId) {
         ToastUtil.show(stringId);
+    }
+
+    @Override
+    public void showToast(String string) {
+        ToastUtil.show(string);
     }
 }

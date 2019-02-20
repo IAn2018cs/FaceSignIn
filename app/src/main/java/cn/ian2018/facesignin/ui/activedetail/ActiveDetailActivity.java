@@ -1,6 +1,7 @@
 package cn.ian2018.facesignin.ui.activedetail;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -148,7 +149,7 @@ public class ActiveDetailActivity extends BaseActivity<ActiveDetailPresenter> im
 
     @Override
     public void onClick(View v) {
-        getPresenter().signIn(mActive,mYunziId);
+        showSignConfirmDialog();
     }
 
     @Override
@@ -160,5 +161,36 @@ public class ActiveDetailActivity extends BaseActivity<ActiveDetailPresenter> im
     @Override
     public boolean isCanSign() {
         return isCanSign;
+    }
+
+    @Override
+    public void goSinOutActivity() {
+        // TODO 跳转到签离界面
+    }
+
+    // 显示确认签到对话框
+    private void showSignConfirmDialog() {
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+        //设置对话框左上角图标
+        builder.setIcon(R.mipmap.ic_launcher);
+        //设置对话框标题
+        builder.setTitle(R.string.sign_dialog_title);
+        //设置文本内容
+        builder.setMessage(R.string.sign_dialog_msg);
+        //设置积极的按钮
+        builder.setPositiveButton(R.string.sign_dialog_positive, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                getPresenter().signIn(mActive);
+            }
+        });
+        //设置消极的按钮
+        builder.setNegativeButton(R.string.sign_dialog_negative, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
     }
 }

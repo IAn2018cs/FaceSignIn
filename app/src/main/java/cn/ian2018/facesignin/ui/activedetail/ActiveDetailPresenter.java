@@ -16,11 +16,13 @@ import java.util.Locale;
 
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.bean.Active;
+import cn.ian2018.facesignin.bean.SignInResult;
 import cn.ian2018.facesignin.bean.SignItem;
 import cn.ian2018.facesignin.data.Constant;
 import cn.ian2018.facesignin.data.SpUtil;
 import cn.ian2018.facesignin.data.db.MyDatabase;
 import cn.ian2018.facesignin.ui.base.BasePresenter;
+import rx.Subscriber;
 
 import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE_DUTY;
 import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE_ORDINARY;
@@ -45,7 +47,6 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.Ac
     public ActiveDetailPresenter() {
         mActiveDetailModel = new ActiveDetailModel();
         mDatabase = MyDatabase.getInstance();
-        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -87,7 +88,7 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.Ac
     }
 
     @Override
-    public void signIn(Active.DataBean active, String yunziId) {
+    public void signIn(Active.DataBean active) {
         switch (active.getRule()) {
             // 日常活动
             case TYPE_DUTY:
@@ -99,7 +100,7 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.Ac
                         // TODO 如果能检测到云子 可以签到 为了优化用户体验，当连续点击15次，可以签到
                         // 如果是扫描获取的活动，可以直接签到
                         if (getView().isCanSign() || mClickCount > 14 || active.isScan()) {
-                            //signInForService();
+                            signInForService(active);
                         } else {
                             getView().showToast(R.string.unable_sign_location_error);
                             mClickCount++;
@@ -111,7 +112,7 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.Ac
                     getView().showToast(R.string.unable_sign_unsignout_error);
                 } else {
                     clickDebug++;
-                    //ToastUtil.show("您今天已经签到过，请明天在来吧");
+                    getView().showToast(R.string.unable_sign_already_error);
                 }
                 break;
             // 普通活动
@@ -125,7 +126,7 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.Ac
                         if (TimeCompare(active, active.getTime().replace("T", " ").substring(0, 19))) {
                             // 如果能检测到云子 可以签到
                             if (getView().isCanSign() || mClickCount > 14 || active.isScan()) {
-                                //signInForService();
+                                signInForService(active);
                             } else {
                                 getView().showToast(R.string.unable_sign_location_error);
                                 mClickCount++;
@@ -136,7 +137,7 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.Ac
                         break;
                     // 已经签到过
                     case 1:
-                        //ToastUtil.show("您已经签到过");
+                        getView().showToast(R.string.unable_sign_already_error);
                         break;
                     // 没有签离
                     case 2:
@@ -145,6 +146,49 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.Ac
                 }
                 break;
         }
+    }
+
+    private void signInForService(Active.DataBean active){
+        getView().showProgressDialog(R.string.sign_dialog_loading_mag);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
+        String time = df.format(new Date());
+        mActiveDetailModel.signInResult(SpUtil.getString(Constant.ACCOUNT, ""),active.getId(),time,time,mInLocation)
+                .subscribe(new Subscriber<SignInResult>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                getView().showToast(R.string.sign_fail);
+                getView().closeProgressDialog();
+            }
+
+            @Override
+            public void onNext(SignInResult signInResult) {
+                getView().closeProgressDialog();
+                if (signInResult.isSucessed()) {
+                    saveSignInData(active, time, signInResult.getData());
+                    // 到签离界面
+                    getView().goSinOutActivity();
+                } else {
+                    getView().showToast(R.string.sign_fail);
+                }
+            }
+        });
+    }
+
+    // 保存数据到本地数据库
+    private void saveSignInData(Active.DataBean active, String inTime, int nid) {
+        SignItem signItem = new SignItem();
+
+        signItem.setNumber(SpUtil.getString(Constant.ACCOUNT,""));
+        signItem.setActiveId(active.getId());
+        signItem.setInTime(inTime);
+        signItem.setOutTime(inTime);
+        signItem.setNid(nid);
+
+        mDatabase.saveSignItem(signItem);
     }
 
     // 判断是否到了签到时间  signTime 需要签到的时间
