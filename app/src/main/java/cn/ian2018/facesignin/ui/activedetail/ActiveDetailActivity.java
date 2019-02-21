@@ -22,6 +22,7 @@ import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.data.db.MyDatabase;
 import cn.ian2018.facesignin.event.SensorGone;
 import cn.ian2018.facesignin.event.SensorUpdate;
+import cn.ian2018.facesignin.ui.activemove.ActiveMoveActivity;
 import cn.ian2018.facesignin.ui.base.BaseActivity;
 
 import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE_DUTY;
@@ -31,7 +32,7 @@ import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE
 import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE_TRAINING;
 
 /**
- * Description:
+ * Description: 活动详情
  * Author:chenshuai
  * E-mail:chenshuai@amberweather.com
  * Date:2019/2/15
@@ -165,7 +166,9 @@ public class ActiveDetailActivity extends BaseActivity<ActiveDetailPresenter> im
 
     @Override
     public void goSinOutActivity() {
-        // TODO 跳转到签离界面
+        // 跳转到签离界面
+        ActiveMoveActivity.start(this, mActive, mYunziId);
+        finish();
     }
 
     // 显示确认签到对话框
