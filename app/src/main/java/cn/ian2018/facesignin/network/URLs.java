@@ -47,7 +47,7 @@ public class URLs {
     /**
      * 签离
      */
-    public static final String SIGN_OUT = HOST_ADDRESS + "HBUCentreInterface/signout.do";
+    public static final String SIGN_OUT = "signout.do";
     /**
      * 意见反馈
      */

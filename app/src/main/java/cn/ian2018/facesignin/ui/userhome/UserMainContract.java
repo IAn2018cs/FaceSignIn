@@ -1,5 +1,8 @@
 package cn.ian2018.facesignin.ui.userhome;
 
+import android.content.Context;
+
+import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.bean.Saying;
 import cn.ian2018.facesignin.ui.base.BaseView;
 import rx.Observable;
@@ -18,5 +21,7 @@ public class UserMainContract {
 
     interface UserMainPresenter {
         void initSaying();
+        void checkUnSignOutActive(Context context);
+
     }
 }

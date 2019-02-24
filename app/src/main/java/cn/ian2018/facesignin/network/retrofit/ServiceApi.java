@@ -4,6 +4,7 @@ import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.bean.AppVersion;
 import cn.ian2018.facesignin.bean.Saying;
 import cn.ian2018.facesignin.bean.SignInResult;
+import cn.ian2018.facesignin.bean.SignOutResult;
 import cn.ian2018.facesignin.bean.User;
 import cn.ian2018.facesignin.network.URLs;
 import retrofit2.http.Field;
@@ -41,4 +42,10 @@ public interface ServiceApi {
             @Field("account") String account, @Field("activityid") int activityId,
             @Field("intime") String inTime, @Field("outtime") String outTime,
             @Field("InLocation") String inLocation);
+
+    @POST(URLs.SIGN_OUT)
+    @FormUrlEncoded
+    Observable<SignOutResult> signOutResult(
+            @Field("nid") int id, @Field("outtime") String outTime,
+            @Field("OutLocation") String location);
 }

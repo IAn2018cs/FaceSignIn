@@ -1,7 +1,14 @@
 package cn.ian2018.facesignin.ui.userhome;
 
+import android.content.Context;
+
+import cn.ian2018.facesignin.MyApplication;
+import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.bean.Saying;
+import cn.ian2018.facesignin.data.Constant;
+import cn.ian2018.facesignin.data.SpUtil;
 import cn.ian2018.facesignin.data.db.MyDatabase;
+import cn.ian2018.facesignin.ui.activemove.ActiveMoveActivity;
 import cn.ian2018.facesignin.ui.base.BasePresenter;
 import cn.ian2018.facesignin.utils.Logs;
 import rx.Subscriber;
@@ -42,5 +49,26 @@ public class UserMainPresenter extends BasePresenter<UserMainContract.UserMainVi
                 }
             }
         });
+    }
+
+    @Override
+    public void checkUnSignOutActive(Context context) {
+        // 如果sp里有数据，说明有未签离的活动，需要跳转到签离界面
+        if (!SpUtil.getString(Constant.SIGN_OUT_ACTIVE_NAME,"").equals("")) {
+            String activeName = SpUtil.getString(Constant.SIGN_OUT_ACTIVE_NAME, "");
+            String location = SpUtil.getString(Constant.SIGN_OUT_LOCATION, "");
+            int activeId = SpUtil.getInt(Constant.SIGN_OUT_ACTIVE_ID, 0);
+            String endTime = SpUtil.getString(Constant.SIGN_OUT_ENDTIME, "");
+
+            String yunziId = SpUtil.getString(Constant.SIGN_OUT_YUNZIID, "");
+
+            Active.DataBean active = new Active.DataBean();
+            active.setId(activeId);
+            active.setActivityName(activeName);
+            active.setLocation(location);
+            active.setEndTime(endTime);
+
+            ActiveMoveActivity.start(context, active, yunziId);
+        }
     }
 }

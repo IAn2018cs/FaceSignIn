@@ -21,6 +21,7 @@ import java.util.Locale;
 
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.data.SpUtil;
+import cn.ian2018.facesignin.event.AutoSignOut;
 import cn.ian2018.facesignin.event.SensorGone;
 import cn.ian2018.facesignin.event.SensorShow;
 import cn.ian2018.facesignin.event.SensorUpdate;
@@ -194,10 +195,7 @@ public class SensorService extends Service {
                             if (Math.abs(end-start) > 1000*60*10) {
                                 // 自动签离
                                 Log.d("SIGN_TAG","发送自动签离的广播");
-                                Intent intent = new Intent();
-                                intent.setAction("SET_BROADCST_OUT");
-                                intent.putExtra("isLeave", true);
-                                sendBroadcast(intent);
+                                EventBus.getDefault().post(new AutoSignOut());
                             }
                         }
 
@@ -213,10 +211,7 @@ public class SensorService extends Service {
                             if (time > end) {
                                 // 自动签离
                                 Log.d("SIGN_TAG","发送自动签离的广播");
-                                Intent intent = new Intent();
-                                intent.setAction("SET_BROADCST_OUT");
-                                intent.putExtra("isLeave", true);
-                                sendBroadcast(intent);
+                                EventBus.getDefault().post(new AutoSignOut());
                             }
                         }
 

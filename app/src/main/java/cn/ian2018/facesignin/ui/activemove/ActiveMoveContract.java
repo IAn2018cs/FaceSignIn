@@ -1,6 +1,11 @@
 package cn.ian2018.facesignin.ui.activemove;
 
+import android.content.Context;
+
+import cn.ian2018.facesignin.bean.Active;
+import cn.ian2018.facesignin.bean.SignOutResult;
 import cn.ian2018.facesignin.ui.base.BaseView;
+import rx.Observable;
 
 /**
  * Description:
@@ -10,14 +15,22 @@ import cn.ian2018.facesignin.ui.base.BaseView;
  */
 public class ActiveMoveContract {
     interface ActiveMoveView extends BaseView {
-
+        void updateInTimeText(String time);
+        void updateTotalTimeText(String time);
+        boolean isCanSignOut();
+        void finishActivity();
     }
 
     interface ActiveMoveModel {
-
+        Observable<SignOutResult> signOutResult(int activeId, String outTime, String location);
     }
 
     interface ActiveMovePresenter {
-
+        void updateTime();
+        void saveUnSignOutData(Active.DataBean dataBean, String yunziId);
+        void signOutClick();
+        void uploadSignOutInfo();
+        void initLocation(Context context);
+        void checkSignOut();
     }
 }

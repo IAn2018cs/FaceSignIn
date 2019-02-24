@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import cn.ian2018.facesignin.MyApplication;
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.bean.SignInResult;

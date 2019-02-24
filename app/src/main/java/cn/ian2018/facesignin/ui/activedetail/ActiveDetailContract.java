@@ -20,8 +20,8 @@ public class ActiveDetailContract {
     }
 
     interface ActiveDetailPresenter {
-        void initLocation(Context context);
         void signIn(Active.DataBean active);
+        void initLocation(Context context);
     }
 
     interface ActiveDetailModel {

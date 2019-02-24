@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import cn.ian2018.facesignin.MyApplication;
 import cn.ian2018.facesignin.bean.AnalyzeSign;
@@ -121,7 +122,7 @@ public class MyDatabase {
     public boolean isRecentSign(String number, long activeId) {
         boolean flag = false;
         try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
             long big = -1;
             String out = "";
             Cursor cursor = db.query("Sign", new String[]{"outTime"}, "number=? and activeId=?", new String[]{number, String.valueOf(activeId)}, null, null, null);
@@ -135,7 +136,7 @@ public class MyDatabase {
             cursor.close();
 
             // 如果当前时间超过上次签离时间一天，就可以签到
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd",Locale.getDefault());
             String currentTime = sdf.format(new Date());
             if (out.equals("") || (sdf.parse(currentTime).getTime() - sdf.parse(out.substring(0, 10)).getTime()) >= 1000 * 60 * 60 * 24) {
                 flag = true;
@@ -154,7 +155,7 @@ public class MyDatabase {
     public int isSignOut(String number, long activeId, SignItem signItem) {
         int flag = 1;
         try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
             long big = -1;
             String inTime = "";
             String endTime = "";
@@ -301,7 +302,7 @@ public class MyDatabase {
 
     // 获取签到时间比开始时间早的次数 （守时）
     public int getEarlyFrequency(String num) {
-        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss",Locale.getDefault());
         int number = 0;
         Cursor cursor = db.query("AnalyzeSign", new String[]{"time", "inTime"}, "number=?", new String[]{num}, null, null, null);
 

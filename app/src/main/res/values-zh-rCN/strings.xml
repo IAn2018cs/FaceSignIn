@@ -57,4 +57,15 @@
     <string name="sign_dialog_loading_mag">签到中...</string>
 
     <string name="sign_fail">签到失败:</string>
+
+    <string name="sign_out_dialog_title">确定要签离</string>
+    <string name="sign_out_dialog_msg">您确定要对该活动签离</string>
+
+    <string name="sign_in_time_text">签到时间：</string>
+
+    <string name="sign_out_fail_location_erro">暂时无法签离，请稍后重试，并确保您在活动地点附近</string>
+    <string name="sign_out_fail">签离失败：</string>
+    <string name="sign_out_success">签离成功</string>
+
+    <string name="sign_out_dialog_loading_mag">签离中...</string>
 </resources>

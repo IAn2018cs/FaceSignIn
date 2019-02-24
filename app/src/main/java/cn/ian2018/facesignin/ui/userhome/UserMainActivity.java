@@ -69,6 +69,8 @@ public class UserMainActivity extends BaseActivity<UserMainPresenter> implements
         // 注册监听退出登录的事件
         EventBus.getDefault().register(this);
 
+        getPresenter().checkUnSignOutActive(this);
+
         // 检查版本更新
         CheckVersionHelper checkVersionHelper = new CheckVersionHelper(this);
         checkVersionHelper.checkVersionCode();

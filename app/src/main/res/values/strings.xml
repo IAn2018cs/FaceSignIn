@@ -58,4 +58,15 @@
     <string name="sign_dialog_loading_mag">Check in ...</string>
     
     <string name="sign_fail">Check in failure:</string>
+
+    <string name="sign_out_dialog_title">Determined to sign off</string>
+    <string name="sign_out_dialog_msg">Are you sure to sign the event</string>
+
+    <string name="sign_in_time_text">Check in time：</string>
+
+    <string name="sign_out_fail_location_erro">Temporarily unable to sign out, please try again later and make sure you are near the event location</string>
+    <string name="sign_out_fail">Sign off failure：</string>
+    <string name="sign_out_success">Sign off success</string>
+
+    <string name="sign_out_dialog_loading_mag">Sign off ...</string>
 </resources>
