@@ -10,6 +10,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 
 import java.lang.ref.WeakReference;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,6 +47,8 @@ public class ActiveMovePresenter extends BasePresenter<ActiveMoveContract.Active
     private Context mContext;
 
     private int clickCount;
+
+    public boolean isClick = false;
 
     public ActiveMovePresenter() {
         mContext = MyApplication.getContext();
@@ -94,6 +97,32 @@ public class ActiveMovePresenter extends BasePresenter<ActiveMoveContract.Active
     @Override
     public void checkSignOut() {
         // TODO 检查是否过了签离时间
+        try {
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd",Locale.getDefault());
+            // 获取签到时的日期
+            String inTime = mSignItem.getInTime().substring(0,10);
+            // 获取活动结束的时间
+            String endTime1 = SpUtil.getString(Constant.ACTIVE_MOVE_END_TIME, "").replace("T", " ").substring(11, 19);
+            // 获取当前日期
+            String dayTime = sdf1.format(new Date());
+
+            SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss",Locale.getDefault());
+            // 获取当前时间
+            String hourTime = sdf2.format(new Date());
+            // 转换成毫秒 活动结束的时间
+            long end = sdf2.parse(endTime1).getTime();
+            // 转换成毫秒 现在的时间
+            long time = sdf2.parse(hourTime).getTime();
+
+            // 如果超过一天
+            if ((sdf1.parse(dayTime).getTime() - sdf1.parse(inTime).getTime()) >= 1000 * 60 * 60 * 24) {
+                uploadSignOutInfo(inTime + " " + endTime1);
+            } else if ((sdf1.parse(dayTime).getTime() == sdf1.parse(inTime).getTime()) && time > end) {
+                uploadSignOutInfo(inTime + " " + endTime1);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     // 清除未签离的活动数据
@@ -104,8 +133,8 @@ public class ActiveMovePresenter extends BasePresenter<ActiveMoveContract.Active
         SpUtil.remove(Constant.SIGN_OUT_ACTIVE_ID);
         SpUtil.remove(Constant.SIGN_OUT_ENDTIME);
 
-        SpUtil.remove("endTime");
-        SpUtil.remove("yunziId");
+        SpUtil.remove(Constant.ACTIVE_MOVE_END_TIME);
+        SpUtil.remove(Constant.ACTIVE_MOVE_YUNZI_ID);
     }
 
     // 保存未签离的数据
@@ -118,16 +147,17 @@ public class ActiveMovePresenter extends BasePresenter<ActiveMoveContract.Active
         SpUtil.putInt(Constant.SIGN_OUT_ACTIVE_ID, dataBean.getId());
         SpUtil.putString(Constant.SIGN_OUT_ENDTIME, dataBean.getEndTime());
 
-        SpUtil.putString("yunziId", yunziId);
-        SpUtil.putString("endTime", dataBean.getEndTime());
+        SpUtil.putString(Constant.ACTIVE_MOVE_YUNZI_ID, yunziId);
+        SpUtil.putString(Constant.ACTIVE_MOVE_END_TIME, dataBean.getEndTime());
     }
 
     @Override
     public void signOutClick() {
         // TODO 如果可以签离 为了优化用户体验，当连续点击15次，可以签到
         if (getView().isCanSignOut() || mActive.isScan() || clickCount > 14) {
+            isClick = true;
             getView().showProgressDialog(R.string.sign_out_dialog_loading_mag);
-            uploadSignOutInfo();
+            uploadSignOutInfo(null);
         } else {
             clickCount ++;
             getView().showToast(R.string.sign_out_fail_location_erro);
@@ -135,10 +165,16 @@ public class ActiveMovePresenter extends BasePresenter<ActiveMoveContract.Active
     }
 
     @Override
-    public void uploadSignOutInfo() {
-        // ("HH:mm:ss")(小时：分钟：秒)
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
-        String outTime = df.format(new Date());
+    public void uploadSignOutInfo(String time) {
+        String outTime;
+        if (time == null) {
+            // ("HH:mm:ss")(小时：分钟：秒)
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
+            outTime = df.format(new Date());
+        } else {
+            outTime = time;
+        }
+
         mActiveMoveModel.signOutResult(mSignItem.getNid(),outTime,mOutLocation).subscribe(new Subscriber<SignOutResult>() {
             @Override
             public void onCompleted() {

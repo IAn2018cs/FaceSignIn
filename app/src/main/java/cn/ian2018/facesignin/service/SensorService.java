@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Locale;
 
 import cn.ian2018.facesignin.R;
+import cn.ian2018.facesignin.data.Constant;
 import cn.ian2018.facesignin.data.SpUtil;
 import cn.ian2018.facesignin.event.AutoSignOut;
 import cn.ian2018.facesignin.event.SensorGone;
@@ -69,8 +70,8 @@ public class SensorService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Logs.d("onStartCommand服务连接");
-        SpUtil.remove("yunziId");
-        SpUtil.remove("endTime");
+        SpUtil.remove(Constant.ACTIVE_MOVE_YUNZI_ID);
+        SpUtil.remove(Constant.ACTIVE_MOVE_END_TIME);
         sensoroManager = SensoroManager.getInstance(this);
         setSDK();
         startSDK();
@@ -134,7 +135,7 @@ public class SensorService extends Service {
                 // 签到 签离界面需要的广播 云子更新
                 EventBus.getDefault().post(new SensorUpdate(serialNumber));
 
-                if (SpUtil.getString("yunziId","").equals(beacon.getSerialNumber())) {
+                if (SpUtil.getString(Constant.ACTIVE_MOVE_YUNZI_ID,"").equals(beacon.getSerialNumber())) {
                     isCheck = false;
                 }
             }
@@ -150,7 +151,7 @@ public class SensorService extends Service {
                     EventBus.getDefault().post(new SensorGone(beacon.getSerialNumber()));
                 }
 
-                if (SpUtil.getString("yunziId","").equals(beacon.getSerialNumber())) {
+                if (SpUtil.getString(Constant.ACTIVE_MOVE_YUNZI_ID,"").equals(beacon.getSerialNumber())) {
                     isCheck = true;
                     SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());//("HH:mm:ss")(小时：分钟：秒)
                     startTime = df.format(new Date());
@@ -200,8 +201,8 @@ public class SensorService extends Service {
                         }
 
                         // 判断是否到了活动结束时间
-                        if (!SpUtil.getString("endTime","").equals("")) {
-                            String endTime1 = SpUtil.getString("endTime", "").replace("T", " ").substring(11, 19);
+                        if (!SpUtil.getString(Constant.ACTIVE_MOVE_END_TIME,"").equals("")) {
+                            String endTime1 = SpUtil.getString(Constant.ACTIVE_MOVE_END_TIME, "").replace("T", " ").substring(11, 19);
                             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
                             String presentTime = sdf.format(new Date());//当前时间
 

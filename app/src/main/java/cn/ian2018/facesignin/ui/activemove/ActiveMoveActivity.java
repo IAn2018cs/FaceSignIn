@@ -67,6 +67,8 @@ public class ActiveMoveActivity extends BaseActivity<ActiveMovePresenter> implem
         getPresenter().saveUnSignOutData(mActive, mYunziId);
 
         getPresenter().updateTime();
+
+        getPresenter().checkSignOut();
     }
 
     @Override
@@ -112,7 +114,8 @@ public class ActiveMoveActivity extends BaseActivity<ActiveMovePresenter> implem
     // 自动签离
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(AutoSignOut event) {
-        getPresenter().uploadSignOutInfo();
+        getPresenter().isClick = true;
+        getPresenter().uploadSignOutInfo(null);
         finish();
     }
 
@@ -160,6 +163,10 @@ public class ActiveMoveActivity extends BaseActivity<ActiveMovePresenter> implem
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        // 在页面销毁时，如果没有点击过签离按钮，就自动签离
+        if (!getPresenter().isClick) {
+            getPresenter().uploadSignOutInfo(null);
+        }
     }
 
     @Override

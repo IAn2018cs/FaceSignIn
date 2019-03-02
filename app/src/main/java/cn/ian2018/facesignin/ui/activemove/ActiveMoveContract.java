@@ -29,7 +29,7 @@ public class ActiveMoveContract {
         void updateTime();
         void saveUnSignOutData(Active.DataBean dataBean, String yunziId);
         void signOutClick();
-        void uploadSignOutInfo();
+        void uploadSignOutInfo(String outTime);
         void initLocation(Context context);
         void checkSignOut();
     }

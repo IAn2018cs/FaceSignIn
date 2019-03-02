@@ -35,15 +35,6 @@ public class Constant {
     public static final String SHAREDPREFERENCES_NAME = "config";
 
     /**
-     * 测试接口地址
-     */
-    public static final String TEST_URL = "http://123.206.57.216:8080/SchoolTestInterface/";
-
-    /**
-     * 接口地址
-     */
-    public static final String API_URL = "http://api.hicc.cn/";
-    /**
      * 用户年级
      */
     public static final String USER_GRADE = "user_grade";
@@ -83,4 +74,12 @@ public class Constant {
      * 兴趣小组
      */
     public static final String USER_INTERESTGROUP = "user_interestgroup";
+    /**
+     * 签离时用的活动结束时间
+     */
+    public static final String ACTIVE_MOVE_END_TIME = "endTime";
+    /**
+     * 签离时用的活动云子id
+     */
+    public static final String ACTIVE_MOVE_YUNZI_ID = "yunziId";
 }
