@@ -55,7 +55,7 @@ public class URLs {
     /**
      * 获取历史签到
      */
-    public static final String GET_SING = HOST_ADDRESS + "HBUCentreInterface/getHistoryActivity.do";
+    public static final String GET_SING = "getHistoryActivity.do";
     /**
      * 获取反馈信息
      */

@@ -68,4 +68,24 @@
     <string name="sign_out_success">签离成功</string>
 
     <string name="sign_out_dialog_loading_mag">签离中...</string>
+
+    <string name="network_error">当前网络不可用，请检查网络连接</string>
+
+    <string name="quantify_loading_text">加载数据中...</string>
+    <string name="quantify_look_sign_data">查看签到数据</string>
+    <string name="quantify_look_rank">查看排名情况</string>
+    <string name="quantify_no_data">暂无数据</string>
+    <string name="quantify_get_data_fail">历史记录响应失败:</string>
+    <string name="quantify_no_sign_data">您还没有参加活动，快去寻找喜欢的活动吧</string>
+    <string name="quantify_sign_times1">累计参加</string>
+    <string name="quantify_sign_times2">次活动</string>
+
+    <string-array name="quantify_string_list">
+        <item>毅力</item>
+        <item>学识</item>
+        <item>守时</item>
+        <item>自律</item>
+        <item>活力</item>
+    </string-array>
+
 </resources>

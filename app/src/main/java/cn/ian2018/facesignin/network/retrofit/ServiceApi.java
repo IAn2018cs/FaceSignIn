@@ -2,6 +2,7 @@ package cn.ian2018.facesignin.network.retrofit;
 
 import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.bean.AppVersion;
+import cn.ian2018.facesignin.bean.HistorySignInfo;
 import cn.ian2018.facesignin.bean.Saying;
 import cn.ian2018.facesignin.bean.SignInResult;
 import cn.ian2018.facesignin.bean.SignOutResult;
@@ -48,4 +49,8 @@ public interface ServiceApi {
     Observable<SignOutResult> signOutResult(
             @Field("nid") int id, @Field("outtime") String outTime,
             @Field("OutLocation") String location);
+
+    @POST(URLs.GET_SING)
+    @FormUrlEncoded
+    Observable<HistorySignInfo> getHistorySignInfo(@Field("userId") String account);
 }
