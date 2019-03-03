@@ -16,7 +16,7 @@
 
     <string name="password">密码</string>
     <string name="account">账号</string>
-    <string name="landing">登录中 ...</string>
+    <string name="landing">登录中…</string>
 
     <string name="again_to_return">再按一次退出程序</string>
 
@@ -54,7 +54,7 @@
     <string name="sign_dialog_positive">确认</string>
     <string name="sign_dialog_negative">取消</string>
 
-    <string name="sign_dialog_loading_mag">签到中...</string>
+    <string name="sign_dialog_loading_mag">签到中…</string>
 
     <string name="sign_fail">签到失败:</string>
 
@@ -62,16 +62,17 @@
     <string name="sign_out_dialog_msg">您确定要对该活动签离</string>
 
     <string name="sign_in_time_text">签到时间：</string>
+    <string name="sign_out_time_text">签离时间：</string>
 
     <string name="sign_out_fail_location_erro">暂时无法签离，请稍后重试，并确保您在活动地点附近</string>
     <string name="sign_out_fail">签离失败：</string>
     <string name="sign_out_success">签离成功</string>
 
-    <string name="sign_out_dialog_loading_mag">签离中...</string>
+    <string name="sign_out_dialog_loading_mag">签离中…</string>
 
     <string name="network_error">当前网络不可用，请检查网络连接</string>
 
-    <string name="quantify_loading_text">加载数据中...</string>
+    <string name="quantify_loading_text">加载数据中…</string>
     <string name="quantify_look_sign_data">查看签到数据</string>
     <string name="quantify_look_rank">查看排名情况</string>
     <string name="quantify_no_data">暂无数据</string>
@@ -88,4 +89,8 @@
         <item>活力</item>
     </string-array>
 
+    <string name="no_history_data">没有历史记录</string>
+    <string name="history_active_title">历史详细信息</string>
+    
+    <string name="active_details_title">活动详情</string>
 </resources>

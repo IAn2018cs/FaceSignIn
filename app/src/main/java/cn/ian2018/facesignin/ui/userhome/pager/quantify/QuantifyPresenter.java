@@ -31,6 +31,7 @@ public class QuantifyPresenter extends BasePresenter<QuantifyContract.QuantifyVi
     private MyDatabase mDatabase;
     private Context mContext;
     QuantifyContract.QuantifyModel mQuantifyModel;
+    public boolean noData = true;
 
     public QuantifyPresenter() {
         mQuantifyModel = new QuantifyModel();
@@ -40,13 +41,14 @@ public class QuantifyPresenter extends BasePresenter<QuantifyContract.QuantifyVi
 
     @Override
     public void refreshHistorySignInfo() {
-        mQuantifyModel.getHistorySignInfo(SpUtil.getString(Constant.ACCOUNT, "")).subscribe(new Subscriber<HistorySignInfo>() {
+        mQuantifyModel.getHistorySignInfo().subscribe(new Subscriber<HistorySignInfo>() {
             @Override
             public void onCompleted() {
             }
 
             @Override
             public void onError(Throwable e) {
+                noData = true;
                 getView().closeRefresh();
                 getView().showEmptyRadarData();
                 if (Utils.isNetworkAvalible(mContext)) {
@@ -60,6 +62,7 @@ public class QuantifyPresenter extends BasePresenter<QuantifyContract.QuantifyVi
             public void onNext(HistorySignInfo historySignInfo) {
                 getView().closeRefresh();
                 if (historySignInfo.isSucessed()) {
+                    noData = false;
                     mDatabase.deleteAnalyzeSign();
                     List<HistorySignInfo.DataBean> data = historySignInfo.getData();
                     for (HistorySignInfo.DataBean datum : data) {
@@ -77,6 +80,7 @@ public class QuantifyPresenter extends BasePresenter<QuantifyContract.QuantifyVi
                     }
                     analyzeData();
                 } else {
+                    noData = true;
                     getView().showEmptyRadarData();
                 }
             }

@@ -70,6 +70,16 @@
         <activity android:name=".ui.activemove.ActiveMoveActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".ui.historyactivie.HistoryActiveActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoTitle" />
+
+        <activity
+            android:name=".ui.activity.HistoryDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoTitle" />
+
         <service android:name=".service.SensorService" />
 
         <service android:name="com.sensoro.beacon.kit.BeaconService" />

@@ -29,43 +29,27 @@ public class SplashActivity extends AppCompatActivity {
 
         // 初始化动画
         initAnimation();
-
-        // 开启一个子线程
-        newThread();
     }
 
     // 初始化动画
     private void initAnimation() {
         AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-        alphaAnimation.setDuration(2500);
+        alphaAnimation.setDuration(2000);
         sl_root.startAnimation(alphaAnimation);
+        sl_root.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // 进入应用程序主界面,activity跳转过程
+                enterHome();
+            }
+        },2000);
     }
 
     // 初始化UI
     private void initUI() {
-        sl_root = (RelativeLayout) findViewById(R.id.sl_root);
+        sl_root = findViewById(R.id.sl_root);
     }
 
-    // 开启一个子线程
-    private void newThread() {
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2500);
-                } catch (InterruptedException e)   {
-                    e.printStackTrace();
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // 进入应用程序主界面,activity跳转过程
-                        enterHome();
-                    }
-                });
-            }
-        }.start();
-    }
 
     // 进入应用
     private void enterHome() {

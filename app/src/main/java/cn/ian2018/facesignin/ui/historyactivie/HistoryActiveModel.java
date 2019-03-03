@@ -1,4 +1,4 @@
-package cn.ian2018.facesignin.ui.userhome.pager.quantify;
+package cn.ian2018.facesignin.ui.historyactivie;
 
 import cn.ian2018.facesignin.bean.HistorySignInfo;
 import cn.ian2018.facesignin.data.Constant;
@@ -14,8 +14,7 @@ import rx.schedulers.Schedulers;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/3/3
  */
-public class QuantifyModel implements QuantifyContract.QuantifyModel {
-
+public class HistoryActiveModel implements HistoryActiveContract.HistoryActiveModel {
     @Override
     public Observable<HistorySignInfo> getHistorySignInfo() {
         return RetrofitClient.getServiceApi()

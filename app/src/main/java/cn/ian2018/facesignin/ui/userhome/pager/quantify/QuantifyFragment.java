@@ -1,6 +1,5 @@
 package cn.ian2018.facesignin.ui.userhome.pager.quantify;
 
-import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,7 @@ import java.util.List;
 
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.ui.base.BaseFragment;
-import cn.ian2018.facesignin.ui.base.BasePresenter;
+import cn.ian2018.facesignin.ui.historyactivie.HistoryActiveActivity;
 import cn.ian2018.facesignin.utils.ToastUtil;
 import rorbin.q.radarview.RadarData;
 import rorbin.q.radarview.RadarView;
@@ -112,6 +111,11 @@ public class QuantifyFragment extends BaseFragment<QuantifyPresenter> implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_detail:
+                if (!getPresenter().noData) {
+                    HistoryActiveActivity.start(getContext());
+                } else {
+                    ToastUtil.show(R.string.no_history_data);
+                }
                 break;
             case R.id.tv_rank:
                 break;

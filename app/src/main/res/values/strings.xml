@@ -17,7 +17,7 @@
 
     <string name="password">Password</string>
     <string name="account">Account</string>
-    <string name="landing">Landing ...</string>
+    <string name="landing">Landing …</string>
 
     <string name="again_to_return">Press again to exit the program</string>
 
@@ -50,12 +50,12 @@
     <string name="unable_sign_unsignout_error">You have not signed out yet, please sign out of the event first.</string>
     <string name="unable_sign_already_error">You have already checked in</string>
 
-    <string name="sign_dialog_title">Ok to sign in</string>
+    <string name="sign_dialog_title">OK to sign in</string>
     <string name="sign_dialog_msg">You are sure you want to check in to the event</string>
     <string name="sign_dialog_positive">Confirm</string>
     <string name="sign_dialog_negative">Cancel</string>
 
-    <string name="sign_dialog_loading_mag">Check in ...</string>
+    <string name="sign_dialog_loading_mag">Check in …</string>
     
     <string name="sign_fail">Check in failure:</string>
 
@@ -63,16 +63,17 @@
     <string name="sign_out_dialog_msg">Are you sure to sign the event</string>
 
     <string name="sign_in_time_text">Check in time：</string>
+    <string name="sign_out_time_text">Signing time：</string>
 
     <string name="sign_out_fail_location_erro">Temporarily unable to sign out, please try again later and make sure you are near the event location</string>
     <string name="sign_out_fail">Sign off failure：</string>
     <string name="sign_out_success">Sign off success</string>
 
-    <string name="sign_out_dialog_loading_mag">Sign off ...</string>
+    <string name="sign_out_dialog_loading_mag">Sign off …</string>
 
     <string name="network_error">The current network is not available, please check the network connection</string>
 
-    <string name="quantify_loading_text">Loading data...</string>
+    <string name="quantify_loading_text">Loading data…</string>
     <string name="quantify_look_sign_data">View check in data</string>
     <string name="quantify_look_rank">View rankings</string>
     <string name="quantify_no_data">No data</string>
@@ -88,4 +89,9 @@
         <item>Self regulation</item>
         <item>Vitality</item>
     </string-array>
+
+    <string name="no_history_data">No history data</string>
+    <string name="history_active_title">Historical details</string>
+
+    <string name="active_details_title">Details Of The Active</string>
 </resources>

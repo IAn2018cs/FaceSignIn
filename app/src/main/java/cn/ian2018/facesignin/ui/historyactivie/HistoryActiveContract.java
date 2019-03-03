@@ -1,8 +1,10 @@
-package cn.ian2018.facesignin.ui.userhome.pager.quantify;
+package cn.ian2018.facesignin.ui.historyactivie;
 
+import java.util.List;
+
+import cn.ian2018.facesignin.bean.HistoryActive;
 import cn.ian2018.facesignin.bean.HistorySignInfo;
 import cn.ian2018.facesignin.ui.base.BaseView;
-import rorbin.q.radarview.RadarData;
 import rx.Observable;
 
 /**
@@ -11,19 +13,17 @@ import rx.Observable;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/3/3
  */
-public class QuantifyContract {
-    interface QuantifyView extends BaseView {
-        void showRadarData(RadarData data);
-        void showEmptyRadarData();
+public class HistoryActiveContract {
+    interface HistoryActiveView extends BaseView {
         void closeRefresh();
-        void setDesText(String des);
+        void resetData(List<HistoryActive> list);
     }
 
-    interface QuantifyModel {
+    interface HistoryActiveModel {
         Observable<HistorySignInfo> getHistorySignInfo();
     }
 
-    interface QuantifyPresenter {
+    interface HistoryActivePresenter {
         void refreshHistorySignInfo();
     }
 }

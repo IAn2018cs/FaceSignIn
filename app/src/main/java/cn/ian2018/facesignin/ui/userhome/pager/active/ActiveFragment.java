@@ -5,20 +5,17 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sensoro.cloud.SensoroManager;
 import com.skyfishjy.library.RippleBackground;
-import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -35,8 +32,8 @@ import cn.ian2018.facesignin.event.SensorShow;
 import cn.ian2018.facesignin.ui.activedetail.ActiveDetailActivity;
 import cn.ian2018.facesignin.ui.activity.ScanActivity;
 import cn.ian2018.facesignin.ui.base.BaseFragment;
+import cn.ian2018.facesignin.ui.base.BaseListViewAdapter;
 import cn.ian2018.facesignin.utils.Logs;
-import cn.ian2018.facesignin.utils.ToastUtil;
 
 /**
  * Description:
@@ -214,7 +211,40 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
     }
 
     // listview适配器
-    class MyAdapter extends BaseAdapter {
+    public class MyAdapter extends BaseListViewAdapter<MyAdapter.ViewHolder> {
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent) {
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.item_active_list, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(int position, ViewHolder holder) {
+            if (getItem(position).getBackTo() == 1) {
+                holder.tv_name.setText(getItem(position).getActivityName() + " 补班");
+            } else {
+                holder.tv_name.setText(getItem(position).getActivityName());
+            }
+            holder.tv_location.setText(new StringBuilder()
+                    .append(getResources().getString(R.string.active_item_location_text))
+                    .append(getItem(position).getLocation()));
+            switch (getItem(position).getRule()) {
+                case TYPE_ORDINARY:
+                case TYPE_TRAINING:
+                    holder.tv_time.setText(getItem(position).getTime().replace("T", " ").substring(0, 16));
+                    break;
+                case TYPE_DUTY:
+                case TYPE_READ:
+                case TYPE_RUN:
+                    holder.tv_time.setText(new StringBuilder()
+                            .append(getResources().getString(R.string.active_item_time_text))
+                            .append(getItem(position).getTime().replace("T", " ").substring(11, 16))
+                            .append(" - ")
+                            .append(getItem(position).getEndTime().replace("T", " ").substring(11, 16)));
+                    break;
+            }
+        }
 
         @Override
         public int getCount() {
@@ -226,56 +256,19 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
             return mActiveList.get(position);
         }
 
-        @Override
-        public long getItemId(int position) {
-            return position;
+        class ViewHolder extends BaseListViewAdapter.ViewHolder {
+            TextView tv_name;
+            TextView tv_location;
+            TextView tv_time;
+            public ViewHolder(View convertView) {
+                super(convertView);
+                tv_name = convertView.findViewById(R.id.tv_name);
+                tv_location = convertView.findViewById(R.id.tv_location);
+                tv_time = convertView.findViewById(R.id.tv_time);
+            }
         }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_active_list, parent, false);
-                viewHolder = new ViewHolder();
-                viewHolder.tv_name = convertView.findViewById(R.id.tv_name);
-                viewHolder.tv_location = convertView.findViewById(R.id.tv_location);
-                viewHolder.tv_time = convertView.findViewById(R.id.tv_time);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-
-            if (getItem(position).getBackTo() == 1) {
-                viewHolder.tv_name.setText(getItem(position).getActivityName() + " 补班");
-            } else {
-                viewHolder.tv_name.setText(getItem(position).getActivityName());
-            }
-            viewHolder.tv_location.setText(new StringBuilder()
-                    .append(getResources().getString(R.string.active_item_location_text))
-                    .append(getItem(position).getLocation()));
-            switch (getItem(position).getRule()) {
-                case TYPE_ORDINARY:
-                case TYPE_TRAINING:
-                    viewHolder.tv_time.setText(getItem(position).getTime().replace("T", " ").substring(0, 16));
-                    break;
-                case TYPE_DUTY:
-                case TYPE_READ:
-                case TYPE_RUN:
-                    viewHolder.tv_time.setText(new StringBuilder()
-                            .append(getResources().getString(R.string.active_item_time_text))
-                            .append(getItem(position).getTime().replace("T", " ").substring(11, 16))
-                            .append(" - ")
-                            .append(getItem(position).getEndTime().replace("T", " ").substring(11, 16)));
-                    break;
-            }
-
-            return convertView;
-        }
     }
 
-    static class ViewHolder {
-        TextView tv_name;
-        TextView tv_location;
-        TextView tv_time;
-    }
+
 }
