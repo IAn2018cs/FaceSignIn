@@ -44,6 +44,7 @@ public class QuantifyFragment extends BaseFragment<QuantifyPresenter> implements
         mDesTv = view.findViewById(R.id.tv_des);
 
         mRadarView = view.findViewById(R.id.radarView);
+        mRadarView.setVertexTextSize(getResources().getDimension(R.dimen.radar_text_size));
         mRadarView.setEmptyHint(getResources().getString(R.string.quantify_loading_text));
 
         // 设置线条颜色

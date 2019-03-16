@@ -79,8 +79,8 @@
     <string name="quantify_no_data">No data</string>
     <string name="quantify_get_data_fail">History response failed:</string>
     <string name="quantify_no_sign_data">You have not participated in the event, go find something you like.</string>
-    <string name="quantify_sign_times1">Accumulated</string>
-    <string name="quantify_sign_times2">events</string>
+    <string name="quantify_sign_times1">Accumulated  </string>
+    <string name="quantify_sign_times2">  events</string>
 
     <string-array name="quantify_string_list">
         <item>Perseverance</item>
