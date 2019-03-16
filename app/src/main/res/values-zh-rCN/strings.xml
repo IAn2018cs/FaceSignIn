@@ -93,4 +93,8 @@
     <string name="history_active_title">历史详细信息</string>
     
     <string name="active_details_title">活动详情</string>
+
+    <string name="mine_feedback_title">意见反馈</string>
+    <string name="mine_repair_title">设备报修</string>
+    <string name="mine_setting_title">设置</string>
 </resources>

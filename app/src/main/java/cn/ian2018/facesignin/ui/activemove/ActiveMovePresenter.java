@@ -33,7 +33,7 @@ import rx.Subscriber;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/2/21
  */
-public class ActiveMovePresenter extends BasePresenter<ActiveMoveContract.ActiveMoveView> implements ActiveMoveContract.ActiveMovePresenter {
+public class ActiveMovePresenter extends BasePresenter<ActiveMoveContract.IActiveMoveView> implements ActiveMoveContract.IActiveMovePresenter {
 
     private ActiveMoveModel mActiveMoveModel;
     private MyDatabase mDatabase;

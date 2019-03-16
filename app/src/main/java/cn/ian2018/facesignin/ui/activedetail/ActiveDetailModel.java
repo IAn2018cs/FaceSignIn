@@ -12,7 +12,7 @@ import rx.schedulers.Schedulers;
  * E-mail:chenshuai@amberweather.com
  * Date:2019/2/15
  */
-public class ActiveDetailModel implements ActiveDetailContract.ActiveDetailModel {
+public class ActiveDetailModel implements ActiveDetailContract.IActiveDetailModel {
 
     @Override
     public Observable<SignInResult> signInResult(String account, int activeId, String inTime, String outTime, String location) {

@@ -14,16 +14,16 @@ import rx.Observable;
  * Date:2019/3/3
  */
 public class HistoryActiveContract {
-    interface HistoryActiveView extends BaseView {
+    interface IHistoryActiveView extends BaseView {
         void closeRefresh();
         void resetData(List<HistoryActive> list);
     }
 
-    interface HistoryActiveModel {
+    interface IHistoryActiveModel {
         Observable<HistorySignInfo> getHistorySignInfo();
     }
 
-    interface HistoryActivePresenter {
+    interface IHistoryActivePresenter {
         void refreshHistorySignInfo();
     }
 }

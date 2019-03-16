@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.ui.base.BaseFragment;
 import cn.ian2018.facesignin.ui.base.BasePresenter;
 
@@ -13,10 +14,10 @@ import cn.ian2018.facesignin.ui.base.BasePresenter;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/2/5
  */
-public class MineFragment extends BaseFragment {
+public class MineFragment extends BaseFragment<MinePresenter> implements MineContract.IMineView {
     @Override
     protected View createView(LayoutInflater inflater, ViewGroup container) {
-        return null;
+        return inflater.inflate(R.layout.fragment_mine, container, false);
     }
 
     @Override
@@ -30,7 +31,9 @@ public class MineFragment extends BaseFragment {
     }
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected MinePresenter createPresenter() {
+        return new MinePresenter();
     }
+
+
 }

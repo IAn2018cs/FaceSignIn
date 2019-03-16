@@ -19,7 +19,6 @@ import java.util.List;
 
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.bean.Active;
-import cn.ian2018.facesignin.data.db.MyDatabase;
 import cn.ian2018.facesignin.event.SensorGone;
 import cn.ian2018.facesignin.event.SensorUpdate;
 import cn.ian2018.facesignin.ui.activemove.ActiveMoveActivity;
@@ -37,7 +36,7 @@ import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE
  * E-mail:chenshuai@amberweather.com
  * Date:2019/2/15
  */
-public class ActiveDetailActivity extends BaseActivity<ActiveDetailPresenter> implements ActiveDetailContract.ActiveDetailView , View.OnClickListener {
+public class ActiveDetailActivity extends BaseActivity<ActiveDetailPresenter> implements ActiveDetailContract.IActiveDetailView, View.OnClickListener {
 
     private TextView mActivityLocationTv;
     private TextView mActivityDesTv;

@@ -18,7 +18,7 @@ import rx.Observable;
  */
 public class ActiveContract {
 
-    interface ActiveView extends BaseView {
+    interface IActiveView extends BaseView {
         void showScanAnim();
         void closeScanAnim();
         void updateActiveList(List<Active.DataBean> actives);
@@ -26,11 +26,11 @@ public class ActiveContract {
         void getActiveFail();
     }
 
-    interface ActiveModel {
+    interface IActiveModel {
         Observable<Active> getActive(String sensoroId);
     }
 
-    interface ActivePresenter {
+    interface IActivePresenter {
         void getActiveForNetwork(String sensoroId, boolean isScan);
         void checkSensor();
         void onActivityResult(int requestCode, Intent data, SensoroManager sensoroManager);

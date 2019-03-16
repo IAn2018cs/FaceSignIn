@@ -41,7 +41,7 @@ import cn.ian2018.facesignin.utils.Logs;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/2/5
  */
-public class ActiveFragment extends BaseFragment<ActivePresenter> implements ActiveContract.ActiveView{
+public class ActiveFragment extends BaseFragment<ActivePresenter> implements ActiveContract.IActiveView {
 
     public static final int BLUETOOTH_CODE = 0;
     public static final int SCAN_CODE = 1;

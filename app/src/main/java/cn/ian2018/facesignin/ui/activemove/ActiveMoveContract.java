@@ -14,18 +14,18 @@ import rx.Observable;
  * Date:2019/2/21
  */
 public class ActiveMoveContract {
-    interface ActiveMoveView extends BaseView {
+    interface IActiveMoveView extends BaseView {
         void updateInTimeText(String time);
         void updateTotalTimeText(String time);
         boolean isCanSignOut();
         void finishActivity();
     }
 
-    interface ActiveMoveModel {
+    interface IActiveMoveModel {
         Observable<SignOutResult> signOutResult(int activeId, String outTime, String location);
     }
 
-    interface ActiveMovePresenter {
+    interface IActiveMovePresenter {
         void updateTime();
         void saveUnSignOutData(Active.DataBean dataBean, String yunziId);
         void signOutClick();

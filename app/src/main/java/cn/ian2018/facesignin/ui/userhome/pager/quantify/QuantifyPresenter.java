@@ -26,11 +26,11 @@ import static cn.ian2018.facesignin.MyApplication.getContext;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/3/3
  */
-public class QuantifyPresenter extends BasePresenter<QuantifyContract.QuantifyView> implements QuantifyContract.QuantifyPresenter {
+public class QuantifyPresenter extends BasePresenter<QuantifyContract.IQuantifyView> implements QuantifyContract.IQuantifyPresenter {
 
     private MyDatabase mDatabase;
     private Context mContext;
-    QuantifyContract.QuantifyModel mQuantifyModel;
+    QuantifyContract.IQuantifyModel mQuantifyModel;
     public boolean noData = true;
 
     public QuantifyPresenter() {

@@ -94,4 +94,8 @@
     <string name="history_active_title">Historical details</string>
 
     <string name="active_details_title">Details Of The Active</string>
+
+    <string name="mine_feedback_title">Feedback</string>
+    <string name="mine_repair_title">Equipment repair</string>
+    <string name="mine_setting_title">Setting</string>
 </resources>

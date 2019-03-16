@@ -23,7 +23,7 @@ import rorbin.q.radarview.RadarView;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/2/5
  */
-public class QuantifyFragment extends BaseFragment<QuantifyPresenter> implements QuantifyContract.QuantifyView,
+public class QuantifyFragment extends BaseFragment<QuantifyPresenter> implements QuantifyContract.IQuantifyView,
         SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private SwipeRefreshLayout mSwipeLayout;

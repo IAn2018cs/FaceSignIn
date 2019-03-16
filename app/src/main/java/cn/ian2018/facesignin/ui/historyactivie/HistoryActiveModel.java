@@ -14,7 +14,7 @@ import rx.schedulers.Schedulers;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/3/3
  */
-public class HistoryActiveModel implements HistoryActiveContract.HistoryActiveModel {
+public class HistoryActiveModel implements HistoryActiveContract.IHistoryActiveModel {
     @Override
     public Observable<HistorySignInfo> getHistorySignInfo() {
         return RetrofitClient.getServiceApi()

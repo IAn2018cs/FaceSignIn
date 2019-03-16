@@ -12,7 +12,7 @@ import rx.schedulers.Schedulers;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/2/6
  */
-public class ActiveModel implements ActiveContract.ActiveModel {
+public class ActiveModel implements ActiveContract.IActiveModel {
 
     @Override
     public Observable<Active> getActive(String sensoroId) {

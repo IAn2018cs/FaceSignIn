@@ -12,18 +12,18 @@ import rx.Observable;
  * Date:2019/3/3
  */
 public class QuantifyContract {
-    interface QuantifyView extends BaseView {
+    interface IQuantifyView extends BaseView {
         void showRadarData(RadarData data);
         void showEmptyRadarData();
         void closeRefresh();
         void setDesText(String des);
     }
 
-    interface QuantifyModel {
+    interface IQuantifyModel {
         Observable<HistorySignInfo> getHistorySignInfo();
     }
 
-    interface QuantifyPresenter {
+    interface IQuantifyPresenter {
         void refreshHistorySignInfo();
     }
 }

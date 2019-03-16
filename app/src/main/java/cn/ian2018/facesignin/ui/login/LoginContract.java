@@ -11,18 +11,18 @@ import rx.Observable;
  * Date:2018/12/12
  */
 public class LoginContract {
-    interface LoginView extends BaseView {
+    interface ILoginView extends BaseView {
         void accountEmpty();
         void passwordEmpty();
         void loginSuccess(int type);
         void loginFail();
     }
 
-    interface LoginPresenter {
+    interface ILoginPresenter {
         void login(String account, String password);
     }
 
-    interface LoginModel {
+    interface ILoginModel {
         Observable<User> login(String account, String password);
     }
 }

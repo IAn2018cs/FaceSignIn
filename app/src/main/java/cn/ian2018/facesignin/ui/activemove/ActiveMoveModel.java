@@ -12,7 +12,7 @@ import rx.schedulers.Schedulers;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/2/21
  */
-public class ActiveMoveModel implements ActiveMoveContract.ActiveMoveModel {
+public class ActiveMoveModel implements ActiveMoveContract.IActiveMoveModel {
     @Override
     public Observable<SignOutResult> signOutResult(int activeId, String outTime, String location) {
         return RetrofitClient.getServiceApi()

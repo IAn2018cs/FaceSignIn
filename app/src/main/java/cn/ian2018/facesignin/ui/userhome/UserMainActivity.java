@@ -3,7 +3,6 @@ package cn.ian2018.facesignin.ui.userhome;
 import android.content.Context;
 import android.content.Intent;
 
-import android.graphics.Color;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -40,7 +39,7 @@ import cn.ian2018.facesignin.utils.ToastUtil;
  * 普通用户主页
  * Created by 陈帅 on 2019/1/17/017.
  */
-public class UserMainActivity extends BaseActivity<UserMainPresenter> implements UserMainContract.UserMainView {
+public class UserMainActivity extends BaseActivity<UserMainPresenter> implements UserMainContract.IUserMainView {
 
     private ViewPager viewPager;
     private BottomBar bottomBar;

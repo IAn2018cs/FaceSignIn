@@ -20,9 +20,9 @@ import rx.Subscriber;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/3/3
  */
-public class HistoryActivePresenter extends BasePresenter<HistoryActiveContract.HistoryActiveView> implements HistoryActiveContract.HistoryActivePresenter {
+public class HistoryActivePresenter extends BasePresenter<HistoryActiveContract.IHistoryActiveView> implements HistoryActiveContract.IHistoryActivePresenter {
 
-    HistoryActiveContract.HistoryActiveModel mHistoryActiveModel;
+    HistoryActiveContract.IHistoryActiveModel mHistoryActiveModel;
     private Context mContext;
 
     public HistoryActivePresenter() {

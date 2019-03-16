@@ -10,7 +10,6 @@ import cn.ian2018.facesignin.data.Constant;
 import cn.ian2018.facesignin.data.SpUtil;
 import cn.ian2018.facesignin.ui.base.BasePresenter;
 import cn.ian2018.facesignin.utils.MD5Util;
-import cn.ian2018.facesignin.utils.ToastUtil;
 import rx.Subscriber;
 
 /**
@@ -19,13 +18,13 @@ import rx.Subscriber;
  * E-mail:chenshuai@amberweather.com
  * Date:2018/12/12
  */
-public class LoginPresenter extends BasePresenter<LoginContract.LoginView> implements LoginContract.LoginPresenter {
+public class LoginPresenter extends BasePresenter<LoginContract.ILoginView> implements LoginContract.ILoginPresenter {
 
-    private LoginContract.LoginModel mModel;
+    private LoginContract.ILoginModel mModel;
 
     private Context mContext;
 
-    private String TAG = "LoginPresenter";
+    private String TAG = "ILoginPresenter";
 
     public LoginPresenter() {
         mModel = new LoginModel();

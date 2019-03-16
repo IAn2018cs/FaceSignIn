@@ -28,7 +28,7 @@ import cn.ian2018.facesignin.utils.ToastUtil;
  * E-mail:chenshuai@amberweather.com
  * Date:2018/12/12
  */
-public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.LoginView, View.OnClickListener {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.ILoginView, View.OnClickListener {
 
     private static final int USER_ORDINARY = 0; // 普通用户
     private static final int USER_ADMIN = 1;    // 管理员

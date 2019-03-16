@@ -30,9 +30,9 @@ import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.SCAN
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/2/6
  */
-public class ActivePresenter extends BasePresenter<ActiveContract.ActiveView> implements ActiveContract.ActivePresenter {
+public class ActivePresenter extends BasePresenter<ActiveContract.IActiveView> implements ActiveContract.IActivePresenter {
 
-    ActiveContract.ActiveModel mActiveModel;
+    ActiveContract.IActiveModel mActiveModel;
     private List<Active.DataBean> mActiveList = new ArrayList<>();
 
     public ActivePresenter() {

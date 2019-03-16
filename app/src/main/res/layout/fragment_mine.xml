@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector_white_bg"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp">
+
+        <ImageView
+            android:id="@+id/iv_pic"
+            android:layout_width="63.75dp"
+            android:layout_height="85dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/avatar_placeholder" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/iv_pic"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                tools:text="王晶" />
+
+            <TextView
+                android:id="@+id/tv_grade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="#b9b5b5"
+                android:textSize="12sp"
+                tools:text="年级：15级" />
+
+            <TextView
+                android:id="@+id/tv_interest_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="#b9b5b5"
+                android:textSize="12sp"
+                tools:text="班级：软件工程" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_white_bg"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/ic_feedback" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="@string/mine_feedback_title"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:background="#e6e3e3" />
+
+        <LinearLayout
+            android:id="@+id/ll_repair"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_white_bg"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:src="@mipmap/ic_repair" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="@string/mine_repair_title"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_white_bg"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@mipmap/ic_setting" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="@string/mine_setting_title"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

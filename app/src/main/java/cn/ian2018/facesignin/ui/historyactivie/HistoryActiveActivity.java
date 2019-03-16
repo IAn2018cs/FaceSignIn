@@ -26,7 +26,7 @@ import cn.ian2018.facesignin.ui.base.BaseListViewAdapter;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/3/3
  */
-public class HistoryActiveActivity extends BaseActivity<HistoryActivePresenter> implements HistoryActiveContract.HistoryActiveView,
+public class HistoryActiveActivity extends BaseActivity<HistoryActivePresenter> implements HistoryActiveContract.IHistoryActiveView,
         SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
 
     private SwipeRefreshLayout mSwipeLayout;

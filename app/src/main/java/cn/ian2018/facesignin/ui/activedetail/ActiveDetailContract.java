@@ -14,17 +14,17 @@ import rx.Observable;
  * Date:2019/2/15
  */
 public class ActiveDetailContract {
-    interface ActiveDetailView extends BaseView {
+    interface IActiveDetailView extends BaseView {
         boolean isCanSign();
         void goSinOutActivity();
     }
 
-    interface ActiveDetailPresenter {
+    interface IActiveDetailPresenter {
         void signIn(Active.DataBean active);
         void initLocation(Context context);
     }
 
-    interface ActiveDetailModel {
+    interface IActiveDetailModel {
         Observable<SignInResult> signInResult(String account, int activeId, String inTime,
                                               String outTime, String location);
     }

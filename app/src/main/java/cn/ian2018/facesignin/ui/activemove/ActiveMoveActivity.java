@@ -28,7 +28,7 @@ import cn.ian2018.facesignin.ui.base.BaseActivity;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/2/21
  */
-public class ActiveMoveActivity extends BaseActivity<ActiveMovePresenter> implements ActiveMoveContract.ActiveMoveView {
+public class ActiveMoveActivity extends BaseActivity<ActiveMovePresenter> implements ActiveMoveContract.IActiveMoveView {
 
     private TextView mActivityNameTv;
     private TextView mLocationTv;

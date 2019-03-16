@@ -14,7 +14,7 @@ import rx.schedulers.Schedulers;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/3/3
  */
-public class QuantifyModel implements QuantifyContract.QuantifyModel {
+public class QuantifyModel implements QuantifyContract.IQuantifyModel {
 
     @Override
     public Observable<HistorySignInfo> getHistorySignInfo() {

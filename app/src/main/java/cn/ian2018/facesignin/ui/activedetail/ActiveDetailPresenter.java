@@ -7,14 +7,11 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import cn.ian2018.facesignin.MyApplication;
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.bean.SignInResult;
@@ -37,7 +34,7 @@ import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE
  * E-mail:chenshuai@amberweather.com
  * Date:2019/2/15
  */
-public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.ActiveDetailView> implements ActiveDetailContract.ActiveDetailPresenter {
+public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.IActiveDetailView> implements ActiveDetailContract.IActiveDetailPresenter {
 
     private final ActiveDetailModel mActiveDetailModel;
     private final MyDatabase mDatabase;
