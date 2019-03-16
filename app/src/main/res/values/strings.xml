@@ -52,8 +52,8 @@
 
     <string name="sign_dialog_title">OK to sign in</string>
     <string name="sign_dialog_msg">You are sure you want to check in to the event</string>
-    <string name="sign_dialog_positive">Confirm</string>
-    <string name="sign_dialog_negative">Cancel</string>
+    <string name="dialog_positive">Confirm</string>
+    <string name="dialog_negative">Cancel</string>
 
     <string name="sign_dialog_loading_mag">Check in …</string>
     
@@ -98,4 +98,11 @@
     <string name="mine_feedback_title">Feedback</string>
     <string name="mine_repair_title">Equipment repair</string>
     <string name="mine_setting_title">Setting</string>
+    <string name="mine_grade_text">Grade：%d </string>
+    <string name="mine_class_text">Class：%s</string>
+    <string name="mine_dialog_call_phone">Call</string>
+    <string name="mine_dialog_msg">If you encounter a cloud device failure, please contact：%s \nphone number：%s</string>
+
+    <string name="mine_repair_loading_msg">Get the repairer information…</string>
+    <string name="mine_repair_loading_fail">Failed to get repairer information, please try again later</string>
 </resources>

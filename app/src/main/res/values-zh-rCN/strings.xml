@@ -51,8 +51,8 @@
 
     <string name="sign_dialog_title">确定要签到</string>
     <string name="sign_dialog_msg">您确定要对该活动签到</string>
-    <string name="sign_dialog_positive">确认</string>
-    <string name="sign_dialog_negative">取消</string>
+    <string name="dialog_positive">确认</string>
+    <string name="dialog_negative">取消</string>
 
     <string name="sign_dialog_loading_mag">签到中…</string>
 
@@ -97,4 +97,11 @@
     <string name="mine_feedback_title">意见反馈</string>
     <string name="mine_repair_title">设备报修</string>
     <string name="mine_setting_title">设置</string>
+    <string name="mine_grade_text">年级：%d级</string>
+    <string name="mine_class_text">班级：%s</string>
+    <string name="mine_dialog_call_phone">打电话</string>
+    <string name="mine_dialog_msg">如果遇到云子设备故障，请及时联系：%s\n电话：%s</string>
+
+    <string name="mine_repair_loading_msg">获取维修人信息中…</string>
+    <string name="mine_repair_loading_fail">获取维修人信息失败，请稍后重试</string>
 </resources>

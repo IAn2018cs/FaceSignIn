@@ -143,14 +143,14 @@ public class ActiveMoveActivity extends BaseActivity<ActiveMovePresenter> implem
         //设置文本内容
         builder.setMessage(R.string.sign_out_dialog_msg);
         //设置积极的按钮
-        builder.setPositiveButton(R.string.sign_dialog_positive, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 getPresenter().signOutClick();
             }
         });
         //设置消极的按钮
-        builder.setNegativeButton(R.string.sign_dialog_negative, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.dialog_negative, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();

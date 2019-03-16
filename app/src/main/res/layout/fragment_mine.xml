@@ -49,7 +49,7 @@
                 tools:text="年级：15级" />
 
             <TextView
-                android:id="@+id/tv_interest_group"
+                android:id="@+id/tv_class"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"

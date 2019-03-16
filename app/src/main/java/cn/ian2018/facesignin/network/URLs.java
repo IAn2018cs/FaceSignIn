@@ -99,7 +99,7 @@ public class URLs {
     /**
      * 获取维修人信息
      */
-    public static final String GET_REPAIR_USER = HOST_ADDRESS + "HBUCentreInterface/getRepairUser.do";
+    public static final String GET_REPAIR_USER = "getRepairUser.do";
     /**
      * 获取中心物品
      */
