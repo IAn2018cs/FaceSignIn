@@ -2,6 +2,7 @@ package cn.ian2018.facesignin.network.retrofit;
 
 import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.bean.AppVersion;
+import cn.ian2018.facesignin.bean.FeedbackResult;
 import cn.ian2018.facesignin.bean.HistorySignInfo;
 import cn.ian2018.facesignin.bean.RepairUserInfo;
 import cn.ian2018.facesignin.bean.Saying;
@@ -64,4 +65,12 @@ public interface ServiceApi {
 
     @GET(URLs.GET_REPAIR_USER)
     Observable<RepairUserInfo> getRepairInfo();
+
+    // 上传反馈信息
+    @POST(URLs.FEED_BACK)
+    @FormUrlEncoded
+    Observable<FeedbackResult> uploadFeedbackInfo(
+            @Field("account") String account, @Field("msg") String msg,
+            @Field("PhoneBrand") String phoneBrand, @Field("PhoneBrandType") String phoneBrandType,
+            @Field("AndroidVersion") String androidVersion, @Field("Anonymous") int anonymous);
 }

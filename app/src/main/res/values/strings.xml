@@ -105,4 +105,13 @@
 
     <string name="mine_repair_loading_msg">Get the repairer information…</string>
     <string name="mine_repair_loading_fail">Failed to get repairer information, please try again later</string>
+
+    <string name="feedback_text">If you have any comments or suggestions about this product, please feel positive feedback.</string>
+    <string name="feedback_hint_text">Please enter your opinion</string>
+    <string name="feedback_anonymous_text">Submit anonymously</string>
+    <string name="feedback_submit_text">Submit</string>
+    <string name="feedback_loading_msg">Send feedback…</string>
+    <string name="feedback_msg_empty">Feedback cannot be empty</string>
+    <string name="feedback_upload_success">Submit feedback successfully</string>
+    <string name="feedback_upload_fail">Submit feedback failed</string>
 </resources>

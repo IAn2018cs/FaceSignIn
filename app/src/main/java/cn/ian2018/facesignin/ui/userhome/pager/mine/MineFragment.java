@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.data.Constant;
 import cn.ian2018.facesignin.data.SpUtil;
+import cn.ian2018.facesignin.ui.activity.FeedbackActivity;
 import cn.ian2018.facesignin.ui.base.BaseFragment;
 
 /**
@@ -81,6 +82,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 showAvatarDialog();
                 break;
             case R.id.ll_feedback:
+                FeedbackActivity.start(getContext());
                 break;
             case R.id.ll_repair:
                 getPresenter().repair();

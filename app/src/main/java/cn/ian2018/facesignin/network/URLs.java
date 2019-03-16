@@ -51,7 +51,7 @@ public class URLs {
     /**
      * 意见反馈
      */
-    public static final String FEED_BACK = HOST_ADDRESS + "HBUCentreInterface/feedback.do";
+    public static final String FEED_BACK = "feedback.do";
     /**
      * 获取历史签到
      */
