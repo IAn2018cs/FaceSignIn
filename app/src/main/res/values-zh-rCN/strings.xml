@@ -6,6 +6,8 @@
     <string name="update_now">立即更新</string>
     <string name="not_yet">暂不更新</string>
 
+    <string name="check_version_toast_mag">您的版本已经是最新的啦</string>
+
     <string name="download_failed">下载失败：</string>
     <string name="download_successful">下载成功,保存路径:</string>
     <string name="download_title">下载安装包中</string>
@@ -46,7 +48,7 @@
 
     <string name="unable_sign_location_error">暂时无法进行签到，请稍后重试，并确保您在活动地点附近</string>
     <string name="unable_sign_time_error">不符合签到时间</string>
-    <string name="unable_sign_unsignout_error">您还没有签离，请先签离该活动</string>
+    <string name="unable_sign_un_sign_out_error">您还没有签离，请先签离该活动</string>
     <string name="unable_sign_already_error">您已经签到过</string>
 
     <string name="sign_dialog_title">确定要签到</string>
@@ -64,7 +66,7 @@
     <string name="sign_in_time_text">签到时间：</string>
     <string name="sign_out_time_text">签离时间：</string>
 
-    <string name="sign_out_fail_location_erro">暂时无法签离，请稍后重试，并确保您在活动地点附近</string>
+    <string name="sign_out_fail_location_error">暂时无法签离，请稍后重试，并确保您在活动地点附近</string>
     <string name="sign_out_fail">签离失败：</string>
     <string name="sign_out_success">签离成功</string>
 
@@ -118,4 +120,7 @@
     <string name="setting_change_password">修改密码</string>
     <string name="setting_updates">检测更新</string>
     <string name="setting_logout">注销</string>
+
+    <string name="dialog_logout_title">是否注销</string>
+    <string name="dialog_logout_msg">您将会退出该账号</string>
 </resources>

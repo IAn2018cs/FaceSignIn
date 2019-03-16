@@ -49,6 +49,8 @@ public class ActiveMovePresenter extends BasePresenter<ActiveMoveContract.IActiv
     private int clickCount;
 
     public boolean isClick = false;
+    private LocationClient mLocationClient;
+    private LocationListener mLocationListener;
 
     public ActiveMovePresenter() {
         mContext = MyApplication.getContext();
@@ -59,17 +61,10 @@ public class ActiveMovePresenter extends BasePresenter<ActiveMoveContract.IActiv
     @Override
     public void initLocation(Context context) {
         // 声明LocationClient类
-        LocationClient mLocationClient = new LocationClient(context);
+        mLocationClient = new LocationClient(context);
+        mLocationListener = new LocationListener();
         // 注册监听函数
-        mLocationClient.registerLocationListener(new BDAbstractLocationListener() {
-            @Override
-            public void onReceiveLocation(BDLocation bdLocation) {
-                String addr = bdLocation.getAddrStr();    //获取详细地址信息
-                String locationDescribe = bdLocation.getLocationDescribe();    //获取位置描述信息
-
-                mOutLocation = addr + locationDescribe;
-            }
-        });
+        mLocationClient.registerLocationListener(mLocationListener);
 
         // 配置定位信息
         LocationClientOption option = new LocationClientOption();
@@ -160,7 +155,7 @@ public class ActiveMovePresenter extends BasePresenter<ActiveMoveContract.IActiv
             uploadSignOutInfo(null);
         } else {
             clickCount ++;
-            getView().showToast(R.string.sign_out_fail_location_erro);
+            getView().showToast(R.string.sign_out_fail_location_error);
         }
     }
 
@@ -254,6 +249,24 @@ public class ActiveMovePresenter extends BasePresenter<ActiveMoveContract.IActiv
             if (presenter != null) {
                 presenter.updateTimeLooper();
             }
+        }
+    }
+
+    @Override
+    public void detach() {
+        super.detach();
+        if (mLocationClient != null && mLocationListener != null) {
+            mLocationClient.unRegisterLocationListener(mLocationListener);
+        }
+    }
+
+    class LocationListener extends BDAbstractLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation bdLocation) {
+            String addr = bdLocation.getAddrStr();    //获取详细地址信息
+            String locationDescribe = bdLocation.getLocationDescribe();    //获取位置描述信息
+
+            mOutLocation = addr + locationDescribe;
         }
     }
 }

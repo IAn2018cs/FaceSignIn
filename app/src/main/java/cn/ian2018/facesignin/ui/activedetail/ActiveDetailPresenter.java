@@ -41,6 +41,8 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.IA
     private String mInLocation = "";
     private int mClickCount;
     private int clickDebug;
+    private LocationClient mLocationClient;
+    private LocationListener mLocationListener;
 
     public ActiveDetailPresenter() {
         mActiveDetailModel = new ActiveDetailModel();
@@ -50,17 +52,10 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.IA
     @Override
     public void initLocation(Context context) {
         // 声明LocationClient类
-        LocationClient mLocationClient = new LocationClient(context);
+        mLocationClient = new LocationClient(context);
+        mLocationListener = new LocationListener();
         // 注册监听函数
-        mLocationClient.registerLocationListener(new BDAbstractLocationListener() {
-            @Override
-            public void onReceiveLocation(BDLocation bdLocation) {
-                String addr = bdLocation.getAddrStr();    //获取详细地址信息
-                String locationDescribe = bdLocation.getLocationDescribe();    //获取位置描述信息
-
-                mInLocation = addr + locationDescribe;
-            }
-        });
+        mLocationClient.registerLocationListener(mLocationListener);
 
         // 配置定位信息
         LocationClientOption option = new LocationClientOption();
@@ -69,7 +64,7 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.IA
         //设置返回经纬度坐标类型，默认gcj02  bd09ll：百度经纬度坐标；
         option.setCoorType("bd09ll");
         //设置发起定位请求的间隔，int类型，单位ms
-        option.setScanSpan(60*1000*60);
+        option.setScanSpan(60 * 1000 * 60);
         //设置是否使用gps，默认false
         option.setOpenGps(true);
         //设置是否在stop的时候杀死这个进程，默认（建议）不杀死，即setIgnoreKillProcess(true)
@@ -106,8 +101,8 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.IA
                     } else {
                         getView().showToast(R.string.unable_sign_time_error);
                     }
-                } else if (mDatabase.isSignOut(SpUtil.getString(Constant.ACCOUNT, ""), active.getId(), new SignItem()) == 0){
-                    getView().showToast(R.string.unable_sign_unsignout_error);
+                } else if (mDatabase.isSignOut(SpUtil.getString(Constant.ACCOUNT, ""), active.getId(), new SignItem()) == 0) {
+                    getView().showToast(R.string.unable_sign_un_sign_out_error);
                 } else {
                     clickDebug++;
                     getView().showToast(R.string.unable_sign_already_error);
@@ -139,48 +134,48 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.IA
                         break;
                     // 没有签离
                     case 2:
-                        getView().showToast(R.string.unable_sign_unsignout_error);
+                        getView().showToast(R.string.unable_sign_un_sign_out_error);
                         break;
                 }
                 break;
         }
     }
 
-    private void signInForService(Active.DataBean active){
+    private void signInForService(Active.DataBean active) {
         getView().showProgressDialog(R.string.sign_dialog_loading_mag);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         String time = df.format(new Date());
-        mActiveDetailModel.signInResult(SpUtil.getString(Constant.ACCOUNT, ""),active.getId(),time,time,mInLocation)
+        mActiveDetailModel.signInResult(SpUtil.getString(Constant.ACCOUNT, ""), active.getId(), time, time, mInLocation)
                 .subscribe(new Subscriber<SignInResult>() {
-            @Override
-            public void onCompleted() {
-            }
+                    @Override
+                    public void onCompleted() {
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                getView().showToast(R.string.sign_fail);
-                getView().closeProgressDialog();
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().showToast(R.string.sign_fail);
+                        getView().closeProgressDialog();
+                    }
 
-            @Override
-            public void onNext(SignInResult signInResult) {
-                getView().closeProgressDialog();
-                if (signInResult.isSucessed()) {
-                    saveSignInData(active, time, signInResult.getData());
-                    // 到签离界面
-                    getView().goSinOutActivity();
-                } else {
-                    getView().showToast(R.string.sign_fail);
-                }
-            }
-        });
+                    @Override
+                    public void onNext(SignInResult signInResult) {
+                        getView().closeProgressDialog();
+                        if (signInResult.isSucessed()) {
+                            saveSignInData(active, time, signInResult.getData());
+                            // 到签离界面
+                            getView().goSinOutActivity();
+                        } else {
+                            getView().showToast(R.string.sign_fail);
+                        }
+                    }
+                });
     }
 
     // 保存数据到本地数据库
     private void saveSignInData(Active.DataBean active, String inTime, int nid) {
         SignItem signItem = new SignItem();
 
-        signItem.setNumber(SpUtil.getString(Constant.ACCOUNT,""));
+        signItem.setNumber(SpUtil.getString(Constant.ACCOUNT, ""));
         signItem.setActiveId(active.getId());
         signItem.setInTime(inTime);
         signItem.setOutTime(inTime);
@@ -231,5 +226,23 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.IA
             e.printStackTrace();
         }
         return true;
+    }
+
+    @Override
+    public void detach() {
+        super.detach();
+        if (mLocationClient != null && mLocationListener != null) {
+            mLocationClient.unRegisterLocationListener(mLocationListener);
+        }
+    }
+
+    class LocationListener extends BDAbstractLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation bdLocation) {
+            String addr = bdLocation.getAddrStr();    //获取详细地址信息
+            String locationDescribe = bdLocation.getLocationDescribe();    //获取位置描述信息
+
+            mInLocation = addr + locationDescribe;
+        }
     }
 }

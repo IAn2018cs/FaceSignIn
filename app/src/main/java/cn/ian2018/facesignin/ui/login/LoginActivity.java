@@ -53,7 +53,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     protected void initData() {
         // 检测更新
         CheckVersionHelper checkVersionHelper = new CheckVersionHelper(this);
-        checkVersionHelper.checkVersionCode();
+        checkVersionHelper.checkVersionCode(false);
 
         // 检测是否登陆
         if (!SpUtil.getBoolean(Constant.IS_REMBER_PWD,false)) {

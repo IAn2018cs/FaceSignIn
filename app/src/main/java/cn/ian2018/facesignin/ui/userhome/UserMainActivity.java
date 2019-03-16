@@ -72,7 +72,7 @@ public class UserMainActivity extends BaseActivity<UserMainPresenter> implements
 
         // 检查版本更新
         CheckVersionHelper checkVersionHelper = new CheckVersionHelper(this);
-        checkVersionHelper.checkVersionCode();
+        checkVersionHelper.checkVersionCode(false);
         // 初始化名言信息
         getPresenter().initSaying();
     }

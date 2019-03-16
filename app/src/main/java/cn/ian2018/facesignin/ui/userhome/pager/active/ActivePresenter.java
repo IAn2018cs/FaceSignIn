@@ -169,7 +169,7 @@ public class ActivePresenter extends BasePresenter<ActiveContract.IActiveView> i
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mActiveList.size() == 0) {
+                if (mActiveList.size() == 0 && getView() != null) {
                     getView().getActiveFail();
                 }
             }

@@ -7,6 +7,8 @@
     <string name="update_now">update now</string>
     <string name="not_yet">not yet</string>
 
+    <string name="check_version_toast_mag">Your version is already up to date.</string>
+
     <string name="download_failed">download failed：</string>
     <string name="download_successful">download successful, save path：</string>
     <string name="download_title">Download apk</string>
@@ -47,7 +49,7 @@
 
     <string name="unable_sign_location_error">Check-in is temporarily unavailable, please try again later and make sure you are near the event location</string>
     <string name="unable_sign_time_error">Does not match the check-in time</string>
-    <string name="unable_sign_unsignout_error">You have not signed out yet, please sign out of the event first.</string>
+    <string name="unable_sign_un_sign_out_error">You have not signed out yet, please sign out of the event first.</string>
     <string name="unable_sign_already_error">You have already checked in</string>
 
     <string name="sign_dialog_title">OK to sign in</string>
@@ -65,7 +67,7 @@
     <string name="sign_in_time_text">Check in time：</string>
     <string name="sign_out_time_text">Signing time：</string>
 
-    <string name="sign_out_fail_location_erro">Temporarily unable to sign out, please try again later and make sure you are near the event location</string>
+    <string name="sign_out_fail_location_error">Temporarily unable to sign out, please try again later and make sure you are near the event location</string>
     <string name="sign_out_fail">Sign off failure：</string>
     <string name="sign_out_success">Sign off success</string>
 
@@ -119,4 +121,7 @@
     <string name="setting_change_password">Change Password</string>
     <string name="setting_updates">Check for updates</string>
     <string name="setting_logout">Logout</string>
+
+    <string name="dialog_logout_title">Logout</string>
+    <string name="dialog_logout_msg">You will be logged out of this account.</string>
 </resources>

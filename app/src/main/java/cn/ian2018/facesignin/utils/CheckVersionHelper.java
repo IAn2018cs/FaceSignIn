@@ -41,7 +41,7 @@ public class CheckVersionHelper {
         mContext = MyApplication.getContext();
     }
 
-    public void checkVersionCode() {
+    public void checkVersionCode(boolean showResult) {
         RetrofitClient.getServiceApi().checkVersion()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -70,6 +70,8 @@ public class CheckVersionHelper {
                                     // 展示下载对话框
                                     showUpDataDialog(appDescribe, appUrl);
                                 }
+                            } else if (showResult) {
+                                ToastUtil.show(R.string.check_version_toast_mag);
                             }
                         } else {
                             Logs.e("获取app信息失败");
