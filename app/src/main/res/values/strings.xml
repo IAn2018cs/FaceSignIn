@@ -114,4 +114,9 @@
     <string name="feedback_msg_empty">Feedback cannot be empty</string>
     <string name="feedback_upload_success">Submit feedback successfully</string>
     <string name="feedback_upload_fail">Submit feedback failed</string>
+
+    <string name="setting_change_info">Modify information</string>
+    <string name="setting_change_password">Change Password</string>
+    <string name="setting_updates">Check for updates</string>
+    <string name="setting_logout">Logout</string>
 </resources>

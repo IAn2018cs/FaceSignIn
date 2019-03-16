@@ -18,6 +18,7 @@ import cn.ian2018.facesignin.data.Constant;
 import cn.ian2018.facesignin.data.SpUtil;
 import cn.ian2018.facesignin.ui.activity.FeedbackActivity;
 import cn.ian2018.facesignin.ui.base.BaseFragment;
+import cn.ian2018.facesignin.ui.setting.SettingActivity;
 
 /**
  * Description:
@@ -88,6 +89,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 getPresenter().repair();
                 break;
             case R.id.ll_setting:
+                SettingActivity.start(getContext());
                 break;
         }
     }

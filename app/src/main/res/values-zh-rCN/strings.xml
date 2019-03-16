@@ -113,4 +113,9 @@
     <string name="feedback_msg_empty">反馈内容不能为空</string>
     <string name="feedback_upload_success">提交反馈成功</string>
     <string name="feedback_upload_fail">提交反馈失败</string>
+
+    <string name="setting_change_info">修改信息</string>
+    <string name="setting_change_password">修改密码</string>
+    <string name="setting_updates">检测更新</string>
+    <string name="setting_logout">注销</string>
 </resources>

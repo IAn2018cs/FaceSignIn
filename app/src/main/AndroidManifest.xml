@@ -85,6 +85,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle" />
 
+        <activity
+            android:name=".ui.setting.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoTitle" />
+
         <service android:name=".service.SensorService" />
 
         <service android:name="com.sensoro.beacon.kit.BeaconService" />
