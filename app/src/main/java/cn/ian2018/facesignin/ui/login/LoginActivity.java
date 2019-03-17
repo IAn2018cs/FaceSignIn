@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import cn.ian2018.facesignin.R;
+import cn.ian2018.facesignin.ui.activity.ForgetPasswordActivity;
 import cn.ian2018.facesignin.ui.base.BaseActivity;
 import cn.ian2018.facesignin.ui.userhome.UserMainActivity;
 import cn.ian2018.facesignin.ui.widget.CustomVideoView;
@@ -56,10 +57,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         checkVersionHelper.checkVersionCode(false);
 
         // 检测是否登陆
-        if (!SpUtil.getBoolean(Constant.IS_REMBER_PWD,false)) {
-            et_account.setText(SpUtil.getString(Constant.ACCOUNT,""));
+        if (!SpUtil.getBoolean(Constant.IS_REMBER_PWD, false)) {
+            et_account.setText(SpUtil.getString(Constant.ACCOUNT, ""));
         } else {
-            loginSuccess(SpUtil.getInt(Constant.USER_TYPE,USER_ORDINARY));
+            loginSuccess(SpUtil.getInt(Constant.USER_TYPE, USER_ORDINARY));
         }
     }
 
@@ -111,7 +112,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        if (data != null) {
+            switch (resultCode) {
+                case ForgetPasswordActivity.FORGET_CODE:
+                    String account = data.getStringExtra("account");
+                    String password = data.getStringExtra("password");
+                    et_account.setText(account);
+                    et_password.setText(password);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -142,11 +152,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             case R.id.bt_login:
                 String account = et_account.getText().toString().trim();
                 String password = et_password.getText().toString().trim();
-                getPresenter().login(account,password);
+                getPresenter().login(account, password);
                 break;
             case R.id.tv_sign_up:
                 break;
             case R.id.tv_forget:
+                ForgetPasswordActivity.start(this);
                 break;
         }
     }
