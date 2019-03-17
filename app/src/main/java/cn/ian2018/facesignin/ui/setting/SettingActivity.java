@@ -158,7 +158,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private void onBack() {
         if (mChangeInfoFragment != null && mChangeInfoFragment.isAdded()) {
-            if (mChangeInfoFragment.mChooseImageDialog.isShowing()) {
+            if (mChangeInfoFragment.mChooseImageDialog != null && mChangeInfoFragment.mChooseImageDialog.isShowing()) {
                 mChangeInfoFragment.mChooseImageDialog.dismiss();
             } else {
                 mToolbar.setTitle(R.string.mine_setting_title);

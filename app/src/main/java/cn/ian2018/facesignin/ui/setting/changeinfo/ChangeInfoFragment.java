@@ -1,5 +1,6 @@
 package cn.ian2018.facesignin.ui.setting.changeinfo;
 
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,18 +22,28 @@ import com.jph.takephoto.model.TakePhotoOptions;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.Configuration;
+import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.concurrent.Executors;
 
 import cn.ian2018.facesignin.R;
+import cn.ian2018.facesignin.bean.AuthTokenResult;
+import cn.ian2018.facesignin.bean.SimpleResult;
 import cn.ian2018.facesignin.data.Constant;
 import cn.ian2018.facesignin.data.SpUtil;
+import cn.ian2018.facesignin.network.retrofit.RetrofitClient;
 import cn.ian2018.facesignin.ui.widget.CircleImageView;
 import cn.ian2018.facesignin.utils.Logs;
 import cn.ian2018.facesignin.utils.ToastUtil;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Description:
@@ -49,9 +60,14 @@ public class ChangeInfoFragment extends TakePhotoFragment implements View.OnClic
     private CircleImageView mCircleImageView;
 
     private String mOldImage, mOldName, mOldClass, mOldPhone;
+    private String mChangeName, mChangeClass, mChangePhone;
     private int mOldGrade;
+    private int mChangeGrade;
     private String imagePath = "";
+
     public DialogPlus mChooseImageDialog;
+    private ProgressDialog mProgressDialog;
+
 
     @Nullable
     @Override
@@ -108,8 +124,116 @@ public class ChangeInfoFragment extends TakePhotoFragment implements View.OnClic
                 showChooseImageDialog();
                 break;
             case R.id.bt_information_change:
+                mChangeName = mChangeNameEt.getText().toString().trim();
+                try {
+                    mChangeGrade = Integer.valueOf(mChangeGradeEt.getText().toString().trim());
+                } catch (Exception e) {
+                    mChangeGrade = 15;
+                    Logs.e("转换异常" + e.getMessage());
+                }
+                mChangeClass = mChangeClassEt.getText().toString().trim();
+                mChangePhone = mChangePhoneEt.getText().toString().trim();
+                if (!mChangeClass.equals(mOldClass) || mChangeGrade != mOldGrade || !mChangeName.equals(mOldName)
+                        || !mChangePhone.equals(mOldPhone) || !imagePath.equals("")) {
+                    if (imagePath.equals("")) {
+                        // 上传修改的信息
+                        changeInfo(mOldImage);
+                    } else {
+                        // 先将图片上传
+                        uploadImage2qiniu();
+                    }
+                } else {
+                    ToastUtil.show(R.string.change_info_no_change);
+                }
                 break;
         }
+    }
+
+    // 先上传图片
+    private void uploadImage2qiniu() {
+        showProgressDialog(R.string.change_info_dialog_msg);
+        RetrofitClient.getServiceApi().getToken(Constant.QINIU_STORAGE_NAME)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<AuthTokenResult>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        closeProgressDialog();
+                        Logs.e("获取Token失败" + e.getMessage());
+                        ToastUtil.show(R.string.change_info_fail);
+                    }
+
+                    @Override
+                    public void onNext(AuthTokenResult authTokenResult) {
+                        if (authTokenResult.isSucessed()) {
+                            String token = authTokenResult.getData();
+                            // 获取文件名称
+                            String fileName = imagePath.substring(imagePath.lastIndexOf("/") + 1);
+                            Logs.i("文件路径：" + imagePath);
+                            Logs.i("文件名称：" + fileName);
+                            mUploadManager.put(imagePath, fileName, token,
+                                    new UpCompletionHandler() {
+                                        @Override
+                                        public void complete(String key, ResponseInfo info, JSONObject res) {
+                                            if (info.isOK()) {
+                                                String changeImageUrl = "http://ian2018.com/" + key;
+                                                // 修改信息
+                                                changeInfo(changeImageUrl);
+                                                Logs.i("上传图片成功");
+                                            } else {
+                                                Logs.e("上传图片失败！！！！");
+                                                ToastUtil.show(R.string.change_info_fail);
+                                            }
+                                            Logs.i(key + ",\r\n " + info + ",\r\n " + res);
+                                        }
+                                    }, null);
+                        } else {
+                            Logs.e("获取Token失败" + authTokenResult.getData());
+                            ToastUtil.show(R.string.change_info_fail);
+                        }
+                    }
+                });
+    }
+
+    private void changeInfo(String image) {
+        showProgressDialog(R.string.change_info_dialog_msg);
+        RetrofitClient.getServiceApi().uploadChangeInfo(SpUtil.getString(Constant.ACCOUNT, ""),
+                mChangeName, mChangeGrade, mChangeClass, 1, mChangePhone, image)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<SimpleResult>() {
+                    @Override
+                    public void onCompleted() {
+                        closeProgressDialog();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        closeProgressDialog();
+                        ToastUtil.show(R.string.change_info_fail);
+                        Logs.e("修改信息失败：" + e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(SimpleResult simpleResult) {
+                        if (simpleResult.isSucessed()) {
+                            ToastUtil.show(R.string.change_info_success);
+
+                            SpUtil.putString(Constant.USER_NAME, mChangeName);
+                            SpUtil.putString(Constant.USER_CLASS, mChangeClass);
+                            SpUtil.putInt(Constant.USER_GRADE, mChangeGrade);
+                            SpUtil.putString(Constant.USER_PHONE, mChangePhone);
+                            SpUtil.putString(Constant.USER_IMAGE, image);
+                        } else {
+                            ToastUtil.show(R.string.change_info_fail);
+                            Logs.e("修改信息失败：");
+                        }
+                    }
+                });
     }
 
     @Override
@@ -121,31 +245,33 @@ public class ChangeInfoFragment extends TakePhotoFragment implements View.OnClic
 
     // 弹出底部对话框
     private void showChooseImageDialog() {
-        mChooseImageDialog = DialogPlus.newDialog(getContext())
-                .setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(DialogPlus dialog, View view) {
-                        switch (view.getId()) {
-                            // 拍照
-                            case R.id.bt_takePhoto:
-                                fromTakePhoto();
-                                dialog.dismiss();
-                                break;
-                            // 从相册选择
-                            case R.id.bt_choosePhoto:
-                                fromDCIMPhoto();
-                                dialog.dismiss();
-                                break;
-                            case R.id.bt_cancel:
-                                dialog.dismiss();
-                                break;
+        if (mChooseImageDialog == null) {
+            mChooseImageDialog = DialogPlus.newDialog(getContext())
+                    .setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(DialogPlus dialog, View view) {
+                            switch (view.getId()) {
+                                // 拍照
+                                case R.id.bt_takePhoto:
+                                    fromTakePhoto();
+                                    dialog.dismiss();
+                                    break;
+                                // 从相册选择
+                                case R.id.bt_choosePhoto:
+                                    fromDCIMPhoto();
+                                    dialog.dismiss();
+                                    break;
+                                case R.id.bt_cancel:
+                                    dialog.dismiss();
+                                    break;
+                            }
                         }
-                    }
-                })
-                .setHeader(R.layout.dialog_header)
-                .setContentHolder(new ViewHolder(R.layout.dialog_choose))
-                .setExpanded(true)
-                .create();
+                    })
+                    .setHeader(R.layout.dialog_header)
+                    .setContentHolder(new ViewHolder(R.layout.dialog_choose))
+                    .setExpanded(true)
+                    .create();
+        }
         mChooseImageDialog.show();
     }
 
@@ -181,7 +307,7 @@ public class ChangeInfoFragment extends TakePhotoFragment implements View.OnClic
                 mTakePhoto.onPickFromCaptureWithCrop(imageUri, getCropOptions());
             } catch (Exception e) {
                 Logs.e("打开相机失败");
-                ToastUtil.show("打开相机失败");
+                ToastUtil.show(R.string.open_camera_fail);
             }
         }
     }
@@ -222,5 +348,23 @@ public class ChangeInfoFragment extends TakePhotoFragment implements View.OnClic
         // 设置是否使用自带剪裁工具
         builder.setWithOwnCrop(false);
         return builder.create();
+    }
+
+    public void showProgressDialog(int msg) {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getContext());
+        }
+        mProgressDialog.setMessage(getString(msg));
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        if (!mProgressDialog.isShowing()) {
+            mProgressDialog.show();
+        }
+    }
+
+    public void closeProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
 }

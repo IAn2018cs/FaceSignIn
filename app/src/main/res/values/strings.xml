@@ -124,4 +124,20 @@
 
     <string name="dialog_logout_title">Logout</string>
     <string name="dialog_logout_msg">You will be logged out of this account.</string>
+
+    <string name="change_info_dialog_msg">Modify information…</string>
+    <string name="change_info_no_change">You have not modified any information</string>
+    <string name="change_info_fail">Failed to modify the information, please try again later</string>
+    <string name="change_info_success">Modify information successfully</string>
+
+    <string name="open_camera_fail">Failed to open camera</string>
+    <string name="choose_image_source">Select an image source</string>
+    <string name="choose_image_take_photo">Take a photo</string>
+    <string name="choose_image_from_album">Choose from album</string>
+
+    <string name="hint_name">name</string>
+    <string name="hint_grade">grade</string>
+    <string name="hint_class">class</string>
+    <string name="hint_phone">phone number</string>
+    <string name="change_button_text">Confirm</string>
 </resources>

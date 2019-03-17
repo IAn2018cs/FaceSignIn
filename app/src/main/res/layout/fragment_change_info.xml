@@ -35,7 +35,7 @@
                     android:layout_width="300dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:hint="名字"
+                    android:hint="@string/hint_name"
                     android:inputType="text"
                     android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
@@ -51,7 +51,7 @@
                     android:layout_width="300dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:hint="年级"
+                    android:hint="@string/hint_grade"
                     android:inputType="number"
                     android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
@@ -67,7 +67,7 @@
                     android:layout_width="300dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:hint="班级"
+                    android:hint="@string/hint_class"
                     android:inputType="text"
                     android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
@@ -83,7 +83,7 @@
                     android:layout_width="300dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:hint="电话"
+                    android:hint="@string/hint_phone"
                     android:inputType="phone"
                     android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
@@ -97,7 +97,7 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginRight="50dp"
                 android:background="@drawable/button_bg"
-                android:text="确认修改"
+                android:text="@string/change_button_text"
                 android:textColor="@color/mdtp_white"
                 android:textSize="16sp" />
         </LinearLayout>

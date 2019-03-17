@@ -11,7 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import cn.ian2018.facesignin.R;
-import cn.ian2018.facesignin.bean.FeedbackResult;
+import cn.ian2018.facesignin.bean.SimpleResult;
 import cn.ian2018.facesignin.bean.PhoneInfo;
 import cn.ian2018.facesignin.data.Constant;
 import cn.ian2018.facesignin.data.SpUtil;
@@ -95,7 +95,7 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
                         phoneInfo.getPhoneBrand(), phoneInfo.getPhoneBrandType(), phoneInfo.getAndroidVersion(), checked ? 1 : 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<FeedbackResult>() {
+                .subscribe(new Subscriber<SimpleResult>() {
                     @Override
                     public void onCompleted() {
                         closeProgressDialog();
@@ -103,12 +103,13 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
 
                     @Override
                     public void onError(Throwable e) {
+                        closeProgressDialog();
                         ToastUtil.show(R.string.feedback_upload_fail);
                         Log.e(TAG, "onError: " + e.getMessage());
                     }
 
                     @Override
-                    public void onNext(FeedbackResult result) {
+                    public void onNext(SimpleResult result) {
                         if (result.isSucessed()) {
                             ToastUtil.show(R.string.feedback_upload_success);
                             mFeedbackEdit.setText("");

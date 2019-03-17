@@ -6,7 +6,7 @@ package cn.ian2018.facesignin.bean;
  * E-mail:chenshuai@amberweather.com
  * Date:2019/3/16
  */
-public class FeedbackResult {
+public class SimpleResult {
 
     /**
      * sucessed : true

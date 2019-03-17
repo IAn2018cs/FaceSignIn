@@ -119,7 +119,7 @@ public class URLs {
     /**
      * 修改个人信息
      */
-    public static final String CHANGE_INFO = HOST_ADDRESS + "HBUCentreInterface/changeInfo.do";
+    public static final String CHANGE_INFO = "changeInfo.do";
     /**
      * 获取值班签到记录
      */
@@ -171,7 +171,7 @@ public class URLs {
     /**
      * 获取七牛云上传认证
      */
-    public static final String GET_TOKEN = HOST_ADDRESS + "HBUCentreInterface/auth.do";
+    public static final String GET_TOKEN = "auth.do";
     /**
      * 获取个人本周值班总时间
      */

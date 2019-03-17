@@ -82,4 +82,9 @@ public class Constant {
      * 签离时用的活动云子id
      */
     public static final String ACTIVE_MOVE_YUNZI_ID = "yunziId";
+
+    /**
+     * 七牛云存储对象
+     */
+    public static final String QINIU_STORAGE_NAME = "hbucentre";
 }

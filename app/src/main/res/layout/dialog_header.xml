@@ -11,5 +11,5 @@
         android:gravity="center"
         android:textColor="#a7a7a7"
         android:padding="15dp"
-        android:text="请选择图片来源" />
+        android:text="@string/choose_image_source" />
 </LinearLayout>
