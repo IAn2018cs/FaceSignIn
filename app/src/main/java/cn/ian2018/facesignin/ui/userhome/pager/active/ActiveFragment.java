@@ -77,7 +77,7 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
         tv_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getContext(), ScanActivity.class),SCAN_CODE);
+                startActivityForResult(new Intent(getContext(), ScanActivity.class), SCAN_CODE);
             }
         });
 
@@ -121,13 +121,13 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
         Logs.d("发现云子:" + info.getYunziId());
         yunziId = info.getYunziId();
         // 根据云子id从网络获取具体活动信息
-        getPresenter().getActiveForNetwork(info.getYunziId(),false);
+        getPresenter().getActiveForNetwork(info.getYunziId(), false);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        getPresenter().onActivityResult(requestCode,data, sensoroManager);
+        getPresenter().onActivityResult(requestCode, data, sensoroManager);
     }
 
     @Override
@@ -200,7 +200,14 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
             public void run() {
                 tv_scan.setVisibility(View.VISIBLE);
             }
-        },2000);
+        }, 2000);
+    }
+
+    @Override
+    public void hideScanText() {
+        if (tv_scan != null) {
+            tv_scan.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -260,6 +267,7 @@ public class ActiveFragment extends BaseFragment<ActivePresenter> implements Act
             TextView tv_name;
             TextView tv_location;
             TextView tv_time;
+
             public ViewHolder(View convertView) {
                 super(convertView);
                 tv_name = convertView.findViewById(R.id.tv_name);

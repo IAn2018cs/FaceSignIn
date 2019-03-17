@@ -96,6 +96,7 @@ public class ActivePresenter extends BasePresenter<ActiveContract.IActiveView> i
                     getView().getActiveSuccess();
                 } else {
                     Logs.d("这个云子上没有活动：" + sensoroId);
+                    getView().getActiveFail();
                 }
             }
         });
@@ -139,6 +140,7 @@ public class ActivePresenter extends BasePresenter<ActiveContract.IActiveView> i
                                 result = result.substring(0,12);
                             }
                             // 获取活动
+                            getView().hideScanText();
                             getView().showScanAnim();
                             getActiveForNetwork(result,true);
                         } catch (StringIndexOutOfBoundsException e) {

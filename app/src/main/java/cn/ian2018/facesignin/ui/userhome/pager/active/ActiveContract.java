@@ -24,6 +24,7 @@ public class ActiveContract {
         void updateActiveList(List<Active.DataBean> actives);
         void getActiveSuccess();
         void getActiveFail();
+        void hideScanText();
     }
 
     interface IActiveModel {
