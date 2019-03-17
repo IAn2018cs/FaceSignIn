@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.ui.activity.ForgetPasswordActivity;
+import cn.ian2018.facesignin.ui.activity.RegisteredActivity;
 import cn.ian2018.facesignin.ui.base.BaseActivity;
 import cn.ian2018.facesignin.ui.userhome.UserMainActivity;
 import cn.ian2018.facesignin.ui.widget.CustomVideoView;
@@ -115,6 +116,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         if (data != null) {
             switch (resultCode) {
                 case ForgetPasswordActivity.FORGET_CODE:
+                case RegisteredActivity.REGISTERED_CODE:
                     String account = data.getStringExtra("account");
                     String password = data.getStringExtra("password");
                     et_account.setText(account);
@@ -155,6 +157,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 getPresenter().login(account, password);
                 break;
             case R.id.tv_sign_up:
+                RegisteredActivity.start(this);
                 break;
             case R.id.tv_forget:
                 ForgetPasswordActivity.start(this);

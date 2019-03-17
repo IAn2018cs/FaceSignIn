@@ -83,7 +83,7 @@ public class URLs {
     /**
      * 注册
      */
-    public static final String SIGN_UP = HOST_ADDRESS + "HBUCentreInterface/signUp.do";
+    public static final String SIGN_UP = "signUp.do";
     /**
      * 获取本周个人排名
      */

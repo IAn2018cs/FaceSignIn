@@ -81,6 +81,7 @@ public class QuantifyPresenter extends BasePresenter<QuantifyContract.IQuantifyV
                     analyzeData();
                 } else {
                     noData = true;
+                    getView().setDesText(mContext.getResources().getString(R.string.quantify_no_sign_data));
                     getView().showEmptyRadarData();
                 }
             }

@@ -151,4 +151,8 @@
     <string name="change_password_fail">修改密码失败</string>
     <string name="change_password_success">修改密码成功</string>
 
+    <string name="registered_info_empty">请将信息填写完整</string>
+    <string name="registered_dialog_msg">注册中…</string>
+    <string name="registered_fail">注册失败</string>
+    <string name="registered_success">注册成功</string>
 </resources>

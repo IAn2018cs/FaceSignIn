@@ -25,15 +25,20 @@ import rx.schedulers.Schedulers;
  * E-mail:chenshuai@ian2018.cn
  * Date:2019/3/17
  */
-public class ForgetPasswordActivity extends BaseActivity implements View.OnClickListener {
+public class RegisteredActivity extends BaseActivity implements View.OnClickListener {
 
-    public static final int FORGET_CODE = 3;
+    public static final int REGISTERED_CODE = 2;
 
-    private EditText mAccountEt, mPasswordEt, mPasswordConfirmEt;
+    private EditText mAccountEt;
+    private EditText mPasswordEt;
+    private EditText mPasswordConfirmEt;
+    private EditText mNameEt;
+    private EditText mGradeEt;
+    private EditText mClassEt;
 
     public static void start(Activity activity) {
-        Intent starter = new Intent(activity, ForgetPasswordActivity.class);
-        activity.startActivityForResult(starter, FORGET_CODE);
+        Intent starter = new Intent(activity, RegisteredActivity.class);
+        activity.startActivityForResult(starter, REGISTERED_CODE);
     }
 
     @Override
@@ -48,7 +53,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
     @Override
     protected void initView() {
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.forget_password);
+        toolbar.setTitle(R.string.register_account);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -58,38 +63,57 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             }
         });
 
-        mAccountEt = findViewById(R.id.et_number);
-        mPasswordEt = findViewById(R.id.et_new);
-        mPasswordConfirmEt = findViewById(R.id.et_new_true);
-        Button changeButton = findViewById(R.id.pwd_change);
-        changeButton.setOnClickListener(this);
+        mAccountEt = findViewById(R.id.et_account);
+        mPasswordEt = findViewById(R.id.et_password);
+        mPasswordConfirmEt = findViewById(R.id.et_password_two);
+        mNameEt = findViewById(R.id.et_name);
+        mGradeEt = findViewById(R.id.et_grade);
+        mClassEt = findViewById(R.id.et_class);
+
+        Button submitButton = findViewById(R.id.bt_submit);
+        submitButton.setOnClickListener(this);
     }
 
     @Override
     protected void setContentView() {
-        setContentView(R.layout.activity_forget_password);
+        setContentView(R.layout.activity_registered);
     }
 
     @Override
     public void onClick(View v) {
         String account = mAccountEt.getText().toString().trim();
         String password = mPasswordEt.getText().toString().trim();
-        String passwordConfirm = mPasswordConfirmEt.getText().toString().trim();
-        if (!account.equals("") && !password.equals("") && !passwordConfirm.equals("")) {
-            if (passwordConfirm.equals(password)) {
-                changePassword(account, password);
+        String password2 = mPasswordConfirmEt.getText().toString().trim();
+        String name = mNameEt.getText().toString().trim();
+        String grade = mGradeEt.getText().toString().trim();
+        String classDes = mClassEt.getText().toString().trim();
+        int gradeCode;
+        try {
+            gradeCode = Integer.parseInt(grade);
+        } catch (Exception e) {
+            gradeCode = 18;
+        }
+
+        // 如果都不为空
+        if (!account.equals("") && !password.equals("") && !password2.equals("")
+                && !name.equals("") && !grade.equals("") && !classDes.equals("")) {
+            // 两次密码一致
+            if (password.equals(password2)) {
+                // 注册
+                registeredAccount(account, password, name, gradeCode, classDes);
             } else {
                 ToastUtil.show(R.string.change_password_password_inconsistent);
             }
         } else {
-            ToastUtil.show(R.string.password_empty);
+            ToastUtil.show(R.string.registered_info_empty);
         }
     }
 
-    private void changePassword(String account, String password) {
-        showProgressDialog(R.string.change_password_dialog_msg);
-        String MD5Password = MD5Util.strToMD5(password);
-        RetrofitClient.getServiceApi().changePassword(account, MD5Password)
+    private void registeredAccount(String account, String password, String name, int grade, String classDes) {
+        showProgressDialog(R.string.registered_dialog_msg);
+        // 对密码加密
+        String md5Pass = MD5Util.strToMD5(password);
+        RetrofitClient.getServiceApi().registeredInfo(account, md5Pass, name, grade, classDes, 1, "")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<SimpleResult>() {
@@ -101,21 +125,21 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                     @Override
                     public void onError(Throwable e) {
                         closeProgressDialog();
-                        ToastUtil.show(R.string.change_password_fail);
-                        Logs.e("修改密码 " + e.getMessage());
+                        ToastUtil.show(R.string.registered_fail);
+                        Logs.e("注册失败 " + e.getMessage());
                     }
 
                     @Override
                     public void onNext(SimpleResult simpleResult) {
                         if (simpleResult.isSucessed()) {
-                            ToastUtil.show(R.string.change_password_success);
+                            ToastUtil.show(R.string.registered_success);
                             Intent intent = new Intent();
                             intent.putExtra("account", account);
                             intent.putExtra("password", password);
-                            setResult(FORGET_CODE, intent);
+                            setResult(REGISTERED_CODE, intent);
                             finish();
                         } else {
-                            ToastUtil.show(R.string.change_password_fail);
+                            ToastUtil.show(R.string.registered_fail);
                         }
                     }
                 });

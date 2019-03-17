@@ -93,4 +93,13 @@ public interface ServiceApi {
     @POST(URLs.CHANGE_PASSWORD)
     @FormUrlEncoded
     Observable<SimpleResult> changePassword(@Field("Account") String account, @Field("Password") String password);
+
+    // 注册
+    @POST(URLs.SIGN_UP)
+    @FormUrlEncoded
+    Observable<SimpleResult> registeredInfo(
+            @Field("studentNum") String account, @Field("password") String password,
+            @Field("name") String name, @Field("grade") int grade,
+            @Field("class") String classDes, @Field("groupCode") int group,
+            @Field("Phone") String phone);
 }

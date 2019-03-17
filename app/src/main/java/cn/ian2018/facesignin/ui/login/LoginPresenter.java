@@ -1,6 +1,7 @@
 package cn.ian2018.facesignin.ui.login;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import cn.ian2018.facesignin.MyApplication;
@@ -74,15 +75,17 @@ public class LoginPresenter extends BasePresenter<LoginContract.ILoginView> impl
                     SpUtil.putString(Constant.USER_PHONE, user.getData().getPhone());
                     SpUtil.putInt(Constant.USER_INTERESTGROUP, user.getData().getInterestGroupCode());
                     String imageUrl = user.getData().getNewImage();
-                    if (imageUrl.contains("http://")) {
-                        SpUtil.putString(Constant.USER_IMAGE, imageUrl);
-                    } else {
-                        if (!imageUrl.equals("null")) {
-                            SpUtil.putString(Constant.USER_IMAGE, "http://123.206.57.216:8080/StudentImage/" + imageUrl);
+                    if (!TextUtils.isEmpty(imageUrl)) {
+                        if (imageUrl.contains("http://")) {
+                            SpUtil.putString(Constant.USER_IMAGE, imageUrl);
                         } else {
-                            imageUrl = user.getData().getOldImage();
-                            SpUtil.putString(Constant.USER_IMAGE, "http://123.206.57.216:8080/OldImage/" + imageUrl);
+                            SpUtil.putString(Constant.USER_IMAGE, "http://123.206.57.216:8080/StudentImage/" + imageUrl);
                         }
+                    } else if (!TextUtils.isEmpty(user.getData().getOldImage())) {
+                        imageUrl = user.getData().getOldImage();
+                        SpUtil.putString(Constant.USER_IMAGE, "http://123.206.57.216:8080/OldImage/" + imageUrl);
+                    } else {
+                        SpUtil.putString(Constant.USER_IMAGE, "");
                     }
 
                     getView().loginSuccess(user.getData().getType());
