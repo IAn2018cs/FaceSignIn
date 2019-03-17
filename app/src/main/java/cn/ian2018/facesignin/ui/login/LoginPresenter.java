@@ -48,10 +48,11 @@ public class LoginPresenter extends BasePresenter<LoginContract.ILoginView> impl
             // 对密码md5加密
             String MD5Pass = MD5Util.strToMD5(password);
             getView().showProgressDialog(R.string.landing);
-            mModel.login(account,MD5Pass).subscribe(new Subscriber<User>() {
+            mModel.login(account, MD5Pass).subscribe(new Subscriber<User>() {
                 @Override
                 public void onCompleted() {
                 }
+
                 @Override
                 public void onError(Throwable e) {
                     getView().loginFail();
@@ -61,9 +62,9 @@ public class LoginPresenter extends BasePresenter<LoginContract.ILoginView> impl
                 @Override
                 public void onNext(User user) {
                     // 记住密码
-                    SpUtil.putString(Constant.ACCOUNT,account);
-                    SpUtil.putString(Constant.PASS_WORD,password);
-                    SpUtil.putBoolean(Constant.IS_REMBER_PWD,true);
+                    SpUtil.putString(Constant.ACCOUNT, account);
+                    SpUtil.putString(Constant.PASS_WORD, MD5Pass);
+                    SpUtil.putBoolean(Constant.IS_REMBER_PWD, true);
                     // 保存用户信息
                     SpUtil.putInt(Constant.USER_TYPE, user.getData().getType());
                     SpUtil.putString(Constant.USER_NAME, user.getData().getName());

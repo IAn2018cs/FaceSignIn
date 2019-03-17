@@ -139,4 +139,16 @@
     <string name="hint_class">班级</string>
     <string name="hint_phone">电话</string>
     <string name="change_button_text">确认修改</string>
+
+    <string name="old_password">旧密码</string>
+    <string name="new_password">新密码</string>
+    <string name="new_password_confirm">确认密码</string>
+
+    <string name="change_password_dialog_msg">更新密码中…</string>
+    <string name="change_password_password_error">密码不正确</string>
+    <string name="change_password_password_same">新密码与旧密码相同！</string>
+    <string name="change_password_password_inconsistent">密码不一致！</string>
+    <string name="change_password_fail">修改密码失败</string>
+    <string name="change_password_success">修改密码成功</string>
+
 </resources>

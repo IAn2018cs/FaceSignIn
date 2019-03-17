@@ -140,4 +140,15 @@
     <string name="hint_class">class</string>
     <string name="hint_phone">phone number</string>
     <string name="change_button_text">Confirm</string>
+
+    <string name="old_password">old password</string>
+    <string name="new_password">new password</string>
+    <string name="new_password_confirm">confirm password</string>
+
+    <string name="change_password_dialog_msg">Update password…</string>
+    <string name="change_password_password_error">The password is incorrect</string>
+    <string name="change_password_password_same">The new password is the same as the old password!</string>
+    <string name="change_password_password_inconsistent">Inconsistent password!</string>
+    <string name="change_password_fail">Password change failed</string>
+    <string name="change_password_success">Password has been updated</string>
 </resources>

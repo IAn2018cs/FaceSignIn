@@ -87,4 +87,8 @@ public class Constant {
      * 七牛云存储对象
      */
     public static final String QINIU_STORAGE_NAME = "hbucentre";
+    /**
+     * 七牛云外链域名
+     */
+    public static final String QINIU_STORAGE_URL = "http://ian2018.com/";
 }

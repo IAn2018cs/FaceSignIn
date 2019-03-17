@@ -180,7 +180,7 @@ public class ChangeInfoFragment extends TakePhotoFragment implements View.OnClic
                                         @Override
                                         public void complete(String key, ResponseInfo info, JSONObject res) {
                                             if (info.isOK()) {
-                                                String changeImageUrl = "http://ian2018.com/" + key;
+                                                String changeImageUrl = Constant.QINIU_STORAGE_URL + key;
                                                 // 修改信息
                                                 changeInfo(changeImageUrl);
                                                 Logs.i("上传图片成功");

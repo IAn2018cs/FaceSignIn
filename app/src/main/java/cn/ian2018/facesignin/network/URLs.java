@@ -39,7 +39,7 @@ public class URLs {
     /**
      * 修改密码
      */
-    public static final String CHANGE_PASSWORD = HOST_ADDRESS + "HBUCentreInterface/changePassword.do";
+    public static final String CHANGE_PASSWORD = "changePassword.do";
     /**
      * 签到
      */

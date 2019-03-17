@@ -88,4 +88,9 @@ public interface ServiceApi {
             @Field("GradeCode") int grade, @Field("ClassDescription") String classDes,
             @Field("Group") int group, @Field("Phone") String phone,
             @Field("ImageUrl") String image);
+
+    // 修改密码
+    @POST(URLs.CHANGE_PASSWORD)
+    @FormUrlEncoded
+    Observable<SimpleResult> changePassword(@Field("Account") String account, @Field("Password") String password);
 }
