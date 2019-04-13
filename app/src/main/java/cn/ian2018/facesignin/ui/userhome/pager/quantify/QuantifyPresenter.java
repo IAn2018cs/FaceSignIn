@@ -109,8 +109,7 @@ public class QuantifyPresenter extends BasePresenter<QuantifyContract.IQuantifyV
         if (lectureFrequency == 0) {
             getView().setDesText(mContext.getResources().getString(R.string.quantify_no_sign_data));
         } else {
-            getView().setDesText(mContext.getResources().getString(R.string.quantify_sign_times1) + lectureFrequency +
-                    mContext.getResources().getString(R.string.quantify_sign_times2));
+            getView().setDesText(mContext.getResources().getString(R.string.quantify_sign_times1, lectureFrequency));
         }
     }
 }

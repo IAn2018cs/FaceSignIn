@@ -46,6 +46,8 @@
     <string name="start_time_text">开始时间：</string>
     <string name="end_time_text">结束时间：</string>
 
+    <string name="sign_in_button_text">签  到</string>
+
     <string name="unable_sign_location_error">暂时无法进行签到，请稍后重试，并确保您在活动地点附近</string>
     <string name="unable_sign_time_error">不符合签到时间</string>
     <string name="unable_sign_un_sign_out_error">您还没有签离，请先签离该活动</string>
@@ -80,8 +82,7 @@
     <string name="quantify_no_data">暂无数据</string>
     <string name="quantify_get_data_fail">历史记录响应失败:</string>
     <string name="quantify_no_sign_data">您还没有参加活动，快去寻找喜欢的活动吧</string>
-    <string name="quantify_sign_times1">累计参加</string>
-    <string name="quantify_sign_times2">次活动</string>
+    <string name="quantify_sign_times1">累计参加 %d 次活动</string>
 
     <string-array name="quantify_string_list">
         <item>毅力</item>
@@ -155,4 +156,6 @@
     <string name="registered_dialog_msg">注册中…</string>
     <string name="registered_fail">注册失败</string>
     <string name="registered_success">注册成功</string>
+
+    <string name="init_failed">引擎初始化失败，错误码为 %d</string>
 </resources>

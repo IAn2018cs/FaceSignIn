@@ -119,6 +119,7 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.IA
                         if (TimeCompare(active, active.getTime().replace("T", " ").substring(0, 19))) {
                             // 如果能检测到云子 可以签到
                             if (getView().isCanSign() || mClickCount > 14 || active.isScan()) {
+                                // TODO 对比人脸
                                 signInForService(active);
                             } else {
                                 getView().showToast(R.string.unable_sign_location_error);

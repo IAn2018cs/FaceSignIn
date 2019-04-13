@@ -97,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="活动详情"
+                    android:text="@string/active_details_title"
                     android:textColor="#343434"
                     android:textSize="18sp" />
 
@@ -138,7 +138,7 @@
                     android:layout_marginLeft="35dp"
                     android:layout_marginRight="35dp"
                     android:layout_marginTop="20dp"
-                    android:text="签  到"
+                    android:text="@string/sign_in_button_text"
                     android:background="@drawable/bt_sign_bg"
                     android:textColor="#ffffff"
                     android:textSize="18sp" />

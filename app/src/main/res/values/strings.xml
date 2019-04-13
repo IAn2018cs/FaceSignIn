@@ -47,6 +47,8 @@
     <string name="start_time_text">start time：</string>
     <string name="end_time_text">end time：</string>
 
+    <string name="sign_in_button_text">Sign in</string>
+
     <string name="unable_sign_location_error">Check-in is temporarily unavailable, please try again later and make sure you are near the event location</string>
     <string name="unable_sign_time_error">Does not match the check-in time</string>
     <string name="unable_sign_un_sign_out_error">You have not signed out yet, please sign out of the event first.</string>
@@ -81,8 +83,7 @@
     <string name="quantify_no_data">No data</string>
     <string name="quantify_get_data_fail">History response failed:</string>
     <string name="quantify_no_sign_data">You have not participated in the event, go find something you like.</string>
-    <string name="quantify_sign_times1">Accumulated  </string>
-    <string name="quantify_sign_times2">  events</string>
+    <string name="quantify_sign_times1">Accumulated  %d times</string>
 
     <string-array name="quantify_string_list">
         <item>Perseverance</item>
@@ -156,4 +157,7 @@
     <string name="registered_dialog_msg">Registering…</string>
     <string name="registered_fail">Registration failed</string>
     <string name="registered_success">Registration success</string>
+
+    <string name="permission_denied">权限被拒绝！</string>
+    <string name="init_failed">引擎初始化失败，错误码为 %d</string>
 </resources>

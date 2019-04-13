@@ -5,6 +5,10 @@ package cn.ian2018.facesignin.data;
  */
 
 public class Constant {
+    // 人脸识别引擎
+    public static final String APP_ID = "6yvZX8JythotMLCK8yMX6gUTVErxNgS6SMMYxV9Ve8AV";
+    public static final String SDK_KEY = "2cMQ6NsWAwk6Sy9LxN8HVnk2gqxjq8biqr81KeQharkg";
+
     /**
      * 用户账号（学号）
      */
