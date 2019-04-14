@@ -82,7 +82,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_name"
+                android:inputType="text"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="14sp" />
         </android.support.design.widget.TextInputLayout>
 
@@ -113,7 +115,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_class"
+                android:inputType="text"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="14sp" />
         </android.support.design.widget.TextInputLayout>
 
@@ -124,7 +128,7 @@
             android:layout_margin="25dp"
             android:background="@drawable/button_bg"
             android:padding="10dp"
-            android:text="注  册"
+            android:text="@string/registered_button"
             android:textColor="#ffffff"
             android:textSize="18sp" />
     </LinearLayout>

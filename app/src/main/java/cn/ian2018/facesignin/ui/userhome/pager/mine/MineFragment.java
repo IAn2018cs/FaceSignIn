@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
+
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.data.Constant;
 import cn.ian2018.facesignin.data.SpUtil;
+import cn.ian2018.facesignin.faceserver.FaceServer;
 import cn.ian2018.facesignin.ui.activity.FeedbackActivity;
 import cn.ian2018.facesignin.ui.base.BaseFragment;
 import cn.ian2018.facesignin.ui.setting.SettingActivity;
+import cn.ian2018.facesignin.utils.Utils;
 
 /**
  * Description:
@@ -30,6 +35,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private ImageView mAvatarIv;
     private TextView mNameTv, mGradeTv, mClassTv;
+    private File mFaceImgFile;
 
     @Override
     protected View createView(LayoutInflater inflater, ViewGroup container) {
@@ -58,11 +64,22 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         mNameTv.setText(SpUtil.getString(Constant.USER_NAME, ""));
         mGradeTv.setText(String.format(getString(R.string.mine_grade_text), SpUtil.getInt(Constant.USER_GRADE, 18)));
         mClassTv.setText(String.format(getString(R.string.mine_class_text), SpUtil.getString(Constant.USER_CLASS, "")));
-        Glide.with(getContext()).load(SpUtil.getString(Constant.USER_IMAGE, ""))
-                .placeholder(R.drawable.avatar_placeholder)
-                .centerCrop()
-                .error(R.drawable.avatar_placeholder)
-                .into(mAvatarIv);
+
+        // 如果没有修改头像  使用人脸注册的照片
+        mFaceImgFile = Utils.getCurrentFaceImg(getContext());
+        if (TextUtils.isEmpty(SpUtil.getString(Constant.USER_IMAGE, "")) && mFaceImgFile != null) {
+            Glide.with(getContext()).load(mFaceImgFile)
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .centerCrop()
+                    .error(R.drawable.avatar_placeholder)
+                    .into(mAvatarIv);
+        } else {
+            Glide.with(getContext()).load(SpUtil.getString(Constant.USER_IMAGE, ""))
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .centerCrop()
+                    .error(R.drawable.avatar_placeholder)
+                    .into(mAvatarIv);
+        }
     }
 
     @Override
@@ -132,11 +149,20 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         dialog.setView(view, 0, 0, 0, 0);
 
         ImageView iv_avatar = view.findViewById(R.id.iv_avatar);
-        Glide.with(getContext()).load(SpUtil.getString(Constant.USER_IMAGE, ""))
-                .placeholder(R.drawable.avatar_placeholder)
-                .centerCrop()
-                .error(R.drawable.avatar_placeholder)
-                .into(iv_avatar);
+
+        if (TextUtils.isEmpty(SpUtil.getString(Constant.USER_IMAGE, "")) && mFaceImgFile != null) {
+            Glide.with(getContext()).load(mFaceImgFile)
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .centerCrop()
+                    .error(R.drawable.avatar_placeholder)
+                    .into(iv_avatar);
+        } else {
+            Glide.with(getContext()).load(SpUtil.getString(Constant.USER_IMAGE, ""))
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .centerCrop()
+                    .error(R.drawable.avatar_placeholder)
+                    .into(iv_avatar);
+        }
 
         dialog.show();
     }

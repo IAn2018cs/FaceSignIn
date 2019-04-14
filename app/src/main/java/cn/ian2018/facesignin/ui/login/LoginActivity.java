@@ -158,8 +158,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 getPresenter().login(account, password);
                 break;
             case R.id.tv_sign_up:
-//                RegisteredActivity.start(this);
-                RegisterAndRecognizeActivity.start(this);
+                RegisteredActivity.start(this);
                 break;
             case R.id.tv_forget:
                 ForgetPasswordActivity.start(this);

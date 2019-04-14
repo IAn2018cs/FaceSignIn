@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ import cn.ian2018.facesignin.network.retrofit.RetrofitClient;
 import cn.ian2018.facesignin.ui.widget.CircleImageView;
 import cn.ian2018.facesignin.utils.Logs;
 import cn.ian2018.facesignin.utils.ToastUtil;
+import cn.ian2018.facesignin.utils.Utils;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -99,9 +101,18 @@ public class ChangeInfoFragment extends TakePhotoFragment implements View.OnClic
         mChangeGradeEt.setText(mOldGrade + "");
         mChangeClassEt.setText(mOldClass);
         mChangePhoneEt.setText(mOldPhone);
-        Glide.with(this).load(mOldImage).centerCrop()
-                .error(R.drawable.avatar_placeholder)
-                .into(mCircleImageView);
+
+        // 如果没有修改头像  使用人脸注册的照片
+        File faceImgFile = Utils.getCurrentFaceImg(getContext());
+        if (TextUtils.isEmpty(mOldImage) && faceImgFile != null) {
+            Glide.with(getContext()).load(faceImgFile)
+                    .error(R.drawable.avatar_placeholder)
+                    .into(mCircleImageView);
+        } else {
+            Glide.with(this).load(mOldImage).centerCrop()
+                    .error(R.drawable.avatar_placeholder)
+                    .into(mCircleImageView);
+        }
     }
 
     private void initView(View rootView) {

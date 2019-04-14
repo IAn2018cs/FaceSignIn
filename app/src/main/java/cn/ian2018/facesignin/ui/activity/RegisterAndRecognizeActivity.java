@@ -1,6 +1,7 @@
 package cn.ian2018.facesignin.ui.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,15 +13,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.CompoundButton;
-import android.widget.Switch;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.arcsoft.face.AgeInfo;
@@ -43,9 +40,9 @@ import cn.ian2018.facesignin.bean.FacePreviewInfo;
 import cn.ian2018.facesignin.faceserver.CompareResult;
 import cn.ian2018.facesignin.faceserver.FaceServer;
 import cn.ian2018.facesignin.ui.widget.FaceRectView;
-import cn.ian2018.facesignin.ui.widget.ShowFaceInfoAdapter;
 import cn.ian2018.facesignin.utils.ConfigUtil;
 import cn.ian2018.facesignin.utils.DrawHelper;
+import cn.ian2018.facesignin.utils.ToastUtil;
 import cn.ian2018.facesignin.utils.camera.CameraHelper;
 import cn.ian2018.facesignin.utils.camera.CameraListener;
 import cn.ian2018.facesignin.utils.face.FaceHelper;
@@ -63,6 +60,12 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class RegisterAndRecognizeActivity extends AppCompatActivity {
+    /**
+     * 当前是检测还是注册
+     */
+    private static final int TYPE_DETECT = 1001;
+    private static final int TYPE_REGISTER = 1002;
+
     private static final String TAG = "RegisterAndRecognize";
     private static final int MAX_DETECT_NUM = 10;
     /**
@@ -79,7 +82,6 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
     private FaceEngine faceEngine;
     private FaceHelper faceHelper;
     private List<CompareResult> compareResultList;
-    private ShowFaceInfoAdapter adapter;
     /**
      * 活体检测的开关
      */
@@ -113,7 +115,7 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
      */
     private FaceRectView faceRectView;
 
-    private Switch switchLivenessDetect;
+    private Button registerBt;
 
     private static final int ACTION_REQUEST_PERMISSIONS = 0x001;
     private static final float SIMILAR_THRESHOLD = 0.8F;
@@ -124,10 +126,21 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
             Manifest.permission.CAMERA,
             Manifest.permission.READ_PHONE_STATE
     };
+    private String mAccount;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, RegisterAndRecognizeActivity.class);
+        starter.putExtra("open_type", TYPE_DETECT);
         context.startActivity(starter);
+    }
+
+    // 注册人脸跳转
+    public static void startForResult(Activity activity, String account, String name) {
+        Intent starter = new Intent(activity, RegisterAndRecognizeActivity.class);
+        starter.putExtra("open_type", TYPE_REGISTER);
+        starter.putExtra("account", account);
+        starter.putExtra("name", name);
+        activity.startActivityForResult(starter, 0);
     }
 
     @Override
@@ -148,24 +161,12 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
         //本地人脸库初始化
         FaceServer.getInstance().init(this);
 
+        registerBt = findViewById(R.id.bt_registered);
         previewView = findViewById(R.id.texture_preview);
         faceRectView = findViewById(R.id.face_rect_view);
-        switchLivenessDetect = findViewById(R.id.switch_liveness_detect);
-        switchLivenessDetect.setChecked(livenessDetect);
-        switchLivenessDetect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                livenessDetect = isChecked;
-            }
-        });
-        RecyclerView recyclerShowFaceInfo = findViewById(R.id.recycler_view_person);
         compareResultList = new ArrayList<>();
-        adapter = new ShowFaceInfoAdapter(compareResultList, this);
-        recyclerShowFaceInfo.setAdapter(adapter);
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        int spanCount = (int) (dm.widthPixels / (getResources().getDisplayMetrics().density * 100 + 0.5f));
-        recyclerShowFaceInfo.setLayoutManager(new GridLayoutManager(this, spanCount));
-        recyclerShowFaceInfo.setItemAnimator(new DefaultItemAnimator());
+
+        initIntent();
 
         if (!checkPermissions(NEEDED_PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, NEEDED_PERMISSIONS, ACTION_REQUEST_PERMISSIONS);
@@ -173,8 +174,19 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
             initEngine();
             initCamera();
         }
+    }
 
-
+    private void initIntent() {
+        Intent intent = getIntent();
+        int openType = intent.getIntExtra("open_type", -1);
+        if (openType == TYPE_REGISTER) {
+            registerBt.setVisibility(View.VISIBLE);
+            // 暂时只保存账号
+            mAccount = intent.getStringExtra("account");
+            String name = intent.getStringExtra("name");
+        } else {
+            registerBt.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -315,6 +327,7 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
                     faceRectView.clearFaceInfo();
                 }
                 List<FacePreviewInfo> facePreviewInfoList = faceHelper.onPreviewFrame(nv21);
+                // 框出人脸
                 if (facePreviewInfoList != null && faceRectView != null && drawHelper != null) {
                     List<DrawInfo> drawInfoList = new ArrayList<>();
                     for (int i = 0; i < facePreviewInfoList.size(); i++) {
@@ -329,7 +342,7 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
                     Observable.create(new ObservableOnSubscribe<Boolean>() {
                         @Override
                         public void subscribe(ObservableEmitter<Boolean> emitter) {
-                            boolean success = FaceServer.getInstance().register(RegisterAndRecognizeActivity.this, nv21.clone(), previewSize.width, previewSize.height, "registered " + faceHelper.getCurrentTrackId());
+                            boolean success = FaceServer.getInstance().register(RegisterAndRecognizeActivity.this, nv21.clone(), previewSize.width, previewSize.height, mAccount);
                             emitter.onNext(success);
                         }
                     })
@@ -343,9 +356,16 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onNext(Boolean success) {
-                                    String result = success ? "register success!" : "register failed!";
-                                    Toast.makeText(RegisterAndRecognizeActivity.this, result, Toast.LENGTH_SHORT).show();
                                     registerStatus = REGISTER_STATUS_DONE;
+                                    if (success) {
+                                        // 注册成功 返回注册页面
+                                        Intent intent = new Intent();
+                                        intent.putExtra("register_flag", success.booleanValue());
+                                        setResult(0, intent);
+                                        finish();
+                                    } else {
+                                        ToastUtil.showLong("注册人脸识别，请重试");
+                                    }
                                 }
 
                                 @Override
@@ -442,7 +462,6 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
             for (int i = compareResultList.size() - 1; i >= 0; i--) {
                 if (!keySet.contains(compareResultList.get(i).getTrackId())) {
                     compareResultList.remove(i);
-                    adapter.notifyItemRemoved(i);
                 }
             }
         }
@@ -474,6 +493,7 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
                     @Override
                     public void subscribe(ObservableEmitter<CompareResult> emitter) {
 //                        Log.i(TAG, "subscribe: fr search start = " + System.currentTimeMillis() + " trackId = " + requestId);
+                        // 对比人脸
                         CompareResult compareResult = FaceServer.getInstance().getTopOfFaceLib(frFace);
 //                        Log.i(TAG, "subscribe: fr search end = " + System.currentTimeMillis() + " trackId = " + requestId);
                         if (compareResult == null) {
@@ -517,12 +537,11 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
                                 //对于多人脸搜索，假如最大显示数量为 MAX_DETECT_NUM 且有新的人脸进入，则以队列的形式移除
                                 if (compareResultList.size() >= MAX_DETECT_NUM) {
                                     compareResultList.remove(0);
-                                    adapter.notifyItemRemoved(0);
                                 }
                                 //添加显示人员时，保存其trackId
                                 compareResult.setTrackId(requestId);
                                 compareResultList.add(compareResult);
-                                adapter.notifyItemInserted(compareResultList.size() - 1);
+                                // 检测成功
                             }
                             requestFeatureStatusMap.put(requestId, RequestFeatureStatus.SUCCEED);
                             faceHelper.addName(requestId, compareResult.getUserName());

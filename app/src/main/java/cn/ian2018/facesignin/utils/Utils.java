@@ -14,6 +14,7 @@ import android.net.NetworkInfo;
 import android.provider.Settings;
 import android.widget.TextView;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,6 +24,7 @@ import java.util.TimeZone;
 import cn.ian2018.facesignin.MyApplication;
 import cn.ian2018.facesignin.data.Constant;
 import cn.ian2018.facesignin.data.SpUtil;
+import cn.ian2018.facesignin.faceserver.FaceServer;
 
 
 /**
@@ -32,6 +34,7 @@ public class Utils {
 
     /**
      * 判断网络情况
+     *
      * @param context 上下文
      * @return false 表示没有网络 true 表示有网络
      */
@@ -93,7 +96,7 @@ public class Utils {
     // 判断服务是否在运行
     public static boolean ServiceIsWorked(String name) {
         ActivityManager myManager = (ActivityManager) MyApplication.getContext().getSystemService(Context.ACTIVITY_SERVICE);
-        ArrayList<ActivityManager.RunningServiceInfo> runningService = (ArrayList<ActivityManager.RunningServiceInfo>)myManager.getRunningServices(300);
+        ArrayList<ActivityManager.RunningServiceInfo> runningService = (ArrayList<ActivityManager.RunningServiceInfo>) myManager.getRunningServices(300);
         for (int i = 0; i < runningService.size(); i++) {
             if (runningService.get(i).service.getClassName().toString().equals(name)) {
                 return true;
@@ -132,7 +135,7 @@ public class Utils {
     }
 
     // 获取当前星期
-    public static  int getWeek(){
+    public static int getWeek() {
         final Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
         String mWay = String.valueOf(c.get(Calendar.DAY_OF_WEEK));
@@ -142,11 +145,11 @@ public class Utils {
     // 根据编号获取组别
     public static String getGroup(int groupCode) {
         String group = "";
-        String[] groups = new String[]{"Android组","iOS组","Java组","PHP组","行政组","前端组","视频组",".NET组"};
+        String[] groups = new String[]{"Android组", "iOS组", "Java组", "PHP组", "行政组", "前端组", "视频组", ".NET组"};
         if (groupCode == 0) {
             group = "请修改组别";
         } else {
-            group = groups[groupCode-1];
+            group = groups[groupCode - 1];
         }
         return group;
     }
@@ -154,11 +157,11 @@ public class Utils {
     // 根据编号获取兴趣小组
     public static String getInterestGroup(int interest) {
         String group = "";
-        String[] groups = new String[]{"前端实现","后台实现","大数据","物联网","微信小程序","区块链","人工智能"};
+        String[] groups = new String[]{"前端实现", "后台实现", "大数据", "物联网", "微信小程序", "区块链", "人工智能"};
         if (interest == 0) {
             group = "无";
         } else {
-            group = groups[interest-1];
+            group = groups[interest - 1];
         }
         return group;
     }
@@ -192,8 +195,8 @@ public class Utils {
 
     // 根据用户类型获取活动账号
     public static int getAccount() {
-        int account=0;
-        int type = SpUtil.getInt(Constant.USER_TYPE,0);
+        int account = 0;
+        int type = SpUtil.getInt(Constant.USER_TYPE, 0);
         switch (type) {
             // 管理员
             case 1:
@@ -206,9 +209,27 @@ public class Utils {
             // 组长 人力
             case 3:
             case 4:
-                account = SpUtil.getInt(Constant.USER_GROUP,0);
+                account = SpUtil.getInt(Constant.USER_GROUP, 0);
                 break;
         }
         return account;
+    }
+
+    // 获取当前人脸注册的照片
+    public static File getCurrentFaceImg(Context context) {
+        File faceImgDir = new File(context.getFilesDir().getAbsolutePath() + File.separator + FaceServer.SAVE_IMG_DIR);
+        if (!faceImgDir.exists() || !faceImgDir.isDirectory()) {
+            return null;
+        }
+        File[] faceImgFiles = faceImgDir.listFiles();
+        if (faceImgFiles == null || faceImgFiles.length == 0) {
+            return null;
+        }
+        for (File file : faceImgFiles) {
+            if (file.getName().contains(SpUtil.getString(Constant.ACCOUNT, ""))) {
+                return file;
+            }
+        }
+        return null;
     }
 }

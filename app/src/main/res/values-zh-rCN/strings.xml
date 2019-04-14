@@ -156,6 +156,11 @@
     <string name="registered_dialog_msg">注册中…</string>
     <string name="registered_fail">注册失败</string>
     <string name="registered_success">注册成功</string>
+    <string name="registered_button">注  册</string>
 
+    <string name="register_face_dialog_title">去注册人脸</string>
+    <string name="register_face_dialog_msg">签到活动的时候需要进行人脸识别，必须绑定人脸后才能完成注册</string>
+
+    <string name="permission_denied">权限被拒绝！</string>
     <string name="init_failed">引擎初始化失败，错误码为 %d</string>
 </resources>

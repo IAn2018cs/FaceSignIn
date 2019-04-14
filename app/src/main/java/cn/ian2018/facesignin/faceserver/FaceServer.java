@@ -197,10 +197,10 @@ public class FaceServer {
      * @param nv21    NV21数据
      * @param width   NV21宽度
      * @param height  NV21高度
-     * @param name    保存的名字，可为空
+     * @param account    保存的名字，可为空
      * @return 是否注册成功
      */
-    public boolean register(Context context, byte[] nv21, int width, int height, String name) {
+    public boolean register(Context context, byte[] nv21, int width, int height, String account) {
         synchronized (this) {
             if (faceEngine == null || context == null || nv21 == null || width % 4 != 0 || nv21.length != width * height * 3 / 2) {
                 return false;
@@ -234,7 +234,8 @@ public class FaceServer {
 
                 //2.特征提取
                 code = faceEngine.extractFaceFeature(nv21, width, height, FaceEngine.CP_PAF_NV21, faceInfoList.get(0), faceFeature);
-                String userName = name == null ? String.valueOf(System.currentTimeMillis()) : name;
+                // TODO 先只保存账号
+                String userName = account == null ? String.valueOf(System.currentTimeMillis()) : account;
                 try {
                     //3.保存注册结果（注册图、特征数据）
                     if (code == ErrorInfo.MOK) {
