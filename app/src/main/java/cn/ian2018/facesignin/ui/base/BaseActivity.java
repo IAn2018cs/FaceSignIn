@@ -1,7 +1,9 @@
 package cn.ian2018.facesignin.ui.base;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +18,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.ian2018.facesignin.R;
+import cn.ian2018.facesignin.data.Constant;
+import cn.ian2018.facesignin.data.SpUtil;
+import cn.ian2018.facesignin.ui.activity.RegisterAndRecognizeActivity;
+import cn.ian2018.facesignin.ui.activity.RegisteredActivity;
 import cn.ian2018.facesignin.utils.ToastUtil;
 
 /**
@@ -131,6 +137,31 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
+    }
+
+    protected void showRegisterFaceDialog(Activity activity) {
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+        //设置对话框左上角图标
+        builder.setIcon(R.mipmap.ic_launcher);
+        //设置对话框标题
+        builder.setTitle(R.string.register_face_dialog_title);
+        //设置文本内容
+        builder.setMessage(R.string.register_face_dialog_msg2);
+        //设置积极的按钮
+        builder.setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                RegisterAndRecognizeActivity.startForRegister(activity, SpUtil.getString(Constant.ACCOUNT, ""), SpUtil.getString(Constant.USER_NAME, ""));
+            }
+        });
+        //设置消极的按钮
+        builder.setNegativeButton(R.string.dialog_negative, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
     }
 
     @Override

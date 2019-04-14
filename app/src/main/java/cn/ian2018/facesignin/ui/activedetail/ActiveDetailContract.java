@@ -17,11 +17,13 @@ public class ActiveDetailContract {
     interface IActiveDetailView extends BaseView {
         boolean isCanSign();
         void goSinOutActivity();
+        void goDetectActivity();
     }
 
     interface IActiveDetailPresenter {
         void signIn(Active.DataBean active);
         void initLocation(Context context);
+        void signInForService(Active.DataBean active);
     }
 
     interface IActiveDetailModel {

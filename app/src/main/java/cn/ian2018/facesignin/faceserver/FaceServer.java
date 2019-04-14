@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.ian2018.facesignin.bean.FaceRegisterInfo;
+import cn.ian2018.facesignin.data.Constant;
+import cn.ian2018.facesignin.data.SpUtil;
 import cn.ian2018.facesignin.utils.ImageUtil;
 
 /**
@@ -324,7 +326,11 @@ public class FaceServer {
         }
         isProcessing = false;
         if (maxSimilarIndex != -1) {
-            return new CompareResult(faceRegisterInfoList.get(maxSimilarIndex).getName(), maxSimilar);
+            // 如果是当前账号下的人脸
+            String name = faceRegisterInfoList.get(maxSimilarIndex).getName();
+            if (name.contains(SpUtil.getString(Constant.ACCOUNT,""))) {
+                return new CompareResult(faceRegisterInfoList.get(maxSimilarIndex).getName(), maxSimilar);
+            }
         }
         return null;
     }

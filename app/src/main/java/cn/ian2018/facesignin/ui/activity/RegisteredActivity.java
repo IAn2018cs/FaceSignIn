@@ -132,7 +132,7 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
             builder.setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    RegisterAndRecognizeActivity.startForResult(RegisteredActivity.this, mAccount, mName);
+                    RegisterAndRecognizeActivity.startForRegister(RegisteredActivity.this, mAccount, mName);
                 }
             });
             //设置消极的按钮

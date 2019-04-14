@@ -3,6 +3,7 @@ package cn.ian2018.facesignin.ui.activedetail;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,10 @@ import cn.ian2018.facesignin.bean.Active;
 import cn.ian2018.facesignin.event.SensorGone;
 import cn.ian2018.facesignin.event.SensorUpdate;
 import cn.ian2018.facesignin.ui.activemove.ActiveMoveActivity;
+import cn.ian2018.facesignin.ui.activity.RegisterAndRecognizeActivity;
 import cn.ian2018.facesignin.ui.base.BaseActivity;
+import cn.ian2018.facesignin.utils.ToastUtil;
+import cn.ian2018.facesignin.utils.Utils;
 
 import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE_DUTY;
 import static cn.ian2018.facesignin.ui.userhome.pager.active.ActiveFragment.TYPE_ORDINARY;
@@ -149,7 +154,13 @@ public class ActiveDetailActivity extends BaseActivity<ActiveDetailPresenter> im
 
     @Override
     public void onClick(View v) {
-        showSignConfirmDialog();
+        // 检测本地是否有注册的人脸
+        File currentFaceImg = Utils.getCurrentFaceImg(this);
+        if (currentFaceImg != null) {
+            showSignConfirmDialog();
+        } else {
+            showRegisterFaceDialog(this);
+        }
     }
 
     @Override
@@ -161,6 +172,24 @@ public class ActiveDetailActivity extends BaseActivity<ActiveDetailPresenter> im
     @Override
     public boolean isCanSign() {
         return isCanSign;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RegisterAndRecognizeActivity.DETECT_RESULT_CODE && data != null) {
+            getPresenter().signInForService(mActive);
+        } else if (resultCode == 0){
+            getPresenter().signInForService(mActive);
+        } else {
+            ToastUtil.show(R.string.sign_fail);
+        }
+    }
+
+    @Override
+    public void goDetectActivity() {
+        // 进行人脸检测
+        RegisterAndRecognizeActivity.startForDetect(this);
     }
 
     @Override

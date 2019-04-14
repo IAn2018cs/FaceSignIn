@@ -66,6 +66,9 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
     private static final int TYPE_DETECT = 1001;
     private static final int TYPE_REGISTER = 1002;
 
+    // 人脸识别结果返回给上一个activity
+    public static final int DETECT_RESULT_CODE = 2001;
+
     private static final String TAG = "RegisterAndRecognize";
     private static final int MAX_DETECT_NUM = 10;
     /**
@@ -128,14 +131,15 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
     };
     private String mAccount;
 
-    public static void start(Context context) {
-        Intent starter = new Intent(context, RegisterAndRecognizeActivity.class);
+    // 检测人脸
+    public static void startForDetect(Activity activity) {
+        Intent starter = new Intent(activity, RegisterAndRecognizeActivity.class);
         starter.putExtra("open_type", TYPE_DETECT);
-        context.startActivity(starter);
+        activity.startActivityForResult(starter, DETECT_RESULT_CODE);
     }
 
     // 注册人脸跳转
-    public static void startForResult(Activity activity, String account, String name) {
+    public static void startForRegister(Activity activity, String account, String name) {
         Intent starter = new Intent(activity, RegisterAndRecognizeActivity.class);
         starter.putExtra("open_type", TYPE_REGISTER);
         starter.putExtra("account", account);
@@ -364,7 +368,7 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
                                         setResult(0, intent);
                                         finish();
                                     } else {
-                                        ToastUtil.showLong("注册人脸识别，请重试");
+                                        ToastUtil.showLong("注册人脸失败，请重试");
                                     }
                                 }
 
@@ -541,11 +545,15 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
                                 //添加显示人员时，保存其trackId
                                 compareResult.setTrackId(requestId);
                                 compareResultList.add(compareResult);
-                                // 检测成功
                             }
                             requestFeatureStatusMap.put(requestId, RequestFeatureStatus.SUCCEED);
                             faceHelper.addName(requestId, compareResult.getUserName());
 
+                            // 检测成功
+                            Intent intent = new Intent();
+                            intent.putExtra("detect_result", true);
+                            setResult(DETECT_RESULT_CODE, intent);
+                            finish();
                         } else {
                             requestFeatureStatusMap.put(requestId, RequestFeatureStatus.FAILED);
                             faceHelper.addName(requestId, "VISITOR " + requestId);

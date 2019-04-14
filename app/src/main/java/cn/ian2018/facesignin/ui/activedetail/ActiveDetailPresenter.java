@@ -119,8 +119,8 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.IA
                         if (TimeCompare(active, active.getTime().replace("T", " ").substring(0, 19))) {
                             // 如果能检测到云子 可以签到
                             if (getView().isCanSign() || mClickCount > 14 || active.isScan()) {
-                                // TODO 对比人脸
-                                signInForService(active);
+                                // 对比人脸
+                                getView().goDetectActivity();
                             } else {
                                 getView().showToast(R.string.unable_sign_location_error);
                                 mClickCount++;
@@ -142,7 +142,8 @@ public class ActiveDetailPresenter extends BasePresenter<ActiveDetailContract.IA
         }
     }
 
-    private void signInForService(Active.DataBean active) {
+    @Override
+    public void signInForService(Active.DataBean active) {
         getView().showProgressDialog(R.string.sign_dialog_loading_mag);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         String time = df.format(new Date());

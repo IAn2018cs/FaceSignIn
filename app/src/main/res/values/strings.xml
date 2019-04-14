@@ -161,6 +161,7 @@
 
     <string name="register_face_dialog_title">Go to register face</string>
     <string name="register_face_dialog_msg">Face recognition is required when signing in. You must bind your face to complete registration.</string>
+    <string name="register_face_dialog_msg2">After reinstalling the app or clearing the data, you need to re-register the face</string>
 
     <string name="permission_denied">Permission denied！</string>
     <string name="init_failed">Engine initialization failed with error code %d</string>
