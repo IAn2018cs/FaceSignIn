@@ -1,6 +1,7 @@
 package cn.ian2018.facesignin.ui.userhome.pager.active;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -161,7 +162,11 @@ public class ActivePresenter extends BasePresenter<ActiveContract.IActiveView> i
         checkTimeThread();
         // 如果服务没有运行，开启服务
         if (!Utils.ServiceIsWorked(SensorService.class.getName())) {
-            getContext().startService(new Intent(getContext(), SensorService.class));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                getContext().startForegroundService(new Intent(getContext(), SensorService.class));
+            } else {
+                getContext().startService(new Intent(getContext(), SensorService.class));
+            }
         }
     }
 

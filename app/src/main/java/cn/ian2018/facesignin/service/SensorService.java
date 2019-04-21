@@ -1,8 +1,12 @@
 package cn.ian2018.facesignin.service;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -19,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import cn.ian2018.facesignin.MyApplication;
 import cn.ian2018.facesignin.R;
 import cn.ian2018.facesignin.data.Constant;
 import cn.ian2018.facesignin.data.SpUtil;
@@ -39,6 +44,7 @@ public class SensorService extends Service {
     private String startTime = "";
     private boolean isCheck = false;
     private boolean isOpen = false;
+    private static final String CHANNEL_ID = "facesign";
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -52,9 +58,15 @@ public class SensorService extends Service {
         Logs.d("onCreate服务创建");
 
         // 绑定前台服务
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "facesign", NotificationManager.IMPORTANCE_MIN);
+            NotificationManager manager = (NotificationManager) MyApplication.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.createNotificationChannel(channel);
+        }
+
         //Intent notificationIntent = new Intent(this,MainActivity.class);
         //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,notificationIntent, 0);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(getResources().getString(R.string.app_name))
                 .setContentText(getResources().getString(R.string.notification_bar_title));
