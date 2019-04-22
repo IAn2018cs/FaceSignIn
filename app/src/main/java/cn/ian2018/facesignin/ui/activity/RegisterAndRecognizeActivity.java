@@ -2,7 +2,6 @@ package cn.ian2018.facesignin.ui.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
@@ -68,6 +67,7 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
 
     // 人脸识别结果返回给上一个activity
     public static final int DETECT_RESULT_CODE = 2001;
+    public static final int REGISTER_RESULT_CODE = 2002;
 
     private static final String TAG = "RegisterAndRecognize";
     private static final int MAX_DETECT_NUM = 10;
@@ -144,7 +144,7 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
         starter.putExtra("open_type", TYPE_REGISTER);
         starter.putExtra("account", account);
         starter.putExtra("name", name);
-        activity.startActivityForResult(starter, 0);
+        activity.startActivityForResult(starter, REGISTER_RESULT_CODE);
     }
 
     @Override
@@ -365,7 +365,7 @@ public class RegisterAndRecognizeActivity extends AppCompatActivity {
                                         // 注册成功 返回注册页面
                                         Intent intent = new Intent();
                                         intent.putExtra("register_flag", success.booleanValue());
-                                        setResult(0, intent);
+                                        setResult(REGISTER_RESULT_CODE, intent);
                                         finish();
                                     } else {
                                         ToastUtil.showLong("注册人脸失败，请重试");

@@ -179,7 +179,7 @@ public class ActiveDetailActivity extends BaseActivity<ActiveDetailPresenter> im
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RegisterAndRecognizeActivity.DETECT_RESULT_CODE && data != null) {
             getPresenter().signInForService(mActive);
-        } else if (resultCode == 0){
+        } else if (resultCode == RegisterAndRecognizeActivity.REGISTER_RESULT_CODE && data != null){
             getPresenter().signInForService(mActive);
         } else {
             ToastUtil.show(R.string.sign_fail);
