@@ -9,6 +9,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        // 分包规则 保证数据正常
+        multiDexKeepProguard file('multidex-config.pro')
     }
     buildTypes {
         release {
@@ -35,6 +38,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:+'
     implementation 'com.squareup.retrofit2:adapter-rxjava:+'
     implementation 'io.reactivex:rxandroid:1.2.0'
+    implementation 'com.squareup.okio:okio:2.1.0'
 
     implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
